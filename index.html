@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>하윤이의 백일잔치</title>
+<!-- 카카오톡 링크 미리보기 (배포 후 실제 주소/이미지로 교체) -->
+<meta property="og:title" content="하윤이의 백일잔치에 초대합니다">
+<meta property="og:description" content="2026년 10월 10일 토요일 낮 12시">
+<meta property="og:image" content="https://example.com/baekil/images/og.jpg">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hanji: #f6f0e4;
+    --hanji-dark: #ece3d1;
+    --ink: #3b2f28;
+    --ink-soft: #7a6a5d;
+    --line: #d8cbb3;
+    /* 색동 */
+    --sd-red: #c8453b;
+    --sd-yellow: #e5b54a;
+    --sd-green: #4f8a5b;
+    --sd-blue: #3c5f9c;
+    --sd-pink: #d9808c;
+    --sd-white: #fbf8f1;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: #e6dcc8;
+    color: var(--ink);
+    font-family: "Nanum Myeongjo", serif;
+    font-size: 17px;
+    line-height: 1.8;
+    word-break: keep-all;
+  }
+  .card {
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background-color: var(--hanji);
+    /* 한지 섬유 질감 */
+    background-image:
+      radial-gradient(rgba(120, 95, 60, .05) 1px, transparent 1px),
+      radial-gradient(rgba(120, 95, 60, .04) 1px, transparent 1px);
+    background-size: 7px 7px, 11px 11px;
+    background-position: 0 0, 3px 5px;
+    box-shadow: 0 0 40px rgba(60, 40, 20, .15);
+    overflow: hidden;
+  }
+
+  /* 색동 띠 */
+  .saekdong {
+    height: 14px;
+    background: linear-gradient(90deg,
+      var(--sd-red) 0 16.6%, var(--sd-yellow) 16.6% 33.3%, var(--sd-green) 33.3% 50%,
+      var(--sd-blue) 50% 66.6%, var(--sd-pink) 66.6% 83.3%, var(--sd-white) 83.3% 100%);
+  }
+  .saekdong.thin { height: 6px; width: 120px; margin: 0 auto; border-radius: 3px; }
+
+  section { padding: 64px 24px; text-align: center; }
+  section + section { border-top: 1px dashed var(--line); }
+
+  .brush { font-family: "Nanum Brush Script", cursive; }
+  .eyebrow {
+    font-size: 13px; letter-spacing: .3em; color: var(--sd-red); margin-bottom: 8px;
+  }
+  h2 { font-size: 24px; font-weight: 800; margin-bottom: 24px; }
+
+  /* 사진 자리 (이미지가 없으면 안내 문구 표시) */
+  .photo {
+    position: relative;
+    background: var(--hanji-dark);
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ink-soft); font-size: 13px;
+    overflow: hidden;
+  }
+  .photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+  /* 1. 커버 */
+  .cover { padding: 48px 24px 56px; }
+  .cover .title { font-size: 64px; line-height: 1.1; color: var(--sd-red); margin: 12px 0 4px; }
+  .cover .name { font-size: 22px; font-weight: 700; }
+  .cover .photo {
+    width: 82%; aspect-ratio: 3 / 4; margin: 28px auto;
+    border-radius: 999px 999px 12px 12px;
+    border: 6px solid var(--sd-white);
+    box-shadow: 0 0 0 1px var(--line), 0 12px 30px rgba(60, 40, 20, .15);
+  }
+  .cover .date { font-size: 16px; color: var(--ink-soft); }
+
+  /* 2. 인사말 */
+  .greeting p { margin-bottom: 20px; }
+  .greeting .parents { margin-top: 28px; font-weight: 700; }
+  .greeting .parents span { color: var(--ink-soft); font-weight: 400; font-size: 14px; }
+
+  /* 3. 아기 소개 */
+  .baby-name { font-size: 40px; color: var(--ink); }
+  .baby-hanja { font-size: 15px; color: var(--ink-soft); margin-bottom: 24px; }
+  .info-table { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 24px; }
+  .info-table div {
+    background: var(--sd-white); border: 1px solid var(--line); border-radius: 10px; padding: 14px 6px;
+  }
+  .info-table small { display: block; font-size: 12px; color: var(--ink-soft); }
+  .info-table b { font-size: 16px; }
+
+  /* 4. D-day */
+  .counter-num { font-size: 72px; line-height: 1; color: var(--sd-red); }
+  .counter-num em { font-style: normal; font-size: 22px; color: var(--ink); margin-left: 4px; }
+  .dday-box {
+    margin-top: 28px; display: inline-block; padding: 10px 22px;
+    border: 1px solid var(--sd-red); border-radius: 999px; color: var(--sd-red); font-weight: 700;
+  }
+
+  /* 5. 성장 기록 */
+  .timeline { text-align: left; position: relative; padding-left: 28px; }
+  .timeline::before {
+    content: ""; position: absolute; left: 8px; top: 6px; bottom: 6px; width: 2px; background: var(--line);
+  }
+  .tl-item { position: relative; margin-bottom: 36px; }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-item::before {
+    content: ""; position: absolute; left: -26px; top: 7px; width: 14px; height: 14px; border-radius: 50%;
+    background: var(--dot, var(--sd-red)); border: 3px solid var(--hanji);
+    box-shadow: 0 0 0 1px var(--line);
+  }
+  .tl-item h3 { font-size: 18px; }
+  .tl-item .when { font-size: 13px; color: var(--ink-soft); }
+  .tl-item .photo { aspect-ratio: 4 / 3; border-radius: 10px; margin: 10px 0 8px; }
+
+  /* 6. 갤러리 */
+  .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .gallery .photo { aspect-ratio: 1; border-radius: 6px; cursor: pointer; }
+  .lightbox {
+    position: fixed; inset: 0; background: rgba(20, 14, 10, .92); z-index: 10;
+    display: none; align-items: center; justify-content: center;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox .photo { width: min(90vw, 440px); aspect-ratio: 3 / 4; border-radius: 8px; }
+  .lightbox button {
+    position: absolute; background: none; border: 0; color: #fff; font-size: 32px; padding: 16px; cursor: pointer;
+  }
+  .lb-close { top: 8px; right: 8px; }
+  .lb-prev { left: 0; top: 50%; transform: translateY(-50%); }
+  .lb-next { right: 0; top: 50%; transform: translateY(-50%); }
+  .lb-count { position: absolute; bottom: 24px; color: #fff; font-size: 14px; }
+
+  /* 7. 일시·장소 */
+  .when-big { font-size: 20px; font-weight: 700; }
+  .place-name { font-size: 20px; font-weight: 700; margin-top: 28px; }
+  .place-addr { color: var(--ink-soft); font-size: 15px; }
+  .btn-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 20px; }
+  .btn {
+    display: block; padding: 14px 8px; border-radius: 10px; font-size: 15px; font-family: inherit;
+    text-decoration: none; color: var(--ink); background: var(--sd-white); border: 1px solid var(--line);
+    cursor: pointer;
+  }
+  .btn.primary { background: var(--sd-red); border-color: var(--sd-red); color: #fff; font-weight: 700; }
+  .btn.wide { width: 100%; margin-top: 12px; }
+  .note { margin-top: 20px; font-size: 14px; color: var(--ink-soft); }
+
+  /* 8. 마무리 */
+  .closing .brush { font-size: 34px; color: var(--sd-red); }
+  footer { padding: 24px 0 40px; text-align: center; font-size: 12px; color: var(--ink-soft); }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 40px; transform: translate(-50%, 20px);
+    background: var(--ink); color: #fff; padding: 10px 20px; border-radius: 999px; font-size: 14px;
+    opacity: 0; transition: .3s; pointer-events: none; z-index: 20;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  /* 스크롤 등장 애니메이션 */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s ease, transform .9s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+</style>
+</head>
+<body>
+<main class="card">
+  <div class="saekdong"></div>
+
+  <!-- 1. 커버 -->
+  <section class="cover">
+    <p class="eyebrow">百日</p>
+    <h1 class="title brush">백일잔치</h1>
+    <p class="name" data-bind="babyName">하윤</p>
+    <div class="photo" data-photo="cover">메인 사진</div>
+    <p class="date" data-bind="partyDateText"></p>
+  </section>
+
+  <!-- 2. 인사말 -->
+  <section class="greeting reveal">
+    <p class="eyebrow">INVITATION</p>
+    <h2>소중한 가족분들께</h2>
+    <p>작고 여린 손으로 세상에 온 지<br>어느덧 백 일이 되었습니다.</p>
+    <p>그동안 보내주신 사랑과 관심 덕분에<br>건강하게 무럭무럭 자라고 있습니다.</p>
+    <p>백일을 맞아 가족들과 함께<br>따뜻한 식사 자리를 마련했습니다.<br>오셔서 축복해 주세요.</p>
+    <div class="saekdong thin"></div>
+    <p class="parents">아빠 <span data-bind="dad"></span> · 엄마 <span data-bind="mom"></span> 올림</p>
+  </section>
+
+  <!-- 3. 아기 소개 -->
+  <section class="reveal">
+    <p class="eyebrow">OUR BABY</p>
+    <h2>우리 아기를 소개합니다</h2>
+    <p class="baby-name brush" data-bind="babyFullName"></p>
+    <p class="baby-hanja" data-bind="babyHanja"></p>
+    <div class="info-table">
+      <div><small>태어난 날</small><b data-bind="birthShort"></b></div>
+      <div><small>키</small><b data-bind="birthHeight"></b></div>
+      <div><small>몸무게</small><b data-bind="birthWeight"></b></div>
+    </div>
+  </section>
+
+  <!-- 4. D-day -->
+  <section class="reveal">
+    <p class="eyebrow">D+DAY</p>
+    <h2>세상에 온 지</h2>
+    <p class="counter-num brush"><span id="daysAlive">0</span><em>일째</em></p>
+    <p class="dday-box" id="ddayText"></p>
+  </section>
+
+  <!-- 5. 성장 기록 -->
+  <section class="reveal">
+    <p class="eyebrow">GROWING UP</p>
+    <h2>백 일의 기록</h2>
+    <div class="timeline" id="timeline"></div>
+  </section>
+
+  <!-- 6. 갤러리 -->
+  <section class="reveal">
+    <p class="eyebrow">GALLERY</p>
+    <h2>사진첩</h2>
+    <div class="gallery" id="gallery"></div>
+  </section>
+
+  <!-- 7. 일시·장소 -->
+  <section class="reveal">
+    <p class="eyebrow">WHEN &amp; WHERE</p>
+    <h2>오시는 길</h2>
+    <p class="when-big" data-bind="partyDateText"></p>
+    <p class="place-name" data-bind="placeName"></p>
+    <p class="place-addr" data-bind="placeAddr"></p>
+    <div class="btn-row">
+      <a class="btn" id="mapNaver" target="_blank" rel="noopener">네이버지도</a>
+      <a class="btn" id="mapKakao" target="_blank" rel="noopener">카카오맵</a>
+      <a class="btn" id="mapTmap" target="_blank" rel="noopener">티맵</a>
+    </div>
+    <button class="btn primary wide" id="addCalendar">📅 캘린더에 저장</button>
+    <p class="note" data-bind="placeNote"></p>
+  </section>
+
+  <!-- 8. 마무리 + 공유 -->
+  <section class="closing reveal">
+    <p class="brush">건강하게 자라다오</p>
+    <p style="margin: 12px 0 24px; color: var(--ink-soft);">함께해 주셔서 고맙습니다</p>
+    <button class="btn wide" id="copyLink">🔗 링크 복사하기</button>
+    <button class="btn wide" id="shareBtn">📤 공유하기</button>
+  </section>
+
+  <div class="saekdong"></div>
+  <footer>© 하윤이네 가족</footer>
+</main>
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lb-close" aria-label="닫기">✕</button>
+  <button class="lb-prev" aria-label="이전">‹</button>
+  <div class="photo" id="lbPhoto"></div>
+  <button class="lb-next" aria-label="다음">›</button>
+  <span class="lb-count" id="lbCount"></span>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===== 여기만 수정하면 됩니다 ===== */
+const CONFIG = {
+  babyName: "하윤",
+  babyFullName: "김하윤",
+  babyHanja: "金夏潤 · 여름처럼 밝고 윤택하게",
+  birthDate: "2026-07-01",          // 태어난 날 (이 날을 1일째로 계산)
+  birthHeight: "50.2cm",
+  birthWeight: "3.2kg",
+  dad: "김OO",
+  mom: "이OO",
+  party: { date: "2026-10-10", start: "12:00", end: "14:00" },
+  placeName: "OO한정식 2층 별실",
+  placeAddr: "서울특별시 OO구 OO로 123",
+  placeNote: "건물 지하 주차장 2시간 무료",
+  // 사진: images 폴더에 넣고 경로를 적어주세요. 비워두면 안내 칸이 표시됩니다.
+  photos: {
+    cover: "",
+    timeline: ["", "", ""],
+    gallery: ["", "", "", "", "", "", "", "", ""],
+  },
+  timeline: [
+    { title: "세상에 온 날", day: 1,   text: "3.2kg의 작은 몸으로 우리에게 와주었어요." },
+    { title: "50일",        day: 50,  text: "처음으로 눈을 맞추고 방긋 웃어주었어요." },
+    { title: "100일",       day: 100, text: "고개를 번쩍 들고 옹알이도 제법 늘었어요." },
+  ],
+};
+/* ================================= */
+
+const DAY = 86400000;
+const WEEK = ["일", "월", "화", "수", "목", "금", "토"];
+const parseDate = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+const birth = parseDate(CONFIG.birthDate);
+const party = parseDate(CONFIG.party.date);
+const addDays = (date, n) => new Date(date.getFullYear(), date.getMonth(), date.getDate() + n);
+
+function formatTime(hhmm) {
+  const [h, m] = hhmm.split(":").map(Number);
+  const label = h < 12 ? "오전" : h === 12 ? "낮" : "오후";
+  const hour = h > 12 ? h - 12 : h;
+  return `${label} ${hour}시${m ? ` ${m}분` : ""}`;
+}
+
+const derived = {
+  ...CONFIG,
+  birthShort: `${birth.getFullYear() % 100}.${birth.getMonth() + 1}.${birth.getDate()}`,
+  partyDateText: `${party.getFullYear()}년 ${party.getMonth() + 1}월 ${party.getDate()}일 ` +
+    `${WEEK[party.getDay()]}요일 ${formatTime(CONFIG.party.start)}`,
+};
+document.querySelectorAll("[data-bind]").forEach(el => { el.textContent = derived[el.dataset.bind] ?? ""; });
+
+// 사진 채우기
+function fillPhoto(el, src, alt) {
+  if (!src) return;
+  el.textContent = "";
+  const img = new Image();
+  img.src = src; img.alt = alt; img.loading = "lazy";
+  el.appendChild(img);
+}
+fillPhoto(document.querySelector('[data-photo="cover"]'), CONFIG.photos.cover, "메인 사진");
+
+// D-day (태어난 날 = 1일째)
+const today = new Date(); today.setHours(0, 0, 0, 0);
+const daysAlive = Math.round((today - birth) / DAY) + 1;
+const dday = Math.round((party - today) / DAY);
+const day100 = addDays(birth, 99);
+document.getElementById("ddayText").textContent =
+  dday > 0 ? `백일잔치까지 D-${dday}` : dday === 0 ? "오늘은 백일잔치 날이에요 🎉" :
+  `${day100.getMonth() + 1}월 ${day100.getDate()}일, 백일을 맞았어요`;
+
+let counted = false;
+function countUp(el, target) {
+  const start = performance.now();
+  const step = now => {
+    const p = Math.min((now - start) / 1400, 1);
+    el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+    if (p < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+// 성장 기록
+const dotColors = ["var(--sd-red)", "var(--sd-yellow)", "var(--sd-green)", "var(--sd-blue)", "var(--sd-pink)"];
+const tl = document.getElementById("timeline");
+CONFIG.timeline.forEach((item, i) => {
+  const d = addDays(birth, item.day - 1);
+  const div = document.createElement("div");
+  div.className = "tl-item";
+  div.style.setProperty("--dot", dotColors[i % dotColors.length]);
+  div.innerHTML = `<h3></h3><p class="when"></p><div class="photo">${item.title} 사진</div><p></p>`;
+  div.querySelector("h3").textContent = item.title;
+  div.querySelector(".when").textContent = `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()}`;
+  div.querySelector("p:last-child").textContent = item.text;
+  fillPhoto(div.querySelector(".photo"), CONFIG.photos.timeline[i], item.title);
+  tl.appendChild(div);
+});
+
+// 갤러리 + 라이트박스
+const gallery = document.getElementById("gallery");
+const lb = document.getElementById("lightbox");
+const lbPhoto = document.getElementById("lbPhoto");
+let current = 0;
+CONFIG.photos.gallery.forEach((src, i) => {
+  const el = document.createElement("div");
+  el.className = "photo";
+  el.textContent = `사진 ${i + 1}`;
+  fillPhoto(el, src, `사진 ${i + 1}`);
+  el.addEventListener("click", () => openLb(i));
+  gallery.appendChild(el);
+});
+function showLb(i) {
+  const list = CONFIG.photos.gallery;
+  current = (i + list.length) % list.length;
+  lbPhoto.innerHTML = "";
+  lbPhoto.textContent = `사진 ${current + 1}`;
+  fillPhoto(lbPhoto, list[current], `사진 ${current + 1}`);
+  document.getElementById("lbCount").textContent = `${current + 1} / ${list.length}`;
+}
+function openLb(i) { showLb(i); lb.classList.add("open"); lb.setAttribute("aria-hidden", "false"); }
+function closeLb() { lb.classList.remove("open"); lb.setAttribute("aria-hidden", "true"); }
+lb.querySelector(".lb-close").onclick = closeLb;
+lb.querySelector(".lb-prev").onclick = () => showLb(current - 1);
+lb.querySelector(".lb-next").onclick = () => showLb(current + 1);
+lb.addEventListener("click", e => { if (e.target === lb) closeLb(); });
+let touchX = null;
+lb.addEventListener("touchstart", e => { touchX = e.touches[0].clientX; }, { passive: true });
+lb.addEventListener("touchend", e => {
+  if (touchX === null) return;
+  const dx = e.changedTouches[0].clientX - touchX;
+  if (Math.abs(dx) > 40) showLb(current + (dx < 0 ? 1 : -1));
+  touchX = null;
+});
+
+// 지도 링크
+const q = encodeURIComponent(CONFIG.placeAddr);
+document.getElementById("mapNaver").href = `https://map.naver.com/p/search/${q}`;
+document.getElementById("mapKakao").href = `https://map.kakao.com/?q=${q}`;
+document.getElementById("mapTmap").href = `https://tmap.life/search?name=${encodeURIComponent(CONFIG.placeName)}`;
+
+// 캘린더 저장 (.ics)
+document.getElementById("addCalendar").addEventListener("click", () => {
+  const ymd = CONFIG.party.date.replace(/-/g, "");
+  const hm = t => t.replace(":", "") + "00";
+  const ics = [
+    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//baekil//KO", "BEGIN:VEVENT",
+    `UID:${ymd}-baekil@family`,
+    `DTSTART;TZID=Asia/Seoul:${ymd}T${hm(CONFIG.party.start)}`,
+    `DTEND;TZID=Asia/Seoul:${ymd}T${hm(CONFIG.party.end)}`,
+    `SUMMARY:${CONFIG.babyName} 백일잔치`,
+    `LOCATION:${CONFIG.placeName} (${CONFIG.placeAddr})`,
+    "END:VEVENT", "END:VCALENDAR",
+  ].join("\r\n");
+  const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }));
+  const a = document.createElement("a");
+  a.href = url; a.download = "baekil.ics"; a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+});
+
+// 링크 복사 / 공유
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 1800);
+}
+document.getElementById("copyLink").addEventListener("click", async () => {
+  try { await navigator.clipboard.writeText(location.href); toast("링크를 복사했어요"); }
+  catch { toast("복사에 실패했어요. 주소창에서 복사해 주세요"); }
+});
+document.getElementById("shareBtn").addEventListener("click", async () => {
+  if (navigator.share) {
+    try { await navigator.share({ title: `${CONFIG.babyName}이의 백일잔치`, url: location.href }); } catch {}
+  } else {
+    document.getElementById("copyLink").click();
+  }
+});
+
+// 스크롤 등장 + 카운터 시작
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add("in");
+    if (!counted && e.target.querySelector("#daysAlive")) {
+      counted = true;
+      countUp(document.getElementById("daysAlive"), Math.max(daysAlive, 0));
+    }
+    io.unobserve(e.target);
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+</script>
+</body>
+</html>
