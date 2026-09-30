@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>하윤이의 백일잔치</title>
+<title>유찬이의 백일잔치</title>
 <!-- 카카오톡 링크 미리보기 (배포 후 실제 주소/이미지로 교체) -->
-<meta property="og:title" content="하윤이의 백일잔치에 초대합니다">
-<meta property="og:description" content="2026년 10월 10일 토요일 낮 12시">
+<meta property="og:title" content="유찬이의 백일잔치에 초대합니다">
+<meta property="og:description" content="2026년 10월 17일 토요일 오전 11시">
 <meta property="og:image" content="https://example.com/baekil/images/og.jpg">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -101,7 +101,8 @@
 
   /* 3. 아기 소개 */
   .baby-name { font-size: 40px; color: var(--ink); }
-  .baby-hanja { font-size: 15px; color: var(--ink-soft); margin-bottom: 24px; }
+  .baby-hanja { font-size: 15px; color: var(--ink-soft); letter-spacing: .1em; }
+  .baby-meaning { font-size: 15px; margin: 16px auto 0; max-width: 300px; }
   .info-table { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 24px; }
   .info-table div {
     background: var(--sd-white); border: 1px solid var(--line); border-radius: 10px; padding: 14px 6px;
@@ -152,6 +153,13 @@
 
   /* 7. 일시·장소 */
   .when-big { font-size: 20px; font-weight: 700; }
+  .schedule { list-style: none; margin: 20px auto 0; max-width: 320px; text-align: left; }
+  .schedule li {
+    display: flex; gap: 14px; align-items: baseline; padding: 12px 4px; border-bottom: 1px dashed var(--line);
+  }
+  .schedule li:last-child { border-bottom: 0; }
+  .schedule .time { flex: none; width: 64px; font-weight: 800; color: var(--sd-red); }
+  .schedule small { display: block; font-size: 13px; color: var(--ink-soft); }
   .place-name { font-size: 20px; font-weight: 700; margin-top: 28px; }
   .place-addr { color: var(--ink-soft); font-size: 15px; }
   .btn-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 20px; }
@@ -191,7 +199,7 @@
   <section class="cover">
     <p class="eyebrow">百日</p>
     <h1 class="title brush">백일잔치</h1>
-    <p class="name" data-bind="babyName">하윤</p>
+    <p class="name" data-bind="babyName">유찬</p>
     <div class="photo" data-photo="cover">메인 사진</div>
     <p class="date" data-bind="partyDateText"></p>
   </section>
@@ -213,6 +221,7 @@
     <h2>우리 아기를 소개합니다</h2>
     <p class="baby-name brush" data-bind="babyFullName"></p>
     <p class="baby-hanja" data-bind="babyHanja"></p>
+    <p class="baby-meaning" data-bind="babyMeaning"></p>
     <div class="info-table">
       <div><small>태어난 날</small><b data-bind="birthShort"></b></div>
       <div><small>키</small><b data-bind="birthHeight"></b></div>
@@ -245,14 +254,15 @@
   <!-- 7. 일시·장소 -->
   <section class="reveal">
     <p class="eyebrow">WHEN &amp; WHERE</p>
-    <h2>오시는 길</h2>
-    <p class="when-big" data-bind="partyDateText"></p>
+    <h2>잔치 일정</h2>
+    <p class="when-big" data-bind="partyDayText"></p>
+    <ol class="schedule" id="schedule"></ol>
     <p class="place-name" data-bind="placeName"></p>
     <p class="place-addr" data-bind="placeAddr"></p>
     <div class="btn-row">
       <a class="btn" id="mapNaver" target="_blank" rel="noopener">네이버지도</a>
       <a class="btn" id="mapKakao" target="_blank" rel="noopener">카카오맵</a>
-      <a class="btn" id="mapTmap" target="_blank" rel="noopener">티맵</a>
+      <a class="btn" id="mapTmap">티맵</a>
     </div>
     <button class="btn primary wide" id="addCalendar">📅 캘린더에 저장</button>
     <p class="note" data-bind="placeNote"></p>
@@ -267,7 +277,7 @@
   </section>
 
   <div class="saekdong"></div>
-  <footer>© 하윤이네 가족</footer>
+  <footer>© 유찬이네 가족</footer>
 </main>
 
 <div class="lightbox" id="lightbox" aria-hidden="true">
@@ -282,18 +292,28 @@
 <script>
 /* ===== 여기만 수정하면 됩니다 ===== */
 const CONFIG = {
-  babyName: "하윤",
-  babyFullName: "김하윤",
-  babyHanja: "金夏潤 · 여름처럼 밝고 윤택하게",
-  birthDate: "2026-07-01",          // 태어난 날 (이 날을 1일째로 계산)
-  birthHeight: "50.2cm",
-  birthWeight: "3.2kg",
-  dad: "김OO",
-  mom: "이OO",
-  party: { date: "2026-10-10", start: "12:00", end: "14:00" },
-  placeName: "OO한정식 2층 별실",
-  placeAddr: "서울특별시 OO구 OO로 123",
-  placeNote: "건물 지하 주차장 2시간 무료",
+  shareUrl: "https://qwekl.github.io/100dayevent/",   // 링크 복사·공유에 쓰이는 주소
+  babyName: "유찬",
+  babyFullName: "김유찬",
+  babyHanja: "金 裕 燦 · 넉넉할 유, 빛날 찬",
+  babyMeaning: "풍요로운 마음과 넉넉한 인품으로\n세상을 밝게 빛내는 사람",
+  birthDate: "2026-07-08",          // 태어난 날 (이 날을 1일째로 계산)
+  birthHeight: "52cm",
+  birthWeight: "3.37kg",
+  dad: "김정민",
+  mom: "김여울",
+  party: { date: "2026-10-17", start: "11:00", end: "14:00" },
+  schedule: [
+    { time: "11:00", title: "백일상 · 가족사진", place: "집" },
+    { time: "12:00", title: "점심 식사", place: "모담 다산" },
+  ],
+  // 아래 장소 정보는 식당(12시) 기준입니다.
+  placeName: "모담 다산",
+  placeAddr: "경기 남양주시 다산중앙로 153 다산 자이아이비플레이스 상업시설 2층 208, 209호",
+  naverPlaceUrl: "https://map.naver.com/p/entry/place/1326985338",
+  kakaoPlaceUrl: "https://place.map.kakao.com/433757592",
+  placeLatLng: { lat: 37.62663898, lng: 127.15041135 },   // 티맵 길안내 목적지 좌표
+  placeNote: "",
   // 사진: images 폴더에 넣고 경로를 적어주세요. 비워두면 안내 칸이 표시됩니다.
   photos: {
     cover: "",
@@ -301,7 +321,7 @@ const CONFIG = {
     gallery: ["", "", "", "", "", "", "", "", ""],
   },
   timeline: [
-    { title: "세상에 온 날", day: 1,   text: "3.2kg의 작은 몸으로 우리에게 와주었어요." },
+    { title: "세상에 온 날", day: 1,   text: "3.37kg의 작은 몸으로 우리에게 와주었어요." },
     { title: "50일",        day: 50,  text: "처음으로 눈을 맞추고 방긋 웃어주었어요." },
     { title: "100일",       day: 100, text: "고개를 번쩍 들고 옹알이도 제법 늘었어요." },
   ],
@@ -327,8 +347,11 @@ const derived = {
   birthShort: `${birth.getFullYear() % 100}.${birth.getMonth() + 1}.${birth.getDate()}`,
   partyDateText: `${party.getFullYear()}년 ${party.getMonth() + 1}월 ${party.getDate()}일 ` +
     `${WEEK[party.getDay()]}요일 ${formatTime(CONFIG.party.start)}`,
+  partyDayText: `${party.getFullYear()}년 ${party.getMonth() + 1}월 ${party.getDate()}일 ` +
+    `${WEEK[party.getDay()]}요일`,
 };
-document.querySelectorAll("[data-bind]").forEach(el => { el.textContent = derived[el.dataset.bind] ?? ""; });
+document.querySelectorAll("[data-bind]").forEach(el => { el.textContent = derived[el.dataset.bind] ?? "";
+  el.style.whiteSpace = "pre-line"; });
 
 // 사진 채우기
 function fillPhoto(el, src, alt) {
@@ -412,11 +435,24 @@ lb.addEventListener("touchend", e => {
   touchX = null;
 });
 
+// 일정
+const scheduleEl = document.getElementById("schedule");
+CONFIG.schedule.forEach(s => {
+  const li = document.createElement("li");
+  li.innerHTML = `<span class="time"></span><span><b></b><small></small></span>`;
+  li.querySelector(".time").textContent = formatTime(s.time);
+  li.querySelector("b").textContent = s.title;
+  li.querySelector("small").textContent = s.place;
+  scheduleEl.appendChild(li);
+});
+
 // 지도 링크
 const q = encodeURIComponent(CONFIG.placeAddr);
-document.getElementById("mapNaver").href = `https://map.naver.com/p/search/${q}`;
-document.getElementById("mapKakao").href = `https://map.kakao.com/?q=${q}`;
-document.getElementById("mapTmap").href = `https://tmap.life/search?name=${encodeURIComponent(CONFIG.placeName)}`;
+document.getElementById("mapNaver").href = CONFIG.naverPlaceUrl || `https://map.naver.com/p/search/${q}`;
+document.getElementById("mapKakao").href = CONFIG.kakaoPlaceUrl || `https://map.kakao.com/?q=${q}`;
+// 티맵은 웹 장소 페이지가 없어 앱으로 바로 길안내를 엽니다 (폰에 티맵 앱 필요)
+document.getElementById("mapTmap").href = `tmap://route?goalname=${encodeURIComponent(CONFIG.placeName)}` +
+  `&goalx=${CONFIG.placeLatLng.lng}&goaly=${CONFIG.placeLatLng.lat}`;
 
 // 캘린더 저장 (.ics)
 document.getElementById("addCalendar").addEventListener("click", () => {
@@ -428,7 +464,8 @@ document.getElementById("addCalendar").addEventListener("click", () => {
     `DTSTART;TZID=Asia/Seoul:${ymd}T${hm(CONFIG.party.start)}`,
     `DTEND;TZID=Asia/Seoul:${ymd}T${hm(CONFIG.party.end)}`,
     `SUMMARY:${CONFIG.babyName} 백일잔치`,
-    `LOCATION:${CONFIG.placeName} (${CONFIG.placeAddr})`,
+    `DESCRIPTION:${CONFIG.schedule.map(s => `${s.time} ${s.title} (${s.place})`).join("\\n")}`,
+    `LOCATION:${CONFIG.placeName} (${CONFIG.placeAddr.replace(/,/g, "\\,")})`,
     "END:VEVENT", "END:VCALENDAR",
   ].join("\r\n");
   const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }));
@@ -444,12 +481,12 @@ function toast(msg) {
   setTimeout(() => t.classList.remove("show"), 1800);
 }
 document.getElementById("copyLink").addEventListener("click", async () => {
-  try { await navigator.clipboard.writeText(location.href); toast("링크를 복사했어요"); }
+  try { await navigator.clipboard.writeText(CONFIG.shareUrl); toast("링크를 복사했어요"); }
   catch { toast("복사에 실패했어요. 주소창에서 복사해 주세요"); }
 });
 document.getElementById("shareBtn").addEventListener("click", async () => {
   if (navigator.share) {
-    try { await navigator.share({ title: `${CONFIG.babyName}이의 백일잔치`, url: location.href }); } catch {}
+    try { await navigator.share({ title: `${CONFIG.babyName}이의 백일잔치`, url: CONFIG.shareUrl }); } catch {}
   } else {
     document.getElementById("copyLink").click();
   }
