@@ -264,16 +264,14 @@
       <a class="btn" id="mapKakao" target="_blank" rel="noopener">카카오맵</a>
       <a class="btn" id="mapTmap">티맵</a>
     </div>
-    <button class="btn primary wide" id="addCalendar">📅 캘린더에 저장</button>
     <p class="note" data-bind="placeNote"></p>
   </section>
 
-  <!-- 8. 마무리 + 공유 -->
+  <!-- 8. 마무리 + 링크 복사 -->
   <section class="closing reveal">
     <p class="brush">건강하게 자라다오</p>
     <p style="margin: 12px 0 24px; color: var(--ink-soft);">함께해 주셔서 고맙습니다</p>
     <button class="btn wide" id="copyLink">🔗 링크 복사하기</button>
-    <button class="btn wide" id="shareBtn">📤 공유하기</button>
   </section>
 
   <div class="saekdong"></div>
@@ -292,7 +290,7 @@
 <script>
 /* ===== 여기만 수정하면 됩니다 ===== */
 const CONFIG = {
-  shareUrl: "https://qwekl.github.io/100dayevent/",   // 링크 복사·공유에 쓰이는 주소
+  shareUrl: "https://qwekl.github.io/100dayevent/",   // 링크 복사에 쓰이는 주소
   babyName: "유찬",
   babyFullName: "김유찬",
   babyHanja: "金 裕 燦 · 넉넉할 유, 빛날 찬",
@@ -302,12 +300,12 @@ const CONFIG = {
   birthWeight: "3.37kg",
   dad: "김정민",
   mom: "김여울",
-  party: { date: "2026-10-17", start: "11:00", end: "14:00" },
+  party: { date: "2026-10-17", start: "11:00" },
   schedule: [
     { time: "11:00", title: "백일상 · 가족사진", place: "집" },
-    { time: "12:00", title: "점심 식사", place: "모담 다산" },
+    { time: "13:00", title: "점심 식사", place: "모담 다산" },
   ],
-  // 아래 장소 정보는 식당(12시) 기준입니다.
+  // 아래 장소 정보는 식당(13시) 기준입니다.
   placeName: "모담 다산",
   placeAddr: "경기 남양주시 다산중앙로 153 다산 자이아이비플레이스 상업시설 2층 208, 209호",
   naverPlaceUrl: "https://map.naver.com/p/entry/place/1326985338",
@@ -454,27 +452,7 @@ document.getElementById("mapKakao").href = CONFIG.kakaoPlaceUrl || `https://map.
 document.getElementById("mapTmap").href = `tmap://route?goalname=${encodeURIComponent(CONFIG.placeName)}` +
   `&goalx=${CONFIG.placeLatLng.lng}&goaly=${CONFIG.placeLatLng.lat}`;
 
-// 캘린더 저장 (.ics)
-document.getElementById("addCalendar").addEventListener("click", () => {
-  const ymd = CONFIG.party.date.replace(/-/g, "");
-  const hm = t => t.replace(":", "") + "00";
-  const ics = [
-    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//baekil//KO", "BEGIN:VEVENT",
-    `UID:${ymd}-baekil@family`,
-    `DTSTART;TZID=Asia/Seoul:${ymd}T${hm(CONFIG.party.start)}`,
-    `DTEND;TZID=Asia/Seoul:${ymd}T${hm(CONFIG.party.end)}`,
-    `SUMMARY:${CONFIG.babyName} 백일잔치`,
-    `DESCRIPTION:${CONFIG.schedule.map(s => `${s.time} ${s.title} (${s.place})`).join("\\n")}`,
-    `LOCATION:${CONFIG.placeName} (${CONFIG.placeAddr.replace(/,/g, "\\,")})`,
-    "END:VEVENT", "END:VCALENDAR",
-  ].join("\r\n");
-  const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }));
-  const a = document.createElement("a");
-  a.href = url; a.download = "baekil.ics"; a.click();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-});
-
-// 링크 복사 / 공유
+// 링크 복사
 function toast(msg) {
   const t = document.getElementById("toast");
   t.textContent = msg; t.classList.add("show");
@@ -483,13 +461,6 @@ function toast(msg) {
 document.getElementById("copyLink").addEventListener("click", async () => {
   try { await navigator.clipboard.writeText(CONFIG.shareUrl); toast("링크를 복사했어요"); }
   catch { toast("복사에 실패했어요. 주소창에서 복사해 주세요"); }
-});
-document.getElementById("shareBtn").addEventListener("click", async () => {
-  if (navigator.share) {
-    try { await navigator.share({ title: `${CONFIG.babyName}이의 백일잔치`, url: CONFIG.shareUrl }); } catch {}
-  } else {
-    document.getElementById("copyLink").click();
-  }
 });
 
 // 스크롤 등장 + 카운터 시작
