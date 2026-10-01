@@ -100,6 +100,13 @@
   .greeting .parents span { color: var(--ink-soft); font-weight: 400; font-size: 14px; }
 
   /* 3. 아기 소개 */
+  .intro-frame {
+    width: 52%; aspect-ratio: 1; margin: 0 auto 12px; padding: 6px; border-radius: 50%;
+    background: conic-gradient(var(--sd-red) 0 60deg, var(--sd-yellow) 0 120deg, var(--sd-green) 0 180deg,
+      var(--sd-blue) 0 240deg, var(--sd-pink) 0 300deg, var(--sd-white) 0 360deg);
+    box-shadow: 0 10px 24px rgba(60, 40, 20, .15);
+  }
+  .intro-frame .photo { width: 100%; height: 100%; border-radius: 50%; border: 4px solid var(--hanji); }
   .baby-name { font-size: 40px; color: var(--ink); }
   .baby-hanja { font-size: 15px; color: var(--ink-soft); letter-spacing: .1em; }
   .baby-meaning { font-size: 15px; margin: 16px auto 0; max-width: 300px; }
@@ -219,6 +226,7 @@
   <section class="reveal">
     <p class="eyebrow">OUR BABY</p>
     <h2>우리 아기를 소개합니다</h2>
+    <div class="intro-frame"><div class="photo" data-photo="intro">소개 사진</div></div>
     <p class="baby-name brush" data-bind="babyFullName"></p>
     <p class="baby-hanja" data-bind="babyHanja"></p>
     <p class="baby-meaning" data-bind="babyMeaning"></p>
@@ -315,6 +323,7 @@ const CONFIG = {
   // 사진: images 폴더에 넣고 경로를 적어주세요. 비워두면 안내 칸이 표시됩니다.
   photos: {
     cover: "",
+    intro: "",
     timeline: ["", "", ""],
     gallery: ["", "", "", "", "", "", "", "", ""],
   },
@@ -360,6 +369,7 @@ function fillPhoto(el, src, alt) {
   el.appendChild(img);
 }
 fillPhoto(document.querySelector('[data-photo="cover"]'), CONFIG.photos.cover, "메인 사진");
+fillPhoto(document.querySelector('[data-photo="intro"]'), CONFIG.photos.intro, "소개 사진");
 
 // D-day (태어난 날 = 1일째)
 const today = new Date(); today.setHours(0, 0, 0, 0);
