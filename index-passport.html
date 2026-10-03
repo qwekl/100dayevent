@@ -1,0 +1,821 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1c3a31">
+<title>유찬이의 백일잔치</title>
+<meta property="og:title" content="유찬이의 백일잔치에 초대합니다">
+<meta property="og:description" content="2026년 10월 17일 토요일 오전 11시">
+<meta property="og:image" content="https://example.com/baekil/images/og.jpg">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&family=Gowun+Dodum&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --desk: #d9d1bf;
+    --green: #1c3a31;
+    --green-2: #26493d;
+    --navy: #1e2a44;
+    --navy-2: #2a3a5c;
+    --gold: #cfae62;
+    --gold-2: #f0d892;
+    --cream: #f6f0e1;
+    --cream-2: #ece3cc;
+    --ink: #2a2f2c;
+    --ink-soft: #5d625c;
+    --line: rgba(28, 58, 49, .18);
+    --red: #b5372f;
+    --blue: #2c5797;
+    --stamp-green: #2f7a4b;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    --sans: "IBM Plex Sans KR", "Gowun Dodum", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background-color: var(--desk);
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(255, 255, 255, .35), transparent 50%),
+      repeating-linear-gradient(90deg, rgba(90, 70, 40, .035) 0 2px, transparent 2px 7px);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.7;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    overflow-x: hidden;
+  }
+  .wrap { max-width: 480px; margin: 0 auto; padding: 14px 14px 0; }
+  img { display: block; }
+  .mono { font-family: var(--mono); }
+
+  /* 사진 칸 공통 */
+  .photo {
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: repeating-linear-gradient(45deg, #e4dcc6 0 8px, #ddd4bb 8px 16px);
+    color: #7c7a6c; font-size: 13px; text-align: center;
+  }
+  .photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+  /* 1. 여권 표지 */
+  .cover {
+    position: relative; border-radius: 10px 18px 18px 10px; padding: 34px 26px 30px;
+    color: var(--gold-2); text-align: center; overflow: hidden;
+    background-color: var(--green);
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"),
+      radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, .10), transparent 60%),
+      radial-gradient(ellipse at 80% 90%, rgba(0, 0, 0, .28), transparent 60%);
+    box-shadow: inset 10px 0 14px -8px rgba(0, 0, 0, .55), inset 0 0 0 1px rgba(255, 255, 255, .05),
+                0 14px 30px rgba(40, 30, 10, .35);
+  }
+  /* 책등 스티치 */
+  .cover::before {
+    content: ""; position: absolute; left: 12px; top: 10px; bottom: 10px;
+    border-left: 2px dashed rgba(207, 174, 98, .35);
+  }
+  .cover .country { font-size: 13px; letter-spacing: .32em; font-weight: 500; text-shadow: 0 1px 0 rgba(0, 0, 0, .4); }
+  .cover .country b { font-size: 22px; letter-spacing: .18em; display: block; font-weight: 700; margin-bottom: 2px; }
+  .emblem { width: 84px; height: 84px; margin: 18px auto 16px; filter: drop-shadow(0 1px 0 rgba(0, 0, 0, .5)); }
+  .cover-window {
+    width: 64%; max-width: 230px; margin: 0 auto; aspect-ratio: 3 / 4;
+    border-radius: 120px 120px 10px 10px; padding: 6px;
+    background: linear-gradient(145deg, #f3dc98, #a9853b 55%, #e8cd85);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, .4);
+  }
+  .cover-window .photo { width: 100%; height: 100%; border-radius: 114px 114px 6px 6px; color: #6d6a58; }
+  .cover h1 {
+    margin-top: 22px; font-family: "Gowun Dodum", var(--sans); font-weight: 400;
+    font-size: 30px; line-height: 1.3; color: var(--gold-2);
+    text-shadow: 0 1px 0 rgba(0, 0, 0, .5), 0 0 12px rgba(240, 216, 146, .2);
+  }
+  .cover .sub { font-size: 14px; color: rgba(240, 216, 146, .8); margin-top: 4px; }
+  .cover .date {
+    display: inline-block; margin-top: 18px; padding: 8px 14px;
+    border-top: 1px solid rgba(207, 174, 98, .45); border-bottom: 1px solid rgba(207, 174, 98, .45);
+    font-size: 15px; color: #fbf2d4; letter-spacing: .02em;
+  }
+  .cover .chip {
+    position: absolute; right: 18px; bottom: 16px; width: 30px; height: 20px; border-radius: 4px;
+    border: 1.5px solid rgba(207, 174, 98, .6);
+  }
+  .cover .chip::before { content: ""; position: absolute; inset: 4px 8px; border: 1px solid rgba(207, 174, 98, .5); border-radius: 50%; }
+
+  /* 내지 공통: 크림 종이 + 길로셰 무늬 */
+  .page {
+    position: relative; margin-top: 18px; padding: 26px 22px 24px; border-radius: 6px;
+    background-color: var(--cream);
+    background-image:
+      repeating-radial-gradient(circle at 0 0, transparent 0 13px, rgba(28, 58, 49, .045) 13px 14px),
+      repeating-radial-gradient(circle at 100% 100%, transparent 0 13px, rgba(44, 87, 151, .04) 13px 14px),
+      repeating-linear-gradient(60deg, transparent 0 22px, rgba(207, 174, 98, .06) 22px 23px);
+    box-shadow: 0 1px 0 #fffaf0 inset, 0 8px 22px rgba(60, 45, 20, .16);
+  }
+  .page-head {
+    display: flex; justify-content: space-between; gap: 10px; align-items: baseline;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; color: var(--green-2);
+    border-bottom: 1px solid var(--line); padding-bottom: 8px; margin-bottom: 18px; text-transform: uppercase;
+  }
+  .page-no { position: absolute; bottom: 8px; left: 0; right: 0; text-align: center; font-family: var(--mono); font-size: 10px; color: rgba(28, 58, 49, .4); }
+  .sec-title { font-family: "Gowun Dodum", var(--sans); font-size: 22px; font-weight: 400; color: var(--green); line-height: 1.35; }
+  .sec-title small { display: block; font-family: var(--mono); font-size: 10.5px; letter-spacing: .2em; color: var(--ink-soft); }
+
+  /* 2. 신원정보면 */
+  .bio { display: grid; grid-template-columns: 108px 1fr; gap: 16px; }
+  .bio .photo { aspect-ratio: 3 / 4; border-radius: 3px; border: 1px solid rgba(0, 0, 0, .12); filter: saturate(.95); }
+  .bio .sig { font-family: "Nanum Pen Script", cursive; font-size: 24px; line-height: 1; color: var(--navy); margin-top: 8px; text-align: center; }
+  .bio .sig small { display: block; font-family: var(--mono); font-size: 8.5px; letter-spacing: .1em; color: var(--ink-soft); margin-top: 2px; }
+  .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 12px; align-content: start; min-width: 0; }
+  .field { min-width: 0; }
+  .field.full { grid-column: 1 / -1; }
+  .field small { display: block; font-size: 10px; line-height: 1.3; color: var(--ink-soft); letter-spacing: .02em; }
+  .field small i { font-style: normal; font-family: var(--mono); font-size: 9px; opacity: .8; }
+  .field b { display: block; font-size: 15px; font-weight: 500; color: var(--ink); line-height: 1.4; }
+  .field b.name { font-size: 20px; font-weight: 700; letter-spacing: .06em; }
+  .field b.hanja { font-size: 13px; font-weight: 400; }
+  .purpose { margin-top: 18px; padding: 14px 16px; border: 1px dashed rgba(28, 58, 49, .3); border-radius: 4px; background: rgba(255, 255, 255, .35); }
+  .purpose small { font-size: 10.5px; color: var(--ink-soft); }
+  .purpose p { white-space: pre-line; font-family: "Gowun Dodum", var(--sans); font-size: 16px; color: var(--green); line-height: 1.7; margin-top: 2px; }
+  .mrz {
+    margin: 20px -6px 6px; padding: 10px 6px 0; border-top: 1px solid var(--line);
+    font-family: var(--mono); font-weight: 500; color: #23272b; overflow: hidden;
+    font-size: min(12.4px, 2.55vw); line-height: 1.6; letter-spacing: .02em; white-space: pre;
+  }
+
+  /* 3. 여행 안내문 */
+  .notice p { font-size: 15.5px; color: #3a3e3a; margin-top: 12px; }
+  .notice p:first-of-type { margin-top: 16px; }
+  .notice .em { color: var(--green); font-weight: 500; }
+  .guardian { margin-top: 22px; display: flex; justify-content: flex-end; align-items: center; gap: 12px; }
+  .guardian .who { text-align: right; font-size: 15px; }
+  .guardian .who small { display: block; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--ink-soft); }
+  .seal {
+    width: 50px; height: 50px; border-radius: 50%; flex: none;
+    border: 2px solid var(--red); color: var(--red); opacity: .8; transform: rotate(-12deg);
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    font-size: 11px; line-height: 1.15; font-weight: 700;
+  }
+
+  /* 4. 비행 경로 (D+N) */
+  .flight {
+    margin-top: 18px; padding: 26px 20px 22px; border-radius: 12px; color: #e9e3d0; text-align: center;
+    background: radial-gradient(ellipse at 50% 0%, #34507e 0%, var(--navy) 65%);
+    box-shadow: 0 10px 24px rgba(20, 25, 40, .3);
+    position: relative; overflow: hidden;
+  }
+  .flight::after { /* 지도 격자 */
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: repeating-linear-gradient(0deg, rgba(255, 255, 255, .04) 0 1px, transparent 1px 28px),
+                repeating-linear-gradient(90deg, rgba(255, 255, 255, .04) 0 1px, transparent 1px 28px);
+  }
+  .flight > * { position: relative; z-index: 1; }
+  .flight .label { font-family: var(--mono); font-size: 10.5px; letter-spacing: .24em; color: var(--gold); }
+  .flight .big { font-size: 20px; margin-top: 6px; }
+  .flight .big b { font-family: var(--mono); font-size: 46px; font-weight: 600; color: var(--gold-2); margin: 0 4px; line-height: 1.1; }
+  .route-svg { width: 100%; height: auto; display: block; margin: 10px 0 4px; overflow: visible; }
+  .route-ends { display: flex; justify-content: space-between; font-size: 12px; color: #c7c3b4; line-height: 1.4; }
+  .route-ends div:last-child { text-align: right; }
+  .route-ends b { display: block; color: #fff; font-size: 14px; font-weight: 500; }
+  .progress-line { font-family: var(--mono); font-size: 12px; color: #aab4c8; margin-top: 12px; }
+  .dday-pill {
+    display: inline-block; margin-top: 14px; padding: 8px 18px; border-radius: 999px;
+    background: var(--gold); color: var(--navy); font-weight: 700; font-size: 15px;
+  }
+
+  /* 5. 사증(스탬프) */
+  .visa { margin-top: 18px; }
+  .visa-item { padding: 18px 0 22px; border-bottom: 1px dashed var(--line); position: relative; }
+  .visa-item:last-child { border-bottom: 0; padding-bottom: 6px; }
+  .visa-item .photo { aspect-ratio: 4 / 3; border-radius: 3px; border: 6px solid #fff; box-shadow: 0 3px 10px rgba(0, 0, 0, .12); }
+  .visa-item h3 { font-size: 18px; font-weight: 700; color: var(--green); margin-top: 14px; padding-right: 116px; line-height: 1.4; }
+  .visa-item .when { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); padding-right: 116px; }
+  .visa-item .text { font-size: 15px; color: #3a3e3a; margin-top: 6px; }
+  .stamp {
+    position: absolute; right: -4px; bottom: -34px;
+    width: 108px; height: 108px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; color: var(--c); border: 3px double var(--c); border-radius: 50%;
+    background: rgba(246, 240, 225, .35);
+    transform: rotate(var(--r)); opacity: .82; mix-blend-mode: multiply;
+    /* 잉크 번짐: 거친 점 마스크 */
+    -webkit-mask: radial-gradient(circle at 30% 40%, #000 60%, rgba(0, 0, 0, .75) 100%),
+                  repeating-radial-gradient(circle at 70% 20%, #000 0 2px, rgba(0, 0, 0, .78) 2px 3px);
+    -webkit-mask-composite: source-in; mask-composite: intersect;
+    pointer-events: none;
+  }
+  .shot { position: relative; }
+  .stamp.rect { border-radius: 6px; width: 122px; height: 86px; }
+  .stamp.oval { border-radius: 50% / 42%; width: 124px; height: 96px; }
+  .stamp .s-top { font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em; font-weight: 600; }
+  .stamp .s-title { font-size: 14px; font-weight: 700; line-height: 1.2; margin: 3px 6px; }
+  .stamp .s-date { font-family: var(--mono); font-size: 10px; font-weight: 600; border-top: 1px solid var(--c); padding-top: 1px; }
+  .reveal .stamp { transition: transform .45s cubic-bezier(.3, 1.6, .5, 1) .25s, opacity .3s ease .25s; }
+  .reveal:not(.in) .stamp { transform: rotate(var(--r)) scale(1.7); opacity: 0; }
+
+  /* 6. 여행 앨범 */
+  .album { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px 10px; margin-top: 18px; }
+  .card-shot {
+    background: #fffdf7; padding: 5px 5px 16px; box-shadow: 0 3px 8px rgba(0, 0, 0, .14);
+    transform: rotate(var(--r, 0deg)); cursor: pointer; position: relative;
+    border: 0; font: inherit; color: inherit; text-align: left; width: 100%;
+  }
+  .card-shot .photo { aspect-ratio: 1; font-size: 12px; }
+  .card-shot .pm { position: absolute; bottom: 2px; left: 6px; font-family: var(--mono); font-size: 8.5px; color: #8a8676; }
+  .card-shot:active { transform: rotate(0) scale(.97); }
+  .album-hint { text-align: center; font-size: 12.5px; color: var(--ink-soft); margin-top: 14px; }
+
+  .lightbox {
+    position: fixed; inset: 0; background: rgba(14, 20, 32, .94); z-index: 20;
+    display: none; align-items: center; justify-content: center;
+  }
+  .lightbox.open { display: flex; }
+  .lb-frame { background: #fffdf7; padding: 8px 8px 30px; width: min(88vw, 430px); position: relative; }
+  .lb-frame .photo { width: 100%; aspect-ratio: 3 / 4; }
+  .lb-count { position: absolute; bottom: 6px; left: 0; right: 0; text-align: center; font-family: var(--mono); font-size: 13px; color: #555; }
+  .lightbox button {
+    position: absolute; background: rgba(255, 255, 255, .1); border: 0; color: #fff; font-size: 26px;
+    width: 46px; height: 46px; border-radius: 50%; cursor: pointer; line-height: 1;
+  }
+  .lb-close { top: 14px; right: 14px; }
+  .lb-prev { left: 6px; top: 50%; transform: translateY(-50%); }
+  .lb-next { right: 6px; top: 50%; transform: translateY(-50%); }
+
+  /* 7. 탑승권 */
+  .bp-wrap { margin-top: 18px; filter: drop-shadow(0 10px 18px rgba(40, 30, 10, .22)); }
+  .bp-main, .bp-stub { background: #fbf8f0; }
+  .bp-main {
+    border-radius: 14px 14px 0 0; overflow: hidden;
+    -webkit-mask: radial-gradient(circle 12px at 0 100%, transparent 98%, #000) left / 51% 100% no-repeat,
+                  radial-gradient(circle 12px at 100% 100%, transparent 98%, #000) right / 51% 100% no-repeat;
+  }
+  .bp-stub {
+    border-radius: 0 0 14px 14px; padding: 18px 20px 20px; border-top: 2px dashed rgba(30, 42, 68, .28);
+    -webkit-mask: radial-gradient(circle 12px at 0 0, transparent 98%, #000) left / 51% 100% no-repeat,
+                  radial-gradient(circle 12px at 100% 0, transparent 98%, #000) right / 51% 100% no-repeat;
+  }
+  .bp-band {
+    background: var(--navy); color: #f1e7c9; padding: 12px 20px;
+    display: flex; justify-content: space-between; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .14em;
+  }
+  .bp-band b { color: var(--gold-2); font-size: 13px; }
+  .bp-band span { white-space: nowrap; }
+  .bp-body { padding: 18px 20px 22px; }
+  .bp-route { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; }
+  .bp-route .code { font-family: var(--mono); font-size: 30px; font-weight: 600; color: var(--navy); line-height: 1.1; }
+  .bp-route small { display: block; font-size: 11.5px; color: var(--ink-soft); }
+  .bp-route > div:last-child { text-align: right; }
+  .bp-route .plane { color: var(--gold); font-size: 22px; padding: 0 2px; position: relative; }
+  .bp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 14px; margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(30, 42, 68, .12); }
+  .bp-grid small, .bp-sub { display: block; font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; color: #7b8090; }
+  .bp-grid small i { font-style: normal; font-family: var(--sans); letter-spacing: 0; font-size: 10.5px; }
+  .bp-grid b { display: block; font-size: 16px; color: var(--navy); font-weight: 700; line-height: 1.35; }
+  .bp-sub { margin-top: 20px; margin-bottom: 4px; }
+  .bp-sub i { font-style: normal; font-family: var(--sans); letter-spacing: 0; font-size: 11px; }
+  .schedule { list-style: none; }
+  .schedule li { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px dotted rgba(30, 42, 68, .25); align-items: baseline; }
+  .schedule li:last-child { border-bottom: 0; }
+  .schedule .time { flex: none; width: 5.5em; white-space: nowrap; font-weight: 700; color: var(--red); font-size: 15px; }
+  .schedule b { display: block; font-size: 15.5px; font-weight: 500; color: var(--ink); line-height: 1.45; }
+  .schedule small { display: block; font-size: 12.5px; color: var(--ink-soft); }
+  .gate { margin-top: 6px; padding: 14px 14px 16px; background: rgba(30, 42, 68, .05); border-radius: 8px; }
+  .gate .pname { font-size: 18px; font-weight: 700; color: var(--navy); }
+  .gate .paddr { font-size: 13.5px; color: #4b5060; line-height: 1.6; margin-top: 2px; }
+  .gate .pnote { font-size: 13px; color: var(--ink-soft); margin-top: 8px; }
+  .gate .pnote:empty { display: none; }
+  .maps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+  .maps a {
+    display: flex; align-items: center; justify-content: center; min-height: 44px; padding: 6px 4px;
+    border-radius: 8px; background: var(--navy); color: #f5edd6; text-decoration: none;
+    font-size: 13.5px; font-weight: 500; white-space: nowrap;
+  }
+  .maps a:active { opacity: .85; }
+  .stub-row { display: flex; justify-content: space-between; gap: 12px; }
+  .stub-row > div:last-child { text-align: right; }
+  .stub-row b { display: block; font-size: 15px; color: var(--navy); }
+  .barcode { display: flex; height: 54px; margin-top: 14px; overflow: hidden; align-items: stretch; }
+  .barcode i { flex: none; background: #1a1f2b; }
+  .bar-text { font-family: var(--mono); font-size: 10.5px; letter-spacing: .3em; color: #555; text-align: center; margin-top: 4px; }
+
+  /* 8. 마무리 (뒤표지) */
+  .closing {
+    margin-top: 18px; padding: 32px 22px 30px; border-radius: 18px 10px 10px 18px; text-align: center; color: #efe3bd;
+    background-color: var(--green);
+    background-image: radial-gradient(ellipse at 70% 20%, rgba(255, 255, 255, .08), transparent 60%),
+                      radial-gradient(ellipse at 20% 100%, rgba(0, 0, 0, .3), transparent 60%);
+    box-shadow: inset -10px 0 14px -8px rgba(0, 0, 0, .5), 0 14px 30px rgba(40, 30, 10, .3);
+  }
+  .board {
+    background: #14181d; border-radius: 6px; padding: 12px 12px 10px; text-align: left;
+    font-family: var(--mono); color: #f7c948; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06);
+  }
+  .board .row { display: flex; justify-content: space-between; gap: 8px; font-size: 10px; color: #8d939c; letter-spacing: .12em; }
+  .board .row.v { font-size: 14px; color: #f7c948; letter-spacing: .04em; margin-top: 2px; }
+  .board .row.v span { font-family: var(--sans); font-weight: 700; }
+  .board .row.v .blink { color: #7be08f; font-family: var(--mono); font-weight: 500; animation: blink 1.4s steps(2, start) infinite; }
+  @keyframes blink { to { visibility: hidden; } }
+  .closing h2 { font-family: "Gowun Dodum", var(--sans); font-weight: 400; font-size: 26px; color: var(--gold-2); margin-top: 22px; line-height: 1.35; }
+  .closing p { font-size: 15px; margin-top: 10px; color: #dcd3b4; }
+  .copy-btn {
+    margin-top: 22px; width: 100%; padding: 15px; border: 0; border-radius: 10px; cursor: pointer;
+    background: linear-gradient(145deg, #f0d892, #c29d4c); color: #20302a; font: inherit; font-size: 16px; font-weight: 700;
+    box-shadow: 0 4px 0 #8e7032;
+  }
+  .copy-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #8e7032; }
+  footer { text-align: center; font-size: 12px; color: #6b6656; padding: 26px 0 40px; font-family: var(--mono); letter-spacing: .04em; }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 20px); opacity: 0;
+    background: rgba(20, 26, 38, .92); color: #fff; padding: 11px 18px; border-radius: 999px; font-size: 14px;
+    transition: opacity .25s, transform .25s; pointer-events: none; z-index: 30; max-width: calc(100vw - 32px); text-align: center;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal:not(.in) .stamp { opacity: 1; transform: none; transition: none; }
+    .reveal .stamp { transform: rotate(var(--r)); transition: none; opacity: .82; }
+    .board .row.v .blink { animation: none; }
+    #flown, #plane { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <!-- 1. 여권 표지 -->
+  <section class="cover">
+    <p class="country"><b>地球 여권</b>EARTH PASSPORT</p>
+    <svg class="emblem" viewBox="0 0 100 100" aria-hidden="true">
+      <defs>
+        <linearGradient id="foil" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#f6e2a2"/><stop offset=".5" stop-color="#b8913f"/><stop offset="1" stop-color="#ecd28a"/>
+        </linearGradient>
+      </defs>
+      <g fill="none" stroke="url(#foil)" stroke-width="2.2">
+        <circle cx="50" cy="50" r="46"/>
+        <circle cx="50" cy="50" r="40" stroke-width="1" stroke-dasharray="2 3"/>
+        <circle cx="50" cy="50" r="27"/>
+        <ellipse cx="50" cy="50" rx="12" ry="27"/>
+        <path d="M23 50h54M27 37h46M27 63h46"/>
+      </g>
+      <!-- 지구를 도는 작은 별 -->
+      <path fill="url(#foil)" d="M50 4l2.4 5.2 5.6.6-4.2 3.8 1.2 5.5L50 16.3 45 19.1l1.2-5.5-4.2-3.8 5.6-.6z"/>
+      <path fill="url(#foil)" d="M14 76c6 4 10 4 13 2-3 4-9 5-13-2zM86 76c-6 4-10 4-13 2 3 4 9 5 13-2z"/>
+    </svg>
+    <div class="cover-window"><div class="photo" data-photo="cover">메인 사진</div></div>
+    <h1><span data-bind="nick"></span>의 첫 여행</h1>
+    <p class="sub">백일잔치에 초대합니다</p>
+    <p class="date" data-bind="partyDateText"></p>
+    <span class="chip" aria-hidden="true"></span>
+  </section>
+
+  <!-- 2. 신원정보면 -->
+  <section class="page reveal">
+    <div class="page-head"><span>여권 · PASSPORT</span><span>TYPE P · KOR · YC0100</span></div>
+    <div class="bio">
+      <div>
+        <div class="photo" data-photo="intro">소개 사진</div>
+        <p class="sig"><span data-bind="babyName"></span><small>소지인 서명</small></p>
+      </div>
+      <div class="fields">
+        <div class="field full"><small>성명 <i>/ Name</i></small><b class="name" data-bind="babyFullName"></b></div>
+        <div class="field full"><small>한자 <i>/ Hanja</i></small><b class="hanja" data-bind="babyHanja"></b></div>
+        <div class="field full"><small>생년월일 <i>/ Date of birth</i></small><b data-bind="birthText"></b></div>
+        <div class="field full"><small>출생지 <i>/ Place of birth</i></small><b>엄마 아빠 품</b></div>
+        <div class="field"><small>키 <i>/ Height</i></small><b data-bind="birthHeight"></b></div>
+        <div class="field"><small>몸무게 <i>/ Weight</i></small><b data-bind="birthWeight"></b></div>
+        <div class="field"><small>발급일 <i>/ Issue</i></small><b data-bind="birthDot"></b></div>
+        <div class="field"><small>만료일 <i>/ Expiry</i></small><b>평생 유효</b></div>
+      </div>
+    </div>
+    <div class="purpose">
+      <small>여행 목적 · 이름에 담은 뜻</small>
+      <p data-bind="babyMeaning"></p>
+    </div>
+    <div class="mrz" id="mrz" aria-hidden="true"></div>
+  </section>
+
+  <!-- 3. 여행 안내문 -->
+  <section class="page notice reveal">
+    <div class="page-head"><span>NOTICE TO TRAVELERS</span><span>p.03</span></div>
+    <h2 class="sec-title"><small>GUARDIAN'S NOTE</small>여행 안내문</h2>
+    <p><span class="em" data-bind="birthDayText"></span>, 아주 작은 여행자 한 명이 지구에 도착했습니다. 여권도 짐도 없이, 엄마 아빠 품 하나만 들고서요.</p>
+    <p>처음 보는 빛, 처음 듣는 목소리, 처음 맡는 엄마 냄새까지. 하루하루가 낯선 여행지였을 텐데 <span data-bind="nick"></span>는 씩씩하게 모든 곳을 지나왔어요.</p>
+    <p>이제 첫 여행의 백 번째 기착지에 닿았습니다. 이 작은 여권에 사랑하는 분들의 축복 도장을 하나씩 받고 싶어요.</p>
+    <p>귀한 걸음으로 함께해 주시면 더없이 기쁘겠습니다.</p>
+    <div class="guardian">
+      <div class="who"><small>GUARDIANS · 보호자</small>아빠 <span data-bind="dad"></span> · 엄마 <span data-bind="mom"></span></div>
+      <div class="seal" aria-hidden="true">보호자<br>확인</div>
+    </div>
+  </section>
+
+  <!-- 4. 비행 현황 -->
+  <section class="flight reveal" id="flightSec">
+    <p class="label">FLIGHT STATUS · 비행 현황</p>
+    <p class="big">여행 D+<b id="daysAlive">0</b>일째</p>
+    <svg class="route-svg" viewBox="0 0 320 120" aria-hidden="true">
+      <defs>
+        <mask id="flownMask" maskUnits="userSpaceOnUse" x="-20" y="-20" width="360" height="160">
+          <path id="flown" d="M18 100 C 90 0, 230 0, 302 92" fill="none" stroke="#fff" stroke-width="8" style="transition: stroke-dashoffset 2.2s ease-out"/>
+        </mask>
+      </defs>
+      <path id="routePath" d="M18 100 C 90 0, 230 0, 302 92" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="2" stroke-dasharray="2 6" stroke-linecap="round"/>
+      <path d="M18 100 C 90 0, 230 0, 302 92" fill="none" stroke="#f0d892" stroke-width="2.6" stroke-dasharray="2 6" stroke-linecap="round" mask="url(#flownMask)"/>
+      <circle cx="18" cy="100" r="5" fill="#f0d892"/>
+      <circle cx="302" cy="92" r="9" fill="none" stroke="#f0d892" stroke-width="1.5"/>
+      <circle cx="302" cy="92" r="4" fill="#f0d892"/>
+      <g id="plane" style="transition: transform 2.2s ease-out">
+        <path d="M-11 -1.6 L-2 -1.6 L4 -9 L7 -9 L4 -1.6 L10 -1.6 Q13 0 10 1.6 L4 1.6 L7 9 L4 9 L-2 1.6 L-11 1.6 L-13 5 L-15 5 L-13.5 0 L-15 -5 L-13 -5 Z" fill="#fff"/>
+      </g>
+    </svg>
+    <div class="route-ends">
+      <div><b>출발 · 엄마 아빠 품</b><span data-bind="birthShort"></span></div>
+      <div><b>100일 공항</b><span data-bind="day100Short"></span></div>
+    </div>
+    <p class="progress-line" id="progressLine"></p>
+    <p class="dday-pill" id="ddayText"></p>
+  </section>
+
+  <!-- 5. 사증 (성장 기록) -->
+  <section class="page reveal">
+    <div class="page-head"><span>VISAS · 사증</span><span>ENTRY STAMPS</span></div>
+    <h2 class="sec-title"><small>MILESTONES</small>지나온 여행지</h2>
+    <div class="visa" id="visa"></div>
+  </section>
+
+  <!-- 6. 여행 앨범 -->
+  <section class="page reveal">
+    <div class="page-head"><span>TRAVEL ALBUM</span><span>POSTCARDS</span></div>
+    <h2 class="sec-title"><small>SNAPSHOTS</small>여행 앨범</h2>
+    <div class="album" id="gallery"></div>
+    <p class="album-hint">사진을 누르면 크게 볼 수 있어요</p>
+  </section>
+
+  <!-- 7. 탑승권 (일정 · 장소) -->
+  <section class="reveal">
+    <div class="bp-wrap">
+      <div class="bp-main">
+        <div class="bp-band"><b>✈ EARTH AIR</b><span>탑승권 · BOARDING PASS</span></div>
+        <div class="bp-body">
+          <div class="bp-route">
+            <div><span class="code">HOME</span><small>엄마 아빠 품</small></div>
+            <span class="plane" aria-hidden="true">✈</span>
+            <div><span class="code">D100</span><small>백일잔치</small></div>
+          </div>
+          <div class="bp-grid">
+            <div><small>FLIGHT <i>편명</i></small><b>YC100</b></div>
+            <div><small>DATE <i>날짜</i></small><b data-bind="partyShort"></b></div>
+            <div><small>BOARDING <i>탑승 시각</i></small><b data-bind="startText"></b></div>
+            <div><small>GATE <i>게이트</i></small><b data-bind="placeName"></b></div>
+          </div>
+          <p class="bp-sub">ITINERARY <i>· 탑승 일정</i></p>
+          <ul class="schedule" id="schedule"></ul>
+          <p class="bp-sub">GATE INFO <i>· 게이트 안내</i></p>
+          <div class="gate">
+            <p class="pname" data-bind="placeName"></p>
+            <p class="paddr" data-bind="placeAddr"></p>
+            <div class="maps">
+              <a id="mapNaver" target="_blank" rel="noopener">네이버지도</a>
+              <a id="mapKakao" target="_blank" rel="noopener">카카오맵</a>
+              <a id="mapTmap">티맵</a>
+            </div>
+            <p class="pnote" data-bind="placeNote"></p>
+          </div>
+        </div>
+      </div>
+      <div class="bp-stub">
+        <div class="stub-row">
+          <div><small class="bp-sub" style="margin:0">PASSENGER <i>탑승객</i></small><b data-bind="babyFullName"></b></div>
+          <div><small class="bp-sub" style="margin:0">SEAT <i>좌석</i></small><b>엄마 품 1A</b></div>
+        </div>
+        <div class="barcode" id="barcode" aria-hidden="true"></div>
+        <p class="bar-text" id="barText"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. 마무리 -->
+  <section class="closing reveal">
+    <div class="board" aria-label="다음 여행지 안내">
+      <div class="row"><span>NEXT DESTINATION</span><span>STATUS</span></div>
+      <div class="row v"><span>첫 돌</span><span class="blink">ON TIME</span></div>
+      <div class="row" style="margin-top:6px"><span>YC365</span><span data-bind="firstBdText"></span></div>
+    </div>
+    <h2>다음 여행지: 첫 돌 ✈</h2>
+    <p>백 일 동안의 첫 여행을 함께 응원해 주셔서 감사합니다.<br>다음 여행지에서도 꼭 다시 만나요.</p>
+    <button class="copy-btn" id="copyLink" type="button">🔗 링크 복사하기</button>
+  </section>
+
+  <footer>© <span data-bind="familyName"></span> 가족</footer>
+</main>
+
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="사진 크게 보기">
+  <div class="lb-frame">
+    <div class="photo" id="lbPhoto"></div>
+    <p class="lb-count" id="lbCount"></p>
+  </div>
+  <button class="lb-close" type="button" aria-label="닫기">×</button>
+  <button class="lb-prev" type="button" aria-label="이전 사진">‹</button>
+  <button class="lb-next" type="button" aria-label="다음 사진">›</button>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ===== 여기만 수정하면 됩니다 (index.html과 같은 항목) ===== */
+const CONFIG = {
+  shareUrl: "https://qwekl.github.io/100dayevent/",   // 링크 복사에 쓰이는 주소
+  babyName: "유찬",
+  babyFullName: "김유찬",
+  babyHanja: "金 裕 燦 · 넉넉할 유, 빛날 찬",
+  babyMeaning: "풍요로운 마음과 넉넉한 인품으로\n세상을 밝게 빛내는 사람",
+  birthDate: "2026-07-08",          // 태어난 날 (이 날을 1일째로 계산)
+  birthHeight: "52cm",
+  birthWeight: "3.37kg",
+  dad: "김정민",
+  mom: "김여울",
+  party: { date: "2026-10-17", start: "11:00" },
+  schedule: [
+    { time: "11:00", title: "백일상 · 가족사진", place: "유찬이네 하우스" },
+    { time: "13:00", title: "점심 식사", place: "모담 다산" },
+  ],
+  // 아래 장소 정보는 식당(13시) 기준입니다.
+  placeName: "모담 다산",
+  placeAddr: "경기 남양주시 다산중앙로 153 다산 자이아이비플레이스 상업시설 2층 208, 209호",
+  naverPlaceUrl: "https://map.naver.com/p/entry/place/1326985338",
+  kakaoPlaceUrl: "https://place.map.kakao.com/433757592",
+  placeLatLng: { lat: 37.62663898, lng: 127.15041135 },   // 티맵 길안내 목적지 좌표
+  placeNote: "",
+  // 사진: images 폴더에 넣고 경로를 적어주세요. 비워두면 안내 칸이 표시됩니다.
+  photos: {
+    cover: "",
+    intro: "",
+    timeline: ["", "", ""],
+    gallery: ["", "", "", "", "", "", "", "", ""],
+  },
+  timeline: [
+    { title: "세상에 온 날", day: 1,   text: "3.37kg의 작은 몸으로 우리에게 와주었어요." },
+    { title: "50일",        day: 50,  text: "처음으로 눈을 맞추고 방긋 웃어주었어요." },
+    { title: "100일",       day: 100, text: "고개를 번쩍 들고 옹알이도 제법 늘었어요." },
+  ],
+};
+/* ========================================================= */
+
+const DAY = 86400000;
+const WEEK = ["일", "월", "화", "수", "목", "금", "토"];
+const parseDate = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+const addDays = (date, n) => new Date(date.getFullYear(), date.getMonth(), date.getDate() + n);
+const pad2 = n => String(n).padStart(2, "0");
+const dot = d => `${d.getFullYear()}.${pad2(d.getMonth() + 1)}.${pad2(d.getDate())}`;
+const birth = parseDate(CONFIG.birthDate);
+const party = parseDate(CONFIG.party.date);
+const day100 = addDays(birth, 99);
+const firstBd = new Date(birth.getFullYear() + 1, birth.getMonth(), birth.getDate());
+
+function formatTime(hhmm) {
+  const [h, m] = hhmm.split(":").map(Number);
+  const label = h < 12 ? "오전" : h === 12 ? "낮" : "오후";
+  const hour = h > 12 ? h - 12 : h;
+  return `${label} ${hour}시${m ? ` ${m}분` : ""}`;
+}
+
+// 받침이 있으면 '이'를 붙여 부르는 이름 (유찬 → 유찬이)
+const hasBatchim = s => { const c = s.charCodeAt(s.length - 1) - 0xac00; return c >= 0 && c <= 11171 && c % 28 !== 0; };
+const nick = CONFIG.babyName + (hasBatchim(CONFIG.babyName) ? "이" : "");
+
+const partyDay = `${party.getFullYear()}년 ${party.getMonth() + 1}월 ${party.getDate()}일 ${WEEK[party.getDay()]}요일`;
+const derived = {
+  ...CONFIG,
+  nick,
+  familyName: `${nick}네`,
+  partyDateText: `${partyDay} ${formatTime(CONFIG.party.start)}`,
+  partyShort: `${party.getMonth() + 1}.${party.getDate()} (${WEEK[party.getDay()]})`,
+  startText: formatTime(CONFIG.party.start),
+  birthText: `${birth.getFullYear()}년 ${birth.getMonth() + 1}월 ${birth.getDate()}일 (${WEEK[birth.getDay()]})`,
+  birthDayText: `${birth.getFullYear()}년 ${birth.getMonth() + 1}월 ${birth.getDate()}일`,
+  birthDot: dot(birth),
+  birthShort: `${birth.getMonth() + 1}.${birth.getDate()}`,
+  day100Short: `${day100.getMonth() + 1}.${day100.getDate()}`,
+  firstBdText: dot(firstBd),
+};
+document.querySelectorAll("[data-bind]").forEach(el => { el.textContent = derived[el.dataset.bind] ?? ""; });
+
+function fillPhoto(el, src, alt) {
+  if (!el || !src) return;
+  el.textContent = "";
+  const img = new Image();
+  img.src = src; img.alt = alt; img.loading = "lazy";
+  el.appendChild(img);
+}
+fillPhoto(document.querySelector('[data-photo="cover"]'), CONFIG.photos.cover, "메인 사진");
+fillPhoto(document.querySelector('[data-photo="intro"]'), CONFIG.photos.intro, "소개 사진");
+
+// 기계판독영역(MRZ) — 장식용 로마자 표기 + ICAO 체크숫자
+const SURNAME = { 김: "KIM", 이: "LEE", 박: "PARK", 최: "CHOI", 정: "JUNG", 강: "KANG", 조: "CHO", 윤: "YOON", 장: "JANG", 임: "LIM", 한: "HAN", 오: "OH", 신: "SHIN", 서: "SEO", 권: "KWON", 황: "HWANG", 송: "SONG", 류: "RYU", 유: "YOO" };
+const R_INI = ["G","KK","N","D","TT","R","M","B","PP","S","SS","","J","JJ","CH","K","T","P","H"];
+const R_MED = ["A","AE","YA","YAE","EO","E","YEO","YE","O","WA","WAE","OE","YO","U","WO","WE","WI","YU","EU","UI","I"];
+const R_FIN = ["","K","K","K","N","N","N","T","L","K","M","L","L","L","P","L","M","P","P","T","T","NG","T","T","K","T","P","T"];
+const romanize = s => [...s].map(ch => {
+  const c = ch.charCodeAt(0) - 0xac00;
+  if (c < 0 || c > 11171) return /[A-Za-z]/.test(ch) ? ch.toUpperCase() : "";
+  return R_INI[Math.floor(c / 588)] + R_MED[Math.floor((c % 588) / 28)] + R_FIN[c % 28];
+}).join("");
+const sur = SURNAME[CONFIG.babyFullName[0]] || romanize(CONFIG.babyFullName[0]);
+const given = romanize(CONFIG.babyFullName.slice(1)) || romanize(CONFIG.babyName);
+const fit = (s, n) => (s + "<".repeat(n)).slice(0, n);
+const checkDigit = s => [...s].reduce((sum, ch, i) => {
+  const v = /\d/.test(ch) ? +ch : /[A-Z]/.test(ch) ? ch.charCodeAt(0) - 55 : 0;
+  return sum + v * [7, 3, 1][i % 3];
+}, 0) % 10;
+const docNo = "YC0100000";
+const dob = `${String(birth.getFullYear()).slice(2)}${pad2(birth.getMonth() + 1)}${pad2(birth.getDate())}`;
+const opt = fit("BAEKIL<D100", 14);
+const body2 = `${docNo}${checkDigit(docNo)}KOR${dob}${checkDigit(dob)}<<<<<<<<${opt}${checkDigit(opt)}`;
+const mrz1 = fit(`P<KOR${sur}<<${given}`, 44);
+const mrz2 = fit(body2 + checkDigit(body2), 44);
+document.getElementById("mrz").textContent = `${mrz1}\n${mrz2}`;
+
+// 여행 D+N, D-day
+const today = new Date(); today.setHours(0, 0, 0, 0);
+const daysAlive = Math.max(Math.round((today - birth) / DAY) + 1, 0);
+const dday = Math.round((party - today) / DAY);
+document.getElementById("ddayText").textContent =
+  dday > 0 ? `백일잔치까지 D-${dday}` : dday === 0 ? "오늘은 백일잔치 날이에요 🎉" :
+  `${day100.getMonth() + 1}월 ${day100.getDate()}일, 백일을 맞았어요`;
+document.getElementById("progressLine").textContent =
+  daysAlive >= 100 ? `100 / 100 · 100일 공항 도착 완료` : `${daysAlive} / 100 · 100일 공항까지 ${100 - daysAlive}일 남음`;
+
+// 비행 경로: 지나온 만큼 점선 밝히고 비행기 이동
+const route = document.getElementById("routePath");
+const flown = document.getElementById("flown");
+const plane = document.getElementById("plane");
+const routeLen = route.getTotalLength();
+const progress = Math.min(daysAlive, 100) / 100;
+flown.style.strokeDasharray = routeLen;
+flown.style.strokeDashoffset = routeLen;
+function placePlane(p) {
+  const at = Math.max(Math.min(p * routeLen, routeLen - 1), 0);
+  const a = route.getPointAtLength(at), b = route.getPointAtLength(at + 1);
+  const deg = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+  plane.style.transform = `translate(${a.x}px, ${a.y}px) rotate(${deg}deg)`;
+}
+placePlane(0);
+let flew = false;
+function fly() {
+  flew = true;
+  const countEl = document.getElementById("daysAlive");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  flown.style.strokeDashoffset = routeLen * (1 - progress);
+  if (reduce) { placePlane(progress); countEl.textContent = daysAlive; return; }
+  // 비행기는 곡선을 따라 프레임마다 이동
+  const t0 = performance.now(), dur = 2200;
+  const step = now => {
+    const t = Math.min((now - t0) / dur, 1), e = 1 - Math.pow(1 - t, 3);
+    placePlane(progress * e);
+    countEl.textContent = Math.round(daysAlive * e);
+    if (t < 1) requestAnimationFrame(step);
+  };
+  plane.style.transition = "none";
+  requestAnimationFrame(step);
+}
+
+// 사증 스탬프 (성장 기록)
+const STAMP_COLORS = ["var(--red)", "var(--blue)", "var(--stamp-green)"];
+const STAMP_SHAPES = ["", "rect", "oval"];
+const STAMP_ROT = [-14, 9, -6];
+const visa = document.getElementById("visa");
+CONFIG.timeline.forEach((item, i) => {
+  const d = addDays(birth, item.day - 1);
+  const div = document.createElement("div");
+  div.className = "visa-item";
+  div.innerHTML = `<div class="shot"><div class="photo"></div>
+    <div class="stamp"><span class="s-top"></span><span class="s-title"></span><span class="s-date"></span></div></div>
+    <h3></h3><p class="when"></p><p class="text"></p>`;
+  div.querySelector(".photo").textContent = `사진 ${i + 1}`;
+  div.querySelector("h3").textContent = item.title;
+  div.querySelector(".when").textContent = `${dot(d)} (${WEEK[d.getDay()]}) · DAY ${item.day}`;
+  div.querySelector(".text").textContent = item.text;
+  const st = div.querySelector(".stamp");
+  if (STAMP_SHAPES[i % 3]) st.classList.add(STAMP_SHAPES[i % 3]);
+  st.style.setProperty("--c", STAMP_COLORS[i % 3]);
+  st.style.setProperty("--r", `${STAMP_ROT[i % 3]}deg`);
+  st.querySelector(".s-top").textContent = i === 0 ? "ARRIVED" : `DAY ${item.day}`;
+  st.querySelector(".s-title").textContent = item.title;
+  st.querySelector(".s-date").textContent = dot(d);
+  fillPhoto(div.querySelector(".photo"), CONFIG.photos.timeline[i], item.title);
+  div.classList.add("reveal");
+  visa.appendChild(div);
+});
+
+// 여행 앨범 + 라이트박스
+const gallery = document.getElementById("gallery");
+const lb = document.getElementById("lightbox");
+const lbPhoto = document.getElementById("lbPhoto");
+const TILT = [-2, 1.5, -1, 1.2, -1.6, 2, -1.2, 1, -2];
+let current = 0;
+CONFIG.photos.gallery.forEach((src, i) => {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "card-shot";
+  btn.style.setProperty("--r", `${TILT[i % TILT.length]}deg`);
+  btn.setAttribute("aria-label", `사진 ${i + 1} 크게 보기`);
+  const ph = document.createElement("div");
+  ph.className = "photo";
+  ph.textContent = `사진 ${i + 1}`;
+  fillPhoto(ph, src, `사진 ${i + 1}`);
+  const pm = document.createElement("span");
+  pm.className = "pm";
+  pm.textContent = `No.${pad2(i + 1)}`;
+  btn.append(ph, pm);
+  btn.addEventListener("click", () => openLb(i));
+  gallery.appendChild(btn);
+});
+function showLb(i) {
+  const list = CONFIG.photos.gallery;
+  current = (i + list.length) % list.length;
+  lbPhoto.textContent = `사진 ${current + 1}`;
+  fillPhoto(lbPhoto, list[current], `사진 ${current + 1}`);
+  document.getElementById("lbCount").textContent = `${current + 1} / ${list.length}`;
+}
+function openLb(i) { showLb(i); lb.classList.add("open"); lb.setAttribute("aria-hidden", "false"); }
+function closeLb() { lb.classList.remove("open"); lb.setAttribute("aria-hidden", "true"); }
+lb.querySelector(".lb-close").onclick = closeLb;
+lb.querySelector(".lb-prev").onclick = () => showLb(current - 1);
+lb.querySelector(".lb-next").onclick = () => showLb(current + 1);
+lb.addEventListener("click", e => { if (e.target === lb) closeLb(); });
+document.addEventListener("keydown", e => {
+  if (!lb.classList.contains("open")) return;
+  if (e.key === "Escape") closeLb();
+  if (e.key === "ArrowLeft") showLb(current - 1);
+  if (e.key === "ArrowRight") showLb(current + 1);
+});
+let touchX = null;
+lb.addEventListener("touchstart", e => { touchX = e.touches[0].clientX; }, { passive: true });
+lb.addEventListener("touchend", e => {
+  if (touchX === null) return;
+  const dx = e.changedTouches[0].clientX - touchX;
+  if (Math.abs(dx) > 40) showLb(current + (dx < 0 ? 1 : -1));
+  touchX = null;
+});
+
+// 탑승 일정
+const scheduleEl = document.getElementById("schedule");
+CONFIG.schedule.forEach(s => {
+  const li = document.createElement("li");
+  li.innerHTML = `<span class="time"></span><span><b></b><small></small></span>`;
+  li.querySelector(".time").textContent = formatTime(s.time);
+  li.querySelector("b").textContent = s.title;
+  li.querySelector("small").textContent = `게이트 · ${s.place}`;
+  scheduleEl.appendChild(li);
+});
+
+// 지도 링크
+const q = encodeURIComponent(CONFIG.placeAddr);
+document.getElementById("mapNaver").href = CONFIG.naverPlaceUrl || `https://map.naver.com/p/search/${q}`;
+document.getElementById("mapKakao").href = CONFIG.kakaoPlaceUrl || `https://map.kakao.com/?q=${q}`;
+// 티맵은 앱으로 바로 길안내를 엽니다 (폰에 티맵 앱 필요)
+document.getElementById("mapTmap").href = `tmap://route?goalname=${encodeURIComponent(CONFIG.placeName)}` +
+  `&goalx=${CONFIG.placeLatLng.lng}&goaly=${CONFIG.placeLatLng.lat}`;
+
+// 바코드: 편명·이름으로 만든 고정 패턴
+const barcode = document.getElementById("barcode");
+const seedStr = `YC100${mrz1}${dob}`;
+let seed = [...seedStr].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
+const rand = () => (seed = (seed * 1103515245 + 12345) >>> 0) / 4294967296;
+for (let i = 0; i < 120; i++) {
+  const bar = document.createElement("i");
+  bar.style.width = `${1 + Math.floor(rand() * 3)}px`;
+  bar.style.marginRight = `${1 + Math.floor(rand() * 3)}px`;
+  barcode.appendChild(bar);
+}
+document.getElementById("barText").textContent = `YC100 ${sur}/${given} ${dob}`;
+
+// 링크 복사
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(toast.timer);
+  toast.timer = setTimeout(() => t.classList.remove("show"), 1800);
+}
+document.getElementById("copyLink").addEventListener("click", async () => {
+  try { await navigator.clipboard.writeText(CONFIG.shareUrl); toast("링크를 복사했어요"); }
+  catch { toast("복사에 실패했어요. 주소창에서 복사해 주세요"); }
+});
+
+// 스크롤 등장 + 비행 시작
+const flightSec = document.getElementById("flightSec");
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add("in");
+    if (!flew && e.target === flightSec) fly();
+    io.unobserve(e.target);
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+</script>
+</body>
+</html>

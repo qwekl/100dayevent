@@ -4,299 +4,525 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1d2b53">
 <title>유찬이의 백일잔치</title>
-<!-- 카카오톡 링크 미리보기 (배포 후 실제 주소/이미지로 교체) -->
 <meta property="og:title" content="유찬이의 백일잔치에 초대합니다">
 <meta property="og:description" content="2026년 10월 17일 토요일 오전 11시">
 <meta property="og:image" content="https://example.com/baekil/images/og.jpg">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DotGothic16&family=Jua&family=Do+Hyeon&display=swap" rel="stylesheet">
 <style>
   :root {
-    --hanji: #f6f0e4;
-    --hanji-dark: #ece3d1;
-    --ink: #3b2f28;
-    --ink-soft: #7a6a5d;
-    --line: #d8cbb3;
-    /* 색동 */
-    --sd-red: #c8453b;
-    --sd-yellow: #e5b54a;
-    --sd-green: #4f8a5b;
-    --sd-blue: #3c5f9c;
-    --sd-pink: #d9808c;
-    --sd-white: #fbf8f1;
+    --ink: #1a1c2c;
+    --navy: #1d2b53;
+    --navy-2: #29366f;
+    --deep: #0f1630;
+    --cream: #fff4dc;
+    --cream-2: #f3e2bd;
+    --pink: #ff8fab;
+    --pink-d: #e0607e;
+    --blue: #8fd3ff;
+    --blue-d: #4b9fd6;
+    --yellow: #ffd93d;
+    --yellow-d: #d9a514;
+    --green: #7bd389;
+    --muted: #6b6478;
+    --en: "Press Start 2P", "Jua", monospace;
+    --num: "DotGothic16", "Jua", monospace;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { -webkit-text-size-adjust: 100%; }
   body {
-    background: #e6dcc8;
-    color: var(--ink);
-    font-family: "Nanum Myeongjo", serif;
+    background: var(--deep);
+    color: var(--cream);
+    font-family: "Jua", sans-serif;
     font-size: 17px;
-    line-height: 1.8;
+    line-height: 1.7;
     word-break: keep-all;
+    overflow-wrap: break-word;
   }
+  button { font-family: inherit; }
   .card {
-    max-width: 480px;
-    margin: 0 auto;
-    min-height: 100vh;
-    background-color: var(--hanji);
-    /* 한지 섬유 질감 */
+    position: relative; max-width: 480px; margin: 0 auto; min-height: 100vh; overflow: hidden;
+    background-color: var(--navy);
+    /* 은은한 주사선 + 픽셀 격자 */
     background-image:
-      radial-gradient(rgba(120, 95, 60, .05) 1px, transparent 1px),
-      radial-gradient(rgba(120, 95, 60, .04) 1px, transparent 1px);
-    background-size: 7px 7px, 11px 11px;
-    background-position: 0 0, 3px 5px;
-    box-shadow: 0 0 40px rgba(60, 40, 20, .15);
-    overflow: hidden;
+      repeating-linear-gradient(0deg, rgba(0, 0, 0, .12) 0 2px, transparent 2px 4px);
+  }
+  .sky { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+  .sky i { position: absolute; width: 4px; height: 4px; background: var(--cream); animation: blink var(--d, 2s) steps(2, jump-none) infinite; animation-delay: var(--delay, 0s); }
+  @keyframes blink { 0% { opacity: 1; } 100% { opacity: .15; } }
+
+  section { position: relative; z-index: 1; padding: 64px 16px; text-align: center; }
+  .en { font-family: var(--en); }
+  .num { font-family: var(--num); }
+  .stage { font-family: var(--en); font-size: 10px; color: var(--yellow); letter-spacing: .1em; }
+  h2 {
+    font-family: "Do Hyeon", "Jua", sans-serif; font-weight: 400; font-size: 30px; line-height: 1.3;
+    margin: 12px 0 30px; color: var(--cream); text-shadow: 3px 3px 0 var(--ink);
   }
 
-  /* 색동 띠 */
-  .saekdong {
-    height: 14px;
-    background: linear-gradient(90deg,
-      var(--sd-red) 0 16.6%, var(--sd-yellow) 16.6% 33.3%, var(--sd-green) 33.3% 50%,
-      var(--sd-blue) 50% 66.6%, var(--sd-pink) 66.6% 83.3%, var(--sd-white) 83.3% 100%);
+  /* 픽셀 테두리 상자 (box-shadow 계단 기법) */
+  .pbox {
+    position: relative; background: var(--cream); color: var(--ink); margin: 6px;
+    box-shadow:
+      0 -6px 0 0 var(--ink), 0 6px 0 0 var(--ink), -6px 0 0 0 var(--ink), 6px 0 0 0 var(--ink),
+      inset -4px -4px 0 0 var(--cream-2), inset 4px 4px 0 0 #fff;
   }
-  .saekdong.thin { height: 6px; width: 120px; margin: 0 auto; border-radius: 3px; }
-
-  section { padding: 64px 24px; text-align: center; }
-  section + section { border-top: 1px dashed var(--line); }
-
-  .brush { font-family: "Nanum Brush Script", cursive; }
-  .eyebrow {
-    font-size: 13px; letter-spacing: .3em; color: var(--sd-red); margin-bottom: 8px;
+  .drop { filter: drop-shadow(6px 6px 0 rgba(0, 0, 0, .35)); }
+  .win-title {
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--ink); color: var(--cream); font-family: var(--en); font-size: 10px;
+    padding: 8px 12px; letter-spacing: .08em;
   }
-  h2 { font-size: 24px; font-weight: 800; margin-bottom: 24px; }
 
-  /* 사진 자리 (이미지가 없으면 안내 문구 표시) */
+  /* 픽셀 버튼 */
+  .pbtn {
+    display: block; text-align: center; text-decoration: none; cursor: pointer; border: 0;
+    background: var(--yellow); color: var(--ink); font-family: "Jua", sans-serif; font-size: 16px; line-height: 1.3;
+    padding: 12px 4px; margin: 4px;
+    box-shadow:
+      0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink), -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink),
+      inset -4px -4px 0 0 var(--yellow-d), inset 4px 4px 0 0 #fff3a8;
+  }
+  .pbtn:active { transform: translateY(2px); box-shadow:
+      0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink), -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink),
+      inset 4px 4px 0 0 var(--yellow-d); }
+  .pbtn.blue { background: var(--blue); box-shadow:
+      0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink), -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink),
+      inset -4px -4px 0 0 var(--blue-d), inset 4px 4px 0 0 #d7f0ff; }
+  .pbtn.pink { background: var(--pink); box-shadow:
+      0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink), -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink),
+      inset -4px -4px 0 0 var(--pink-d), inset 4px 4px 0 0 #ffd0dc; }
+  .pbtn:focus-visible, .press:focus-visible { outline: 3px dashed var(--yellow); outline-offset: 8px; }
+
+  /* 픽셀 하트·별 (3px 단위) */
+  .px-heart, .px-star { display: inline-block; position: relative; vertical-align: middle; }
+  .px-heart { width: 21px; height: 18px; color: var(--pink); }
+  .px-star { width: 21px; height: 21px; color: var(--yellow); }
+  .px-heart::before, .px-star::before { content: ""; position: absolute; left: 0; top: 0; width: 3px; height: 3px; }
+  .px-heart::before { box-shadow:
+      3px 0, 6px 0, 12px 0, 15px 0,
+      0 3px, 3px 3px, 6px 3px, 9px 3px, 12px 3px, 15px 3px, 18px 3px,
+      0 6px, 3px 6px, 6px 6px, 9px 6px, 12px 6px, 15px 6px, 18px 6px,
+      3px 9px, 6px 9px, 9px 9px, 12px 9px, 15px 9px,
+      6px 12px, 9px 12px, 12px 12px,
+      9px 15px; }
+  .px-star::before { box-shadow:
+      9px 0,
+      6px 3px, 9px 3px, 12px 3px,
+      0 6px, 3px 6px, 6px 6px, 9px 6px, 12px 6px, 15px 6px, 18px 6px,
+      3px 9px, 6px 9px, 9px 9px, 12px 9px, 15px 9px,
+      3px 12px, 6px 12px, 9px 12px, 12px 12px, 15px 12px,
+      3px 15px, 6px 15px, 12px 15px, 15px 15px,
+      0 18px, 18px 18px; }
+  .px-heart.empty { color: rgba(255, 255, 255, .2); }
+
   .photo {
-    position: relative;
-    background: var(--hanji-dark);
-    border: 1px solid var(--line);
-    display: flex; align-items: center; justify-content: center;
-    color: var(--ink-soft); font-size: 13px;
-    overflow: hidden;
+    position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;
+    background-color: #c9d6e8; color: #4a5470; font-size: 15px;
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, .35) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, .35) 75%),
+                      linear-gradient(45deg, rgba(255, 255, 255, .35) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, .35) 75%);
+    background-size: 16px 16px; background-position: 0 0, 8px 8px;
   }
-  .photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; image-rendering: auto; }
 
-  /* 1. 커버 */
-  .cover { padding: 48px 24px 56px; }
-  .cover .title { font-size: 64px; line-height: 1.1; color: var(--sd-red); margin: 12px 0 4px; }
-  .cover .name { font-size: 22px; font-weight: 700; }
-  .cover .photo {
-    width: 82%; aspect-ratio: 3 / 4; margin: 28px auto;
-    border-radius: 999px 999px 12px 12px;
-    border: 6px solid var(--sd-white);
-    box-shadow: 0 0 0 1px var(--line), 0 12px 30px rgba(60, 40, 20, .15);
+  /* 1. 타이틀 화면 */
+  .cover { padding-top: 22px; padding-bottom: 0; }
+  .hud {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--en); font-size: 10px; color: var(--cream);
   }
-  .cover .date { font-size: 16px; color: var(--ink-soft); }
+  .hud .hearts { display: flex; gap: 4px; }
+  .hud b { color: var(--yellow); font-weight: 400; }
+  .logo-sub { margin-top: 34px; font-family: var(--en); font-size: 10px; color: var(--blue); letter-spacing: .12em; }
+  .logo {
+    font-family: "Do Hyeon", sans-serif; font-weight: 400; font-size: 54px; line-height: 1.15; margin-top: 10px;
+    color: var(--yellow);
+    text-shadow: 3px 0 0 var(--ink), -3px 0 0 var(--ink), 0 3px 0 var(--ink), 0 -3px 0 var(--ink),
+                 3px 3px 0 var(--ink), -3px -3px 0 var(--ink), 3px -3px 0 var(--ink), -3px 3px 0 var(--ink),
+                 6px 6px 0 var(--pink-d), 9px 9px 0 var(--ink);
+  }
+  .logo-ribbon {
+    display: inline-block; margin-top: 14px; background: var(--pink); color: var(--ink); padding: 3px 14px;
+    font-size: 16px;
+    box-shadow: 0 -3px 0 0 var(--ink), 0 3px 0 0 var(--ink), -3px 0 0 0 var(--ink), 3px 0 0 0 var(--ink);
+  }
+  .frame-wrap { position: relative; width: 74%; margin: 40px auto 0; }
+  .frame { padding: 10px; background: var(--blue); }
+  .frame .photo { aspect-ratio: 1; }
+  .frame-wrap .px-star { position: absolute; transform: scale(1.4); }
+  .frame-wrap .s1 { left: -30px; top: 10%; }
+  .frame-wrap .s2 { right: -30px; top: 48%; color: var(--pink); }
+  .frame-wrap .s3 { left: -18px; bottom: -14px; color: var(--blue); transform: scale(1); }
+  .lv-badge {
+    position: absolute; right: -10px; top: -16px; z-index: 2;
+    background: var(--pink); color: var(--ink); font-family: var(--en); font-size: 10px; padding: 8px 8px 6px;
+    box-shadow: 0 -3px 0 0 var(--ink), 0 3px 0 0 var(--ink), -3px 0 0 0 var(--ink), 3px 0 0 0 var(--ink);
+    transform: rotate(6deg);
+  }
+  .cover .date {
+    margin-top: 34px; font-size: 18px; color: var(--cream);
+  }
+  .cover .date small { display: block; font-family: var(--en); font-size: 9px; color: var(--blue); letter-spacing: .1em; margin-bottom: 6px; }
+  .press {
+    margin: 30px auto 0; display: inline-block; background: none; border: 0; cursor: pointer;
+    font-family: var(--en); font-size: 14px; color: var(--yellow); padding: 12px 8px; line-height: 1.6;
+    animation: press 1s steps(1, end) infinite;
+  }
+  .press small { display: block; font-family: "Jua", sans-serif; font-size: 15px; color: var(--cream); margin-top: 6px; }
+  @keyframes press { 50% { opacity: 0; } }
+  .ground {
+    margin-top: 40px; height: 36px;
+    background:
+      linear-gradient(var(--green) 0 10px, transparent 10px),
+      repeating-linear-gradient(90deg, #8b5a2b 0 16px, #a86d36 16px 32px);
+    box-shadow: inset 0 4px 0 0 #b7f5c0, 0 -4px 0 0 var(--ink);
+  }
 
-  /* 2. 인사말 */
-  .greeting p { margin-bottom: 20px; }
-  .greeting .parents { margin-top: 28px; font-weight: 700; }
-  .greeting .parents span { color: var(--ink-soft); font-weight: 400; font-size: 14px; }
+  /* 2. NPC 대화창 */
+  .npc { display: flex; align-items: flex-end; gap: 10px; margin: 0 6px 18px; }
+  .npc-face {
+    width: 64px; height: 64px; flex: none; background: var(--blue); display: flex; align-items: center; justify-content: center;
+    font-size: 34px; line-height: 1;
+    box-shadow: 0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink), -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink), inset -4px -4px 0 0 var(--blue-d);
+  }
+  .npc-face.mom { background: var(--pink); box-shadow: 0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink), -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink), inset -4px -4px 0 0 var(--pink-d); }
+  .npc-tag {
+    background: var(--ink); color: var(--yellow); font-size: 16px; padding: 4px 12px; margin-left: 4px;
+  }
+  .dialog {
+    position: relative; text-align: left; padding: 24px 22px 40px; cursor: pointer;
+    background: var(--ink); color: var(--cream);
+    box-shadow:
+      0 -6px 0 0 var(--cream), 0 6px 0 0 var(--cream), -6px 0 0 0 var(--cream), 6px 0 0 0 var(--cream),
+      0 -12px 0 0 var(--ink), 0 12px 0 0 var(--ink), -12px 0 0 0 var(--ink), 12px 0 0 0 var(--ink),
+      -6px -6px 0 0 var(--ink), 6px -6px 0 0 var(--ink), -6px 6px 0 0 var(--ink), 6px 6px 0 0 var(--ink);
+    margin: 12px;
+  }
+  .dialog p { margin-bottom: 14px; font-size: 18px; line-height: 1.75; }
+  .dialog .tw-rest { visibility: hidden; }
+  .dialog .sign { margin: 22px 0 0; text-align: right; color: var(--yellow); font-size: 18px; }
+  .dialog .next {
+    position: absolute; right: 18px; bottom: 12px; color: var(--yellow); font-size: 16px;
+    animation: bob .8s steps(2, jump-none) infinite; opacity: 0;
+  }
+  .dialog.done .next { opacity: 1; }
+  @keyframes bob { 0% { transform: translateY(0); } 100% { transform: translateY(5px); } }
+  .skip-hint { margin-top: 18px; font-size: 15px; color: #b8c2e0; }
 
-  /* 3. 아기 소개 */
-  .intro-frame {
-    width: 52%; aspect-ratio: 1; margin: 0 auto 12px; padding: 6px; border-radius: 50%;
-    background: conic-gradient(var(--sd-red) 0 60deg, var(--sd-yellow) 0 120deg, var(--sd-green) 0 180deg,
-      var(--sd-blue) 0 240deg, var(--sd-pink) 0 300deg, var(--sd-white) 0 360deg);
-    box-shadow: 0 10px 24px rgba(60, 40, 20, .15);
-  }
-  .intro-frame .photo { width: 100%; height: 100%; border-radius: 50%; border: 4px solid var(--hanji); }
-  .baby-name { font-size: 40px; color: var(--ink); }
-  .baby-hanja { font-size: 15px; color: var(--ink-soft); letter-spacing: .1em; }
-  .baby-meaning { font-size: 15px; margin: 16px auto 0; max-width: 300px; }
-  .info-table { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 24px; }
-  .info-table div {
-    background: var(--sd-white); border: 1px solid var(--line); border-radius: 10px; padding: 14px 6px;
-  }
-  .info-table small { display: block; font-size: 12px; color: var(--ink-soft); }
-  .info-table b { font-size: 16px; }
+  /* 3. 스테이터스 창 */
+  .status { text-align: left; }
+  .status-body { padding: 18px 16px 20px; }
+  .status-top { display: flex; gap: 14px; align-items: flex-start; }
+  .portrait-wrap { flex: none; width: 112px; padding: 6px; background: var(--ink); }
+  .portrait-wrap .photo { aspect-ratio: 1; }
+  .status-main { flex: 1; min-width: 0; }
+  .s-label { font-size: 15px; color: var(--muted); line-height: 1.3; }
+  .s-name { font-family: "Do Hyeon", sans-serif; font-size: 28px; line-height: 1.2; }
+  .s-lv { font-family: var(--en); font-size: 11px; margin: 6px 0 8px; }
+  .s-lv b { font-family: var(--num); font-size: 22px; font-weight: 400; color: var(--pink-d); margin-left: 4px; }
+  .bar-row { display: grid; grid-template-columns: 26px 1fr; gap: 6px; align-items: center; margin-top: 6px; }
+  .bar-row > span:first-child { font-family: var(--en); font-size: 10px; }
+  .bar { position: relative; height: 16px; background: #ddd2bb; border: 3px solid var(--ink); }
+  .bar i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--pink); box-shadow: inset 0 3px 0 rgba(255, 255, 255, .45); }
+  .bar.mp i { background: var(--blue); }
+  .bar-note { grid-column: 2; font-size: 15px; color: var(--muted); line-height: 1.3; }
+  .title-box { margin-top: 18px; padding: 12px 14px; background: #fff; border: 3px solid var(--ink); }
+  .title-box .tag { display: inline-block; background: var(--yellow); font-size: 15px; padding: 0 8px; margin-bottom: 6px; border: 2px solid var(--ink); }
+  .hanja { font-size: 17px; }
+  .meaning { margin-top: 8px; white-space: pre-line; font-size: 17px; color: #3b3550; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 16px; }
+  .stats div { background: var(--navy); color: var(--cream); text-align: center; padding: 10px 2px 8px; border: 3px solid var(--ink); }
+  .stats small { display: block; font-size: 15px; color: var(--blue); line-height: 1.3; }
+  .stats b { font-family: var(--num); font-weight: 400; font-size: 20px; line-height: 1.4; }
+  .skills { margin-top: 14px; font-size: 16px; color: #3b3550; }
+  .skills b { color: var(--pink-d); font-weight: 400; }
 
-  /* 4. D-day */
-  .counter-num { font-size: 72px; line-height: 1; color: var(--sd-red); }
-  .counter-num em { font-style: normal; font-size: 22px; color: var(--ink); margin-left: 4px; }
-  .dday-box {
-    margin-top: 28px; display: inline-block; padding: 10px 22px;
-    border: 1px solid var(--sd-red); border-radius: 999px; color: var(--sd-red); font-weight: 700;
+  /* 4. 경험치 */
+  .exp-lv { display: flex; align-items: center; justify-content: center; gap: 14px; font-family: var(--en); }
+  .exp-lv .now { font-size: 18px; color: var(--yellow); }
+  .exp-lv .goal { font-size: 18px; color: var(--pink); }
+  .exp-lv .arrow { font-size: 14px; color: var(--cream); animation: press 1s steps(1, end) infinite; }
+  .exp-wrap { margin: 26px 6px 0; padding: 18px 16px 20px; }
+  .exp-label { display: flex; justify-content: space-between; font-family: var(--en); font-size: 10px; margin-bottom: 10px; }
+  .exp-bar { position: relative; height: 30px; background: var(--deep); border: 4px solid var(--ink); }
+  .exp-bar i {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 0;
+    background: linear-gradient(var(--green) 0 50%, #4fb064 50%);
+    transition: width 2s steps(20, end);
+  }
+  .exp-bar::after { /* 20칸 눈금 */
+    content: ""; position: absolute; inset: 0;
+    background: repeating-linear-gradient(90deg, transparent 0 calc(5% - 3px), var(--ink) calc(5% - 3px) 5%);
+  }
+  .exp-days { margin-top: 18px; font-size: 18px; color: var(--ink); }
+  .exp-days b { font-family: var(--num); font-weight: 400; font-size: 34px; color: var(--pink-d); margin: 0 4px; vertical-align: -3px; }
+  .lvup { margin-top: 4px; font-size: 17px; color: var(--muted); }
+  .dday {
+    display: inline-block; margin-top: 30px; padding: 10px 18px; font-size: 19px;
+    background: var(--yellow); color: var(--ink);
+    box-shadow: 0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink), -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink), inset -4px -4px 0 0 var(--yellow-d);
   }
 
-  /* 5. 성장 기록 */
-  .timeline { text-align: left; position: relative; padding-left: 28px; }
-  .timeline::before {
-    content: ""; position: absolute; left: 8px; top: 6px; bottom: 6px; width: 2px; background: var(--line);
+  /* 5. 퀘스트 로그 · 업적 */
+  .quest-list { display: flex; flex-direction: column; gap: 46px; }
+  .ach { text-align: left; }
+  .ach + .ach::before { /* 점선 연결 */
+    content: ""; position: absolute; left: 50%; top: -46px; height: 34px; width: 6px; margin-left: -3px;
+    background: repeating-linear-gradient(var(--yellow) 0 6px, transparent 6px 12px);
   }
-  .tl-item { position: relative; margin-bottom: 36px; }
-  .tl-item:last-child { margin-bottom: 0; }
-  .tl-item::before {
-    content: ""; position: absolute; left: -26px; top: 7px; width: 14px; height: 14px; border-radius: 50%;
-    background: var(--dot, var(--sd-red)); border: 3px solid var(--hanji);
-    box-shadow: 0 0 0 1px var(--line);
+  .ach-head {
+    display: flex; align-items: center; gap: 10px; background: var(--ink); color: var(--yellow);
+    padding: 8px 12px;
   }
-  .tl-item h3 { font-size: 18px; }
-  .tl-item .when { font-size: 13px; color: var(--ink-soft); }
-  .tl-item .photo { aspect-ratio: 4 / 3; border-radius: 10px; margin: 10px 0 8px; }
+  .ach-head .trophy { font-size: 22px; line-height: 1; }
+  .ach-head .ach-en { font-family: var(--en); font-size: 9px; line-height: 1.5; flex: 1; }
+  .ach-head .ach-en small { display: block; font-family: "Jua", sans-serif; font-size: 15px; color: var(--cream); }
+  .ach-state { font-size: 15px; padding: 0 8px; background: var(--green); color: var(--ink); white-space: nowrap; }
+  .ach.locked .ach-state { background: #9aa3c0; }
+  .ach-body { padding: 14px 14px 18px; }
+  .ach .photo { aspect-ratio: 4 / 3; border: 4px solid var(--ink); }
+  .ach h3 { font-family: "Do Hyeon", sans-serif; font-weight: 400; font-size: 26px; line-height: 1.2; margin-top: 12px; }
+  .ach .when { font-family: var(--num); font-size: 16px; color: var(--muted); }
+  .ach .text { margin-top: 6px; font-size: 17px; }
+  .exp-plus { position: absolute; right: 12px; bottom: -16px; font-family: var(--en); font-size: 10px; background: var(--pink); color: var(--ink); padding: 8px 8px 6px; border: 3px solid var(--ink); }
+  .ach.reveal.in { animation: pop .5s steps(5, end); }
+  @keyframes pop { 0% { transform: scale(.6); } 60% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-  /* 6. 갤러리 */
-  .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-  .gallery .photo { aspect-ratio: 1; border-radius: 6px; cursor: pointer; }
+  /* 6. 세이브 슬롯 */
+  .slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .slot { cursor: pointer; background: var(--ink); padding: 4px; border: 0; color: inherit; font: inherit; text-align: left; }
+  .slot .photo { aspect-ratio: 1; }
+  .slot .slot-no { display: block; font-family: var(--en); font-size: 8px; color: var(--yellow); padding: 5px 2px 2px; }
+  .slot:focus-visible { outline: 3px dashed var(--yellow); outline-offset: 3px; }
+  .slot-hint { margin-top: 20px; font-size: 15px; color: #b8c2e0; }
   .lightbox {
-    position: fixed; inset: 0; background: rgba(20, 14, 10, .92); z-index: 10;
-    display: none; align-items: center; justify-content: center;
+    position: fixed; inset: 0; z-index: 10; display: none; align-items: center; justify-content: center; flex-direction: column;
+    background: rgba(15, 22, 48, .98);
   }
   .lightbox.open { display: flex; }
-  .lightbox .photo { width: min(90vw, 440px); aspect-ratio: 3 / 4; border-radius: 8px; }
-  .lightbox button {
-    position: absolute; background: none; border: 0; color: #fff; font-size: 32px; padding: 16px; cursor: pointer;
-  }
-  .lb-close { top: 8px; right: 8px; }
-  .lb-prev { left: 0; top: 50%; transform: translateY(-50%); }
-  .lb-next { right: 0; top: 50%; transform: translateY(-50%); }
-  .lb-count { position: absolute; bottom: 24px; color: #fff; font-size: 14px; }
+  .lb-win { width: min(88vw, 420px, 51vh); }
+  .lb-win .photo { aspect-ratio: 3 / 4; border: 6px solid var(--ink); }
+  .lb-ctrl { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 14px; width: min(88vw, 420px); margin-top: 22px; }
+  .lb-ctrl .pbtn { font-size: 20px; padding: 8px 4px; }
+  .lb-count { font-family: var(--en); font-size: 12px; color: var(--cream); white-space: nowrap; }
+  .lb-close { position: absolute; top: 16px; right: 16px; width: 52px; font-size: 20px; padding: 8px 0; }
 
-  /* 7. 일시·장소 */
-  .when-big { font-size: 20px; font-weight: 700; }
-  .schedule { list-style: none; margin: 20px auto 0; max-width: 320px; text-align: left; }
-  .schedule li {
-    display: flex; gap: 14px; align-items: baseline; padding: 12px 4px; border-bottom: 1px dashed var(--line);
+  /* 7. 특별 이벤트 퀘스트 */
+  .quest { text-align: left; }
+  .quest-body { padding: 18px 16px 22px; }
+  .q-title { font-family: "Do Hyeon", sans-serif; font-size: 25px; line-height: 1.3; color: var(--ink); }
+  .q-title .star { color: var(--pink-d); }
+  .q-label {
+    display: inline-block; margin-top: 18px; margin-bottom: 8px; font-size: 15px; padding: 0 8px;
+    background: var(--ink); color: var(--yellow);
   }
-  .schedule li:last-child { border-bottom: 0; }
-  .schedule .time { flex: none; width: 5.5em; white-space: nowrap; font-weight: 800; color: var(--sd-red); }
-  .schedule small { display: block; font-size: 13px; color: var(--ink-soft); }
-  .place-name { font-size: 20px; font-weight: 700; margin-top: 28px; }
-  .place-addr { color: var(--ink-soft); font-size: 15px; }
-  .btn-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 20px; }
-  .btn {
-    display: block; padding: 14px 8px; border-radius: 10px; font-size: 15px; font-family: inherit;
-    text-decoration: none; color: var(--ink); background: var(--sd-white); border: 1px solid var(--line);
-    cursor: pointer;
-  }
-  .btn.primary { background: var(--sd-red); border-color: var(--sd-red); color: #fff; font-weight: 700; }
-  .btn.wide { width: 100%; margin-top: 12px; }
-  .note { margin-top: 20px; font-size: 14px; color: var(--ink-soft); }
+  .q-date { font-size: 19px; }
+  .schedule { list-style: none; }
+  .schedule li { display: flex; gap: 10px; align-items: baseline; padding: 8px 0; }
+  .schedule li + li { border-top: 3px dotted rgba(26, 28, 44, .25); }
+  .schedule .time { flex: none; width: 5.5em; white-space: nowrap; color: var(--pink-d); font-size: 17px; }
+  .schedule .time::before { content: "▶"; font-size: 12px; margin-right: 4px; color: var(--ink); }
+  .schedule b { font-weight: 400; font-size: 17px; }
+  .schedule small { display: block; font-size: 15px; color: var(--muted); }
+  .place b { font-size: 20px; font-weight: 400; }
+  .place p { font-size: 15px; color: var(--muted); }
+  .btn-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 18px; }
+  .btn-row .pbtn { font-size: 15px; padding: 12px 0; }
+  .note { margin-top: 14px; font-size: 15px; color: var(--muted); }
+  .note:empty { display: none; }
+  .reward { margin-top: 18px; padding: 10px 12px; background: #fff; border: 3px dashed var(--ink); font-size: 16px; }
 
   /* 8. 마무리 */
-  .closing .brush { font-size: 34px; color: var(--sd-red); }
-  footer { padding: 24px 0 40px; text-align: center; font-size: 12px; color: var(--ink-soft); }
+  .tbc { font-family: var(--en); font-size: 15px; line-height: 1.6; color: var(--yellow); text-shadow: 3px 3px 0 var(--ink); }
+  .next-stage { margin-top: 20px; font-size: 22px; }
+  .next-stage b { color: var(--pink); font-weight: 400; }
+  .closing p.thanks { margin-top: 10px; color: #c9d1ea; }
+  .closing .hearts { margin-top: 26px; display: flex; justify-content: center; gap: 10px; }
+  .copy { width: calc(100% - 8px); margin-top: 34px; font-size: 18px; padding: 15px 8px; }
+  footer { position: relative; z-index: 1; padding: 16px 0 44px; text-align: center; font-size: 15px; color: #9aa6c9; }
 
   .toast {
-    position: fixed; left: 50%; bottom: 40px; transform: translate(-50%, 20px);
-    background: var(--ink); color: #fff; padding: 10px 20px; border-radius: 999px; font-size: 14px;
-    opacity: 0; transition: .3s; pointer-events: none; z-index: 20;
+    position: fixed; left: 50%; bottom: 40px; transform: translate(-50%, 20px); z-index: 20;
+    background: var(--ink); color: var(--yellow); padding: 10px 18px; font-size: 16px; max-width: 90vw; text-align: center;
+    box-shadow: 0 -4px 0 0 var(--cream), 0 4px 0 0 var(--cream), -4px 0 0 0 var(--cream), 4px 0 0 0 var(--cream);
+    opacity: 0; transition: opacity .2s steps(2, end), transform .2s steps(2, end); pointer-events: none;
   }
   .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
-  /* 스크롤 등장 애니메이션 */
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s ease, transform .9s ease; }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s steps(4, end), transform .6s steps(4, end); }
   .reveal.in { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: reduce) {
-    .reveal { opacity: 1; transform: none; transition: none; }
+    .reveal, .ach.reveal.in { opacity: 1; transform: none; transition: none; animation: none; }
+    .sky i, .press, .dialog .next, .exp-lv .arrow { animation: none; }
+    .exp-bar i { transition: none; }
+    html { scroll-behavior: auto; }
   }
 </style>
 </head>
 <body>
 <main class="card">
-  <div class="saekdong"></div>
+  <div class="sky" id="sky"></div>
 
-  <!-- 1. 커버 -->
+  <!-- 1. 타이틀 화면 -->
   <section class="cover">
-    <p class="eyebrow">百日</p>
-    <h1 class="title brush">백일잔치</h1>
-    <p class="name" data-bind="babyName">유찬</p>
-    <div class="photo" data-photo="cover">메인 사진</div>
-    <p class="date" data-bind="partyDateText"></p>
+    <div class="hud">
+      <span>1P</span>
+      <span class="hearts" aria-hidden="true"><i class="px-heart"></i><i class="px-heart"></i><i class="px-heart"></i></span>
+      <span>DAY <b id="hudDay">0</b></span>
+    </div>
+    <p class="logo-sub">THE FIRST 100 DAYS</p>
+    <h1 class="logo"><span data-bind="babyName"></span> 퀘스트</h1>
+    <p class="logo-ribbon">백일잔치 대모험</p>
+    <div class="frame-wrap drop">
+      <i class="px-star s1" aria-hidden="true"></i>
+      <i class="px-star s2" aria-hidden="true"></i>
+      <i class="px-star s3" aria-hidden="true"></i>
+      <span class="lv-badge">LV.100</span>
+      <div class="pbox frame"><div class="photo" data-photo="cover">메인 사진</div></div>
+    </div>
+    <p class="date"><small>PARTY DAY</small><span data-bind="partyDateText"></span></p>
+    <button class="press" id="pressStart" type="button">▶ PRESS START<small>눌러서 모험 시작</small></button>
+    <div class="ground" aria-hidden="true"></div>
   </section>
 
-  <!-- 2. 인사말 -->
-  <section class="greeting reveal">
-    <p class="eyebrow">INVITATION</p>
-    <h2>소중한 가족분들께</h2>
-    <p>작고 여린 손으로 세상에 온 지<br>어느덧 백 일이 되었습니다.</p>
-    <p>그동안 보내주신 사랑과 관심 덕분에<br>건강하게 무럭무럭 자라고 있습니다.</p>
-    <p>백일을 맞아 가족들과 함께<br>따뜻한 식사 자리를 마련했습니다.<br>오셔서 축복해 주세요.</p>
-    <div class="saekdong thin"></div>
-    <p class="parents">아빠 <span data-bind="dad"></span> · 엄마 <span data-bind="mom"></span> 올림</p>
+  <!-- 2. 인사말: NPC 대화창 -->
+  <section class="reveal" id="greeting">
+    <p class="stage">STAGE 01</p>
+    <h2>마을 어귀의 두 NPC</h2>
+    <div class="npc">
+      <div class="npc-face" aria-hidden="true">👨</div>
+      <div class="npc-face mom" aria-hidden="true">👩</div>
+      <span class="npc-tag">아빠 · 엄마</span>
+    </div>
+    <div class="dialog" id="dialog" role="group" aria-label="아빠와 엄마의 인사말">
+      <p data-type>용사님들, 어서 오세요! 기다리고 있었어요.</p>
+      <p data-type><span data-bind="babyName"></span>이가 이 세상에 태어나 첫 모험을 시작한 지 어느덧 백 일이 다 되었어요.</p>
+      <p data-type>밤낮없이 울고 웃으며 매일 한 칸씩 경험치를 쌓아 드디어 레벨 100을 앞두고 있답니다.</p>
+      <p data-type>이 특별한 레벨업 순간을 함께 축하해 주시면 큰 힘이 될 거예요. 저희 파티에 꼭 합류해 주세요!</p>
+      <p class="sign">아빠 <span data-bind="dad"></span> · 엄마 <span data-bind="mom"></span></p>
+      <span class="next" aria-hidden="true">▼</span>
+    </div>
+    <p class="skip-hint">대화창을 누르면 바로 끝까지 볼 수 있어요</p>
   </section>
 
-  <!-- 3. 아기 소개 -->
+  <!-- 3. 캐릭터 스테이터스 -->
   <section class="reveal">
-    <p class="eyebrow">OUR BABY</p>
-    <h2>우리 아기를 소개합니다</h2>
-    <div class="intro-frame"><div class="photo" data-photo="intro">소개 사진</div></div>
-    <p class="baby-name brush" data-bind="babyFullName"></p>
-    <p class="baby-hanja" data-bind="babyHanja"></p>
-    <p class="baby-meaning" data-bind="babyMeaning"></p>
-    <div class="info-table">
-      <div><small>태어난 날</small><b data-bind="birthShort"></b></div>
-      <div><small>키</small><b data-bind="birthHeight"></b></div>
-      <div><small>몸무게</small><b data-bind="birthWeight"></b></div>
+    <p class="stage">STAGE 02</p>
+    <h2>캐릭터 스테이터스</h2>
+    <div class="pbox status drop">
+      <div class="win-title"><span>STATUS</span><span>PLAYER 1</span></div>
+      <div class="status-body">
+        <div class="status-top">
+          <div class="portrait-wrap"><div class="photo" data-photo="intro">소개 사진</div></div>
+          <div class="status-main">
+            <p class="s-label">이름</p>
+            <p class="s-name" data-bind="babyFullName"></p>
+            <p class="s-lv">LV<b id="statLv">1</b></p>
+            <div class="bar-row"><span>HP</span><div class="bar"><i style="width:100%"></i></div><span class="bar-note">체력 가득</span></div>
+            <div class="bar-row"><span>MP</span><div class="bar mp"><i style="width:100%"></i></div><span class="bar-note">귀여움 MAX</span></div>
+          </div>
+        </div>
+        <div class="title-box">
+          <span class="tag">칭호</span>
+          <p class="hanja" data-bind="babyHanja"></p>
+          <p class="meaning" data-bind="babyMeaning"></p>
+        </div>
+        <div class="stats">
+          <div><small>생일</small><b data-bind="birthShort"></b></div>
+          <div><small>키</small><b data-bind="birthHeight"></b></div>
+          <div><small>몸무게</small><b data-bind="birthWeight"></b></div>
+        </div>
+        <p class="skills"><b>특기</b> 방긋 웃기 · 옹알이 · 꿀잠 자기</p>
+      </div>
     </div>
   </section>
 
-  <!-- 4. D-day -->
-  <section class="reveal">
-    <p class="eyebrow">D+DAY</p>
-    <h2>세상에 온 지</h2>
-    <p class="counter-num brush"><span id="daysAlive">0</span><em>일째</em></p>
-    <p class="dday-box" id="ddayText"></p>
-  </section>
-
-  <!-- 5. 성장 기록 -->
-  <section class="reveal">
-    <p class="eyebrow">GROWING UP</p>
-    <h2>백 일의 기록</h2>
-    <div class="timeline" id="timeline"></div>
-  </section>
-
-  <!-- 6. 갤러리 -->
-  <section class="reveal">
-    <p class="eyebrow">GALLERY</p>
-    <h2>사진첩</h2>
-    <div class="gallery" id="gallery"></div>
-  </section>
-
-  <!-- 7. 일시·장소 -->
-  <section class="reveal">
-    <p class="eyebrow">WHEN &amp; WHERE</p>
-    <h2>잔치 일정</h2>
-    <p class="when-big" data-bind="partyDayText"></p>
-    <ol class="schedule" id="schedule"></ol>
-    <p class="place-name" data-bind="placeName"></p>
-    <p class="place-addr" data-bind="placeAddr"></p>
-    <div class="btn-row">
-      <a class="btn" id="mapNaver" target="_blank" rel="noopener">네이버지도</a>
-      <a class="btn" id="mapKakao" target="_blank" rel="noopener">카카오맵</a>
-      <a class="btn" id="mapTmap">티맵</a>
+  <!-- 4. 경험치 (D-day) -->
+  <section class="reveal" id="expSection">
+    <p class="stage">STAGE 03</p>
+    <h2>경험치를 모으는 중</h2>
+    <div class="exp-lv"><span class="now" id="lvNow">LV.1</span><span class="arrow">▶</span><span class="goal">LV.100</span></div>
+    <div class="pbox exp-wrap drop">
+      <div class="exp-label"><span>EXP</span><span id="expPct">0%</span></div>
+      <div class="exp-bar" role="img" id="expBar" aria-label="경험치"><i id="expFill"></i></div>
+      <p class="exp-days">모험 <b id="daysAlive">0</b>일째</p>
+      <p class="lvup" id="lvupText"></p>
     </div>
-    <p class="note" data-bind="placeNote"></p>
+    <p class="dday" id="ddayText"></p>
   </section>
 
-  <!-- 8. 마무리 + 링크 복사 -->
+  <!-- 5. 퀘스트 로그 -->
+  <section>
+    <p class="stage">STAGE 04</p>
+    <h2>퀘스트 로그</h2>
+    <div class="quest-list" id="questList"></div>
+  </section>
+
+  <!-- 6. 세이브 슬롯 -->
+  <section class="reveal">
+    <p class="stage">STAGE 05</p>
+    <h2>세이브 슬롯</h2>
+    <div class="slots" id="gallery"></div>
+    <p class="slot-hint">슬롯을 누르면 크게 볼 수 있어요</p>
+  </section>
+
+  <!-- 7. 특별 이벤트 퀘스트 -->
+  <section class="reveal">
+    <p class="stage">EVENT</p>
+    <h2>새로운 퀘스트 도착!</h2>
+    <div class="pbox quest drop">
+      <div class="win-title"><span>QUEST</span><span>★ SPECIAL</span></div>
+      <div class="quest-body">
+        <p class="q-title"><span class="star">★</span> 특별 이벤트 퀘스트:<br>백일잔치</p>
+        <span class="q-label">퀘스트 일시</span>
+        <p class="q-date" data-bind="partyDateText"></p>
+        <span class="q-label">시간표</span>
+        <ol class="schedule" id="schedule"></ol>
+        <div class="place">
+          <span class="q-label">집결 장소</span>
+          <p><b data-bind="placeName"></b></p>
+          <p data-bind="placeAddr"></p>
+          <div class="btn-row">
+            <a class="pbtn" id="mapNaver" target="_blank" rel="noopener">네이버지도</a>
+            <a class="pbtn blue" id="mapKakao" target="_blank" rel="noopener">카카오맵</a>
+            <a class="pbtn pink" id="mapTmap">티맵</a>
+          </div>
+          <p class="note" data-bind="placeNote"></p>
+        </div>
+        <p class="reward">🎁 보상: <span data-bind="babyName"></span>이의 방긋 웃음 ×∞</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. 마무리 -->
   <section class="closing reveal">
-    <p class="brush">건강하게 자라다오</p>
-    <p style="margin: 12px 0 24px; color: var(--ink-soft);">함께해 주셔서 고맙습니다</p>
-    <button class="btn wide" id="copyLink">🔗 링크 복사하기</button>
+    <p class="tbc">TO BE<br>CONTINUED…</p>
+    <p class="next-stage">다음 스테이지: <b>돌잔치</b></p>
+    <p class="thanks">함께 모험해 주셔서 고맙습니다</p>
+    <div class="hearts" aria-hidden="true"><i class="px-heart"></i><i class="px-star"></i><i class="px-heart"></i></div>
+    <button class="pbtn copy" id="copyLink" type="button">🔗 링크 복사하기</button>
   </section>
 
-  <div class="saekdong"></div>
-  <footer>© 유찬이네 가족</footer>
+  <footer>© <span data-bind="babyName"></span>이네 가족</footer>
 </main>
 
-<div class="lightbox" id="lightbox" aria-hidden="true">
-  <button class="lb-close" aria-label="닫기">✕</button>
-  <button class="lb-prev" aria-label="이전">‹</button>
-  <div class="photo" id="lbPhoto"></div>
-  <button class="lb-next" aria-label="다음">›</button>
-  <span class="lb-count" id="lbCount"></span>
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="사진 크게 보기">
+  <button class="pbtn pink lb-close" type="button" aria-label="닫기">✕</button>
+  <div class="pbox lb-win"><div class="photo" id="lbPhoto"></div></div>
+  <div class="lb-ctrl">
+    <button class="pbtn blue lb-prev" type="button" aria-label="이전">◀</button>
+    <span class="lb-count" id="lbCount"></span>
+    <button class="pbtn blue lb-next" type="button" aria-label="다음">▶</button>
+  </div>
 </div>
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status"></div>
 
 <script>
-/* ===== 여기만 수정하면 됩니다 ===== */
+/* ===== 여기만 수정하면 됩니다 (index.html과 같은 항목) ===== */
 const CONFIG = {
   shareUrl: "https://qwekl.github.io/100dayevent/",   // 링크 복사에 쓰이는 주소
   babyName: "유찬",
@@ -333,14 +559,15 @@ const CONFIG = {
     { title: "100일",       day: 100, text: "고개를 번쩍 들고 옹알이도 제법 늘었어요." },
   ],
 };
-/* ================================= */
+/* ========================================================= */
 
 const DAY = 86400000;
 const WEEK = ["일", "월", "화", "수", "목", "금", "토"];
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const parseDate = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+const addDays = (date, n) => new Date(date.getFullYear(), date.getMonth(), date.getDate() + n);
 const birth = parseDate(CONFIG.birthDate);
 const party = parseDate(CONFIG.party.date);
-const addDays = (date, n) => new Date(date.getFullYear(), date.getMonth(), date.getDate() + n);
 
 function formatTime(hhmm) {
   const [h, m] = hhmm.split(":").map(Number);
@@ -349,20 +576,16 @@ function formatTime(hhmm) {
   return `${label} ${hour}시${m ? ` ${m}분` : ""}`;
 }
 
+const partyDay = `${party.getFullYear()}년 ${party.getMonth() + 1}월 ${party.getDate()}일 ${WEEK[party.getDay()]}요일`;
 const derived = {
   ...CONFIG,
-  birthShort: `${birth.getFullYear() % 100}.${birth.getMonth() + 1}.${birth.getDate()}`,
-  partyDateText: `${party.getFullYear()}년 ${party.getMonth() + 1}월 ${party.getDate()}일 ` +
-    `${WEEK[party.getDay()]}요일 ${formatTime(CONFIG.party.start)}`,
-  partyDayText: `${party.getFullYear()}년 ${party.getMonth() + 1}월 ${party.getDate()}일 ` +
-    `${WEEK[party.getDay()]}요일`,
+  birthShort: `${birth.getFullYear()}.${birth.getMonth() + 1}.${birth.getDate()}`,
+  partyDateText: `${partyDay} ${formatTime(CONFIG.party.start)}`,
 };
-document.querySelectorAll("[data-bind]").forEach(el => { el.textContent = derived[el.dataset.bind] ?? "";
-  el.style.whiteSpace = "pre-line"; });
+document.querySelectorAll("[data-bind]").forEach(el => { el.textContent = derived[el.dataset.bind] ?? ""; });
 
-// 사진 채우기
 function fillPhoto(el, src, alt) {
-  if (!src) return;
+  if (!el || !src) return;
   el.textContent = "";
   const img = new Image();
   img.src = src; img.alt = alt; img.loading = "lazy";
@@ -371,59 +594,131 @@ function fillPhoto(el, src, alt) {
 fillPhoto(document.querySelector('[data-photo="cover"]'), CONFIG.photos.cover, "메인 사진");
 fillPhoto(document.querySelector('[data-photo="intro"]'), CONFIG.photos.intro, "소개 사진");
 
-// D-day (태어난 날 = 1일째)
+// 깜빡이는 픽셀 별 배경
+const sky = document.getElementById("sky");
+const skyColors = ["#fff4dc", "#ffd93d", "#8fd3ff", "#ff8fab"];
+for (let i = 0; i < 46; i++) {
+  const s = document.createElement("i");
+  s.style.left = `${Math.random() * 100}%`;
+  s.style.top = `${Math.random() * 100}%`;
+  s.style.background = skyColors[i % skyColors.length];
+  s.style.setProperty("--d", `${1.2 + Math.random() * 2}s`);
+  s.style.setProperty("--delay", `${Math.random() * 2}s`);
+  if (Math.random() < .25) { s.style.width = s.style.height = "6px"; }
+  sky.appendChild(s);
+}
+
+// PRESS START → 인사말로 이동
+document.getElementById("pressStart").addEventListener("click", () => {
+  document.getElementById("greeting").scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+});
+
+// 날짜 계산 (태어난 날 = 1일째)
 const today = new Date(); today.setHours(0, 0, 0, 0);
-const daysAlive = Math.round((today - birth) / DAY) + 1;
+const daysAlive = Math.max(Math.round((today - birth) / DAY) + 1, 0);
 const dday = Math.round((party - today) / DAY);
 const day100 = addDays(birth, 99);
+const toLv100 = Math.round((day100 - today) / DAY);
+const level = Math.min(Math.max(daysAlive, 1), 100);
+
+document.getElementById("hudDay").textContent = daysAlive;
+document.getElementById("statLv").textContent = level;
+document.getElementById("lvNow").textContent = `LV.${level}`;
+document.getElementById("daysAlive").textContent = daysAlive;
 document.getElementById("ddayText").textContent =
   dday > 0 ? `백일잔치까지 D-${dday}` : dday === 0 ? "오늘은 백일잔치 날이에요 🎉" :
   `${day100.getMonth() + 1}월 ${day100.getDate()}일, 백일을 맞았어요`;
+document.getElementById("lvupText").textContent =
+  toLv100 > 0 ? `LV.100 레벨업까지 D-${toLv100}` : toLv100 === 0 ? "오늘 LV.100 레벨업! 🎉" : "LV.100 달성 완료!";
+const pct = Math.min(daysAlive, 100);
+document.getElementById("expPct").textContent = `${pct}%`;
+document.getElementById("expBar").setAttribute("aria-label", `경험치 ${pct}%`);
+const fillExp = () => { document.getElementById("expFill").style.width = `${pct}%`; };
 
-let counted = false;
-function countUp(el, target) {
-  const start = performance.now();
-  const step = now => {
-    const p = Math.min((now - start) / 1400, 1);
-    el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
-    if (p < 1) requestAnimationFrame(step);
-  };
-  requestAnimationFrame(step);
+// 인사말 타자 효과 (JS가 없으면 전체 문장이 그대로 보임)
+const dialog = document.getElementById("dialog");
+const lines = [...dialog.querySelectorAll("[data-type]")].map(p => {
+  const full = p.textContent;
+  const typed = document.createElement("span");
+  const rest = document.createElement("span");
+  rest.className = "tw-rest";
+  return { p, full, typed, rest };
+});
+let typingDone = false;
+function finishTyping() {
+  typingDone = true;
+  lines.forEach(l => { l.p.textContent = l.full; });
+  dialog.classList.add("done");
 }
+if (reduce) finishTyping();
+else lines.forEach(l => {
+  l.p.textContent = "";
+  l.rest.textContent = l.full;
+  l.p.append(l.typed, l.rest);
+});
+function startTyping() {
+  if (typingDone) return;
+  let li = 0, ci = 0;
+  (function step() {
+    if (typingDone) return;
+    const l = lines[li];
+    if (!l) { finishTyping(); return; }
+    ci++;
+    l.typed.textContent = l.full.slice(0, ci);
+    l.rest.textContent = l.full.slice(ci);
+    if (ci >= l.full.length) { li++; ci = 0; setTimeout(step, 260); }
+    else setTimeout(step, 42);
+  })();
+}
+dialog.addEventListener("click", finishTyping);
 
-// 성장 기록
-const dotColors = ["var(--sd-red)", "var(--sd-yellow)", "var(--sd-green)", "var(--sd-blue)", "var(--sd-pink)"];
-const tl = document.getElementById("timeline");
+// 퀘스트 로그 (업적 달성)
+const questList = document.getElementById("questList");
 CONFIG.timeline.forEach((item, i) => {
   const d = addDays(birth, item.day - 1);
-  const div = document.createElement("div");
-  div.className = "tl-item";
-  div.style.setProperty("--dot", dotColors[i % dotColors.length]);
-  div.innerHTML = `<h3></h3><p class="when"></p><div class="photo">${item.title} 사진</div><p></p>`;
-  div.querySelector("h3").textContent = item.title;
-  div.querySelector(".when").textContent = `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()}`;
-  div.querySelector("p:last-child").textContent = item.text;
-  fillPhoto(div.querySelector(".photo"), CONFIG.photos.timeline[i], item.title);
-  tl.appendChild(div);
+  const done = d <= today;
+  const el = document.createElement("article");
+  el.className = `pbox ach reveal drop${done ? "" : " locked"}`;
+  el.innerHTML = `<div class="ach-head"><span class="trophy" aria-hidden="true"></span>` +
+    `<span class="ach-en">ACHIEVEMENT<small></small></span><span class="ach-state"></span></div>` +
+    `<div class="ach-body"><div class="photo"></div><h3></h3><p class="when"></p><p class="text"></p></div>` +
+    `<span class="exp-plus"></span>`;
+  el.querySelector(".trophy").textContent = done ? "🏆" : "🔒";
+  el.querySelector(".ach-en small").textContent = done ? "업적 달성!" : "곧 달성 예정";
+  el.querySelector(".ach-state").textContent = `QUEST ${i + 1}`;
+  el.querySelector(".photo").textContent = `${item.title} 사진`;
+  el.querySelector("h3").textContent = item.title;
+  el.querySelector(".when").textContent = `DAY ${item.day} · ${d.getFullYear()}. ${d.getMonth() + 1}. ${d.getDate()}.`;
+  el.querySelector(".text").textContent = item.text;
+  el.querySelector(".exp-plus").textContent = `+${item.day} EXP`;
+  fillPhoto(el.querySelector(".photo"), CONFIG.photos.timeline[i], item.title);
+  questList.appendChild(el);
 });
 
-// 갤러리 + 라이트박스
+// 세이브 슬롯 + 라이트박스
 const gallery = document.getElementById("gallery");
 const lb = document.getElementById("lightbox");
 const lbPhoto = document.getElementById("lbPhoto");
 let current = 0;
 CONFIG.photos.gallery.forEach((src, i) => {
-  const el = document.createElement("div");
-  el.className = "photo";
-  el.textContent = `사진 ${i + 1}`;
-  fillPhoto(el, src, `사진 ${i + 1}`);
-  el.addEventListener("click", () => openLb(i));
-  gallery.appendChild(el);
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "slot";
+  btn.setAttribute("aria-label", `사진 ${i + 1} 크게 보기`);
+  const ph = document.createElement("div");
+  ph.className = "photo";
+  ph.textContent = `사진 ${i + 1}`;
+  fillPhoto(ph, src, `사진 ${i + 1}`);
+  const no = document.createElement("span");
+  no.className = "slot-no";
+  no.textContent = `SLOT ${String(i + 1).padStart(2, "0")}`;
+  btn.append(ph, no);
+  btn.addEventListener("click", () => openLb(i));
+  gallery.appendChild(btn);
 });
 function showLb(i) {
   const list = CONFIG.photos.gallery;
   current = (i + list.length) % list.length;
-  lbPhoto.innerHTML = "";
   lbPhoto.textContent = `사진 ${current + 1}`;
   fillPhoto(lbPhoto, list[current], `사진 ${current + 1}`);
   document.getElementById("lbCount").textContent = `${current + 1} / ${list.length}`;
@@ -434,6 +729,12 @@ lb.querySelector(".lb-close").onclick = closeLb;
 lb.querySelector(".lb-prev").onclick = () => showLb(current - 1);
 lb.querySelector(".lb-next").onclick = () => showLb(current + 1);
 lb.addEventListener("click", e => { if (e.target === lb) closeLb(); });
+document.addEventListener("keydown", e => {
+  if (!lb.classList.contains("open")) return;
+  if (e.key === "Escape") closeLb();
+  if (e.key === "ArrowLeft") showLb(current - 1);
+  if (e.key === "ArrowRight") showLb(current + 1);
+});
 let touchX = null;
 lb.addEventListener("touchstart", e => { touchX = e.touches[0].clientX; }, { passive: true });
 lb.addEventListener("touchend", e => {
@@ -443,7 +744,7 @@ lb.addEventListener("touchend", e => {
   touchX = null;
 });
 
-// 일정
+// 시간표
 const scheduleEl = document.getElementById("schedule");
 CONFIG.schedule.forEach(s => {
   const li = document.createElement("li");
@@ -458,34 +759,35 @@ CONFIG.schedule.forEach(s => {
 const q = encodeURIComponent(CONFIG.placeAddr);
 document.getElementById("mapNaver").href = CONFIG.naverPlaceUrl || `https://map.naver.com/p/search/${q}`;
 document.getElementById("mapKakao").href = CONFIG.kakaoPlaceUrl || `https://map.kakao.com/?q=${q}`;
-// 티맵은 웹 장소 페이지가 없어 앱으로 바로 길안내를 엽니다 (폰에 티맵 앱 필요)
+// 티맵은 앱으로 바로 길안내를 엽니다 (폰에 티맵 앱 필요)
 document.getElementById("mapTmap").href = `tmap://route?goalname=${encodeURIComponent(CONFIG.placeName)}` +
   `&goalx=${CONFIG.placeLatLng.lng}&goaly=${CONFIG.placeLatLng.lat}`;
 
 // 링크 복사
+let toastTimer;
 function toast(msg) {
   const t = document.getElementById("toast");
   t.textContent = msg; t.classList.add("show");
-  setTimeout(() => t.classList.remove("show"), 1800);
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 1800);
 }
 document.getElementById("copyLink").addEventListener("click", async () => {
   try { await navigator.clipboard.writeText(CONFIG.shareUrl); toast("링크를 복사했어요"); }
   catch { toast("복사에 실패했어요. 주소창에서 복사해 주세요"); }
 });
 
-// 스크롤 등장 + 카운터 시작
+// 스크롤 등장 + 타자 효과·경험치 시작
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (!e.isIntersecting) return;
     e.target.classList.add("in");
-    if (!counted && e.target.querySelector("#daysAlive")) {
-      counted = true;
-      countUp(document.getElementById("daysAlive"), Math.max(daysAlive, 0));
-    }
+    if (e.target.contains(dialog)) setTimeout(startTyping, reduce ? 0 : 400);
+    if (e.target.id === "expSection") setTimeout(fillExp, reduce ? 0 : 300);
     io.unobserve(e.target);
   });
 }, { threshold: 0.15 });
 document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+if (reduce) fillExp();
 </script>
 </body>
 </html>
