@@ -44,6 +44,7 @@
     overflow-wrap: break-word;
   }
   button { font-family: inherit; }
+  [hidden] { display: none !important; }
   .card {
     position: relative; max-width: 480px; margin: 0 auto; min-height: 100vh; overflow: hidden;
     background-color: var(--navy);
@@ -353,11 +354,110 @@
   }
   .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
+  /* 서프라이즈: 숨은 젖병 */
+  .hidden-item {
+    position: absolute; z-index: 2; width: 40px; height: 40px; padding: 0; border: 0; background: none; cursor: pointer;
+    font-size: 20px; line-height: 40px; -webkit-tap-highlight-color: transparent;
+    animation: bob 1s steps(2, jump-none) infinite;
+  }
+  .hidden-item.got { animation: grab .5s steps(4, end) forwards; pointer-events: none; }
+  @keyframes grab { 100% { transform: translateY(-32px) scale(1.5); opacity: 0; } }
+  .hidden-item:focus-visible, .item-hud:focus-visible, .chest:focus-visible, .boss-mon:focus-visible { outline: 3px dashed var(--yellow); outline-offset: 4px; }
+  .item-hud {
+    position: fixed; z-index: 5; right: max(12px, calc(50vw - 228px)); bottom: calc(14px + env(safe-area-inset-bottom));
+    border: 0; cursor: pointer; background: var(--ink); color: var(--cream); font-family: var(--en); font-size: 10px; padding: 8px 10px 6px;
+    box-shadow: 0 -3px 0 0 var(--cream), 0 3px 0 0 var(--cream), -3px 0 0 0 var(--cream), 3px 0 0 0 var(--cream);
+  }
+  .item-hud b { color: var(--yellow); font-weight: 400; }
+  .item-hud.clear { background: var(--pink); color: var(--ink); }
+  .item-hud.clear b { color: var(--ink); }
+
+  /* 서프라이즈: 비밀 커맨드 */
+  .lv-badge { cursor: pointer; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
+
+  /* 서프라이즈: 보물상자 */
+  .chest {
+    position: relative; display: block; width: 132px; height: 112px; margin: 10px auto 0;
+    background: none; border: 0; padding: 0; cursor: pointer; -webkit-tap-highlight-color: transparent;
+  }
+  .chest .lid, .chest .box { position: absolute; left: 0; right: 0; }
+  .chest .lid {
+    top: 0; height: 44px; z-index: 2; background: #c27b3c; transform-origin: 0 100%;
+    box-shadow: 0 -4px 0 0 var(--ink), -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink), inset 0 -8px 0 0 #8b5a2b, inset 0 6px 0 0 #dd9a55;
+    transition: transform .3s steps(3, end);
+  }
+  .chest .box {
+    bottom: 0; height: 64px; background: #a86d36;
+    background-image: linear-gradient(90deg, transparent 18px, #8b5a2b 18px 26px, transparent 26px calc(100% - 26px), #8b5a2b calc(100% - 26px) calc(100% - 18px), transparent calc(100% - 18px));
+    box-shadow: 0 4px 0 0 var(--ink), -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink), 0 -4px 0 0 var(--ink);
+  }
+  .chest .lock {
+    position: absolute; z-index: 3; left: 50%; top: 32px; width: 20px; height: 24px; margin-left: -10px;
+    background: var(--yellow); box-shadow: 0 0 0 3px var(--ink), inset 0 -6px 0 0 var(--yellow-d);
+  }
+  .chest .glow { position: absolute; z-index: 1; left: 18px; right: 18px; top: 40px; height: 14px; background: var(--yellow); opacity: 0; }
+  .chest.knock { animation: shake .3s steps(3, end); }
+  @keyframes shake { 33% { transform: translateX(-6px) rotate(-3deg); } 66% { transform: translateX(6px) rotate(3deg); } }
+  .chest.open { cursor: default; }
+  .chest.open .lid { transform: translateY(-18px) rotate(-16deg); }
+  .chest.open .lock { display: none; }
+  .chest.open .glow { opacity: 1; box-shadow: 0 0 28px 14px var(--yellow); }
+  .chest-hint { margin-top: 22px; font-size: 16px; color: #b8c2e0; }
+  .loot { margin-top: 26px; text-align: left; animation: pop .5s steps(5, end); }
+  .loot-body { padding: 16px 16px 18px; }
+  .loot-name { font-family: "Do Hyeon", sans-serif; font-size: 25px; line-height: 1.3; }
+  .loot-text { margin-top: 6px; font-size: 17px; color: #3b3550; }
+  .rank-SSR { color: var(--pink); }
+  .rank-SR { color: var(--yellow); }
+  .rank-R { color: var(--blue); }
+  .reroll { width: calc(100% - 8px); margin-top: 22px; }
+
+  /* 서프라이즈: 보스전 */
+  .boss { text-align: left; }
+  .boss-body { padding: 16px 16px 20px; }
+  .boss-body .bar-row { margin-top: 0; }
+  .boss-stage { position: relative; display: flex; justify-content: center; margin-top: 14px; }
+  .boss-mon {
+    width: 120px; height: 120px; border: 0; cursor: pointer; font-size: 72px; line-height: 1;
+    background: var(--navy); -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+    box-shadow: 0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink), -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink), inset -6px -6px 0 0 var(--navy-2);
+  }
+  .boss-mon.hit { animation: hit .2s steps(2, end); }
+  @keyframes hit { 50% { transform: translateX(5px); filter: brightness(2); } }
+  .boss-mon.down { cursor: default; background: var(--blue); box-shadow: 0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink), -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink), inset -6px -6px 0 0 var(--blue-d); }
+  .dmg {
+    position: absolute; left: 50%; top: 10px; pointer-events: none; font-family: var(--en); font-size: 14px; color: var(--pink-d);
+    white-space: nowrap; text-shadow: 2px 2px 0 var(--ink); animation: dmg .6s steps(4, end) forwards;
+  }
+  .dmg.crit { color: var(--yellow-d); font-size: 16px; }
+  @keyframes dmg { 100% { transform: translateY(-40px); opacity: 0; } }
+  .boss-msg { margin-top: 16px; text-align: center; font-size: 17px; }
+  .boss-retry { width: calc(100% - 8px); margin-top: 16px; }
+
+  /* 서프라이즈: 팝업 (히든 보상 · 비밀 메시지 · 레벨업) */
+  .popup {
+    position: fixed; inset: 0; z-index: 15; display: none; align-items: center; justify-content: center; padding: 16px;
+    background: rgba(15, 22, 48, .94);
+  }
+  .popup.open { display: flex; }
+  .pop-win { position: relative; z-index: 1; width: min(100%, 400px); max-height: calc(100vh - 32px); overflow-y: auto; text-align: center; animation: pop .5s steps(5, end); }
+  .pop-body { padding: 18px 16px 18px; }
+  .pop-title { font-family: "Do Hyeon", sans-serif; font-size: 27px; line-height: 1.3; color: var(--pink-d); }
+  .pop-body .photo { aspect-ratio: 1; margin-top: 14px; border: 4px solid var(--ink); }
+  .pop-text { margin-top: 12px; font-size: 17px; white-space: pre-line; }
+  .pop-close { width: calc(100% - 8px); margin-top: 18px; }
+  .confetti { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+  .confetti i { position: absolute; top: -12px; width: 8px; height: 8px; animation: fall var(--d, 3s) steps(16, end) var(--delay, 0s) infinite; }
+  @keyframes fall { 100% { transform: translateY(110vh) rotate(360deg); } }
+
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s steps(4, end), transform .6s steps(4, end); }
   .reveal.in { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: reduce) {
     .reveal, .ach.reveal.in { opacity: 1; transform: none; transition: none; animation: none; }
     .sky i, .press, .dialog .next, .exp-lv .arrow { animation: none; }
+    .hidden-item, .chest.knock, .boss-mon.hit, .loot, .pop-win { animation: none; }
+    .chest .lid { transition: none; }
+    .confetti { display: none; }
     .exp-bar i { transition: none; }
     html { scroll-behavior: auto; }
   }
@@ -387,10 +487,12 @@
     <p class="date"><small>PARTY DAY</small><span data-bind="partyDateText"></span></p>
     <button class="press" id="pressStart" type="button">▶ PRESS START<small>눌러서 모험 시작</small></button>
     <div class="ground" aria-hidden="true"></div>
+    <button class="hidden-item" type="button" data-item style="right:26px; bottom:36px" aria-label="숨은 젖병 줍기">🍼</button>
   </section>
 
   <!-- 2. 인사말: NPC 대화창 -->
   <section class="reveal" id="greeting">
+    <button class="hidden-item" type="button" data-item style="right:16px; top:20px" aria-label="숨은 젖병 줍기">🍼</button>
     <p class="stage">STAGE 01</p>
     <h2>마을 어귀의 두 NPC</h2>
     <div class="npc">
@@ -443,6 +545,7 @@
 
   <!-- 4. 경험치 (D-day) -->
   <section class="reveal" id="expSection">
+    <button class="hidden-item" type="button" data-item style="left:14px; bottom:18px" aria-label="숨은 젖병 줍기">🍼</button>
     <p class="stage">STAGE 03</p>
     <h2>경험치를 모으는 중</h2>
     <div class="exp-lv"><span class="now" id="lvNow">LV.1</span><span class="arrow">▶</span><span class="goal">LV.100</span></div>
@@ -468,6 +571,25 @@
     <h2>세이브 슬롯</h2>
     <div class="slots" id="gallery"></div>
     <p class="slot-hint">슬롯을 누르면 크게 볼 수 있어요</p>
+    <button class="hidden-item" type="button" data-item style="right:14px; bottom:14px" aria-label="숨은 젖병 줍기">🍼</button>
+  </section>
+
+  <!-- 보너스: 보물상자 -->
+  <section class="reveal" id="treasure">
+    <p class="stage">BONUS</p>
+    <h2>보물상자 발견!</h2>
+    <button class="chest" id="chest" type="button" aria-label="보물상자 두드리기">
+      <span class="glow" aria-hidden="true"></span>
+      <span class="lid" aria-hidden="true"></span>
+      <span class="box" aria-hidden="true"></span>
+      <span class="lock" aria-hidden="true"></span>
+    </button>
+    <p class="chest-hint" id="chestHint" role="status">상자를 3번 두드려 열어보세요</p>
+    <div class="pbox loot drop" id="loot" hidden>
+      <div class="win-title"><span>ITEM GET!</span><span id="lootRank"></span></div>
+      <div class="loot-body"><p class="loot-name" id="lootName"></p><p class="loot-text" id="lootText"></p></div>
+    </div>
+    <button class="pbtn blue reroll" id="reroll" type="button" hidden>🎲 한 번 더 뽑기</button>
   </section>
 
   <!-- 7. 특별 이벤트 퀘스트 -->
@@ -498,8 +620,26 @@
     </div>
   </section>
 
+  <!-- 보너스: 보스전 -->
+  <section class="reveal" id="boss">
+    <p class="stage">BONUS STAGE</p>
+    <h2>보스 등장!</h2>
+    <div class="pbox boss drop">
+      <div class="win-title"><span>BOSS</span><span>잠투정 몬스터</span></div>
+      <div class="boss-body">
+        <div class="bar-row"><span>HP</span><div class="bar"><i id="bossHp" style="width:100%"></i></div></div>
+        <div class="boss-stage" id="bossStage">
+          <button class="boss-mon" id="bossMon" type="button" aria-label="잠투정 몬스터 공격하기">👾</button>
+        </div>
+        <p class="boss-msg" id="bossMsg" role="status">몬스터를 연타해서 <span data-bind="babyName"></span>이를 재워주세요!</p>
+        <button class="pbtn pink boss-retry" id="bossRetry" type="button" hidden>↺ 다시 도전</button>
+      </div>
+    </div>
+  </section>
+
   <!-- 8. 마무리 -->
   <section class="closing reveal">
+    <button class="hidden-item" type="button" data-item style="left:18px; top:24px" aria-label="숨은 젖병 줍기">🍼</button>
     <p class="tbc">TO BE<br>CONTINUED…</p>
     <p class="next-stage">다음 스테이지: <b>돌잔치</b></p>
     <p class="thanks">함께 모험해 주셔서 고맙습니다</p>
@@ -519,6 +659,19 @@
     <button class="pbtn blue lb-next" type="button" aria-label="다음">▶</button>
   </div>
 </div>
+<div class="popup" id="popup" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="popTitle">
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+  <div class="pbox drop pop-win">
+    <div class="win-title"><span id="popTag"></span><span>★</span></div>
+    <div class="pop-body">
+      <p class="pop-title" id="popTitle"></p>
+      <div class="photo" id="popPhoto"></div>
+      <p class="pop-text" id="popText"></p>
+      <button class="pbtn pink pop-close" id="popClose" type="button">확인</button>
+    </div>
+  </div>
+</div>
+<button class="item-hud" id="itemHud" type="button" aria-label="숨은 젖병 찾기 현황">🍼 <b id="itemCount">0</b>/<span id="itemTotal">5</span></button>
 <div class="toast" id="toast" role="status"></div>
 
 <script>
@@ -558,6 +711,27 @@ const CONFIG = {
     { title: "50일",        day: 50,  text: "처음으로 눈을 맞추고 방긋 웃어주었어요." },
     { title: "100일",       day: 100, text: "고개를 번쩍 들고 옹알이도 제법 늘었어요." },
   ],
+  // 서프라이즈 퀘스트
+  surprise: {
+    // 숨은 젖병을 모두 찾으면 열리는 보상
+    hiddenPhoto: "",
+    hiddenText: "젖병을 모두 찾아낸 꼼꼼한 용사님께\n유찬이의 히든 사진을 공개합니다!",
+    // LV.100 배지를 5번 연속으로 누르면 열리는 비밀 메시지
+    secretPhoto: "",
+    secretText: "유찬아, 우리에게 와줘서 정말 고마워.\n앞으로의 모험도 엄마 아빠가 늘 함께할게.",
+    // 보물상자에서 랜덤으로 나오는 덕담
+    blessings: [
+      { rank: "SSR", name: "무병장수 버프",   text: "평생 아프지 않고 튼튼하게 자라요." },
+      { rank: "SSR", name: "행복 무한 버프",   text: "매일매일 웃을 일만 가득해요." },
+      { rank: "SSR", name: "엄마·아빠 HP 회복", text: "오늘 밤은 유찬이가 푹 자줄 거예요." },
+      { rank: "SR",  name: "꿀잠 스킬 획득",   text: "밤새 쭉~ 자는 효자 스킬을 배웠어요." },
+      { rank: "SR",  name: "먹방 스킬 획득",   text: "분유도 이유식도 냠냠 잘 먹어요." },
+      { rank: "SR",  name: "인싸 오라",        text: "어딜 가나 사랑받는 아이가 될 거예요." },
+      { rank: "R",   name: "방긋 웃음 +100",   text: "보는 사람마다 기분이 좋아져요." },
+      { rank: "R",   name: "쑥쑥 성장 포션",   text: "키도 마음도 쑥쑥 자라요." },
+      { rank: "R",   name: "지혜 +10",         text: "총명하고 지혜롭게 자라요." },
+    ],
+  },
 };
 /* ========================================================= */
 
@@ -775,6 +949,178 @@ document.getElementById("copyLink").addEventListener("click", async () => {
   try { await navigator.clipboard.writeText(CONFIG.shareUrl); toast("링크를 복사했어요"); }
   catch { toast("복사에 실패했어요. 주소창에서 복사해 주세요"); }
 });
+
+/* ===== 서프라이즈 퀘스트 ===== */
+const SP = CONFIG.surprise;
+const store = {
+  get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+};
+
+// 팝업 (photo를 넘기지 않으면 사진 칸을 숨김)
+const popup = document.getElementById("popup");
+const popPhoto = document.getElementById("popPhoto");
+const confetti = document.getElementById("confetti");
+const confettiColors = ["#ffd93d", "#ff8fab", "#8fd3ff", "#7bd389", "#fff4dc"];
+function openPopup({ tag, title, text, photo, photoAlt, party }) {
+  document.getElementById("popTag").textContent = tag;
+  document.getElementById("popTitle").textContent = title;
+  document.getElementById("popText").textContent = text;
+  popPhoto.hidden = photo === undefined;
+  if (photo !== undefined) { popPhoto.textContent = photoAlt; fillPhoto(popPhoto, photo, photoAlt); }
+  confetti.textContent = "";
+  if (party && !reduce) {
+    for (let i = 0; i < 40; i++) {
+      const c = document.createElement("i");
+      c.style.left = `${Math.random() * 100}%`;
+      c.style.background = confettiColors[i % confettiColors.length];
+      c.style.setProperty("--d", `${2.4 + Math.random() * 2}s`);
+      c.style.setProperty("--delay", `${Math.random() * 2}s`);
+      confetti.appendChild(c);
+    }
+  }
+  popup.classList.add("open");
+  popup.setAttribute("aria-hidden", "false");
+  document.getElementById("popClose").focus({ focusVisible: false });
+}
+function closePopup() {
+  popup.classList.remove("open");
+  popup.setAttribute("aria-hidden", "true");
+  confetti.textContent = "";
+}
+document.getElementById("popClose").onclick = closePopup;
+popup.addEventListener("click", e => { if (e.target === popup) closePopup(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && popup.classList.contains("open")) closePopup(); });
+
+// 1) 숨은 젖병 찾기 (찾은 개수는 이 기기에 저장)
+const items = [...document.querySelectorAll("[data-item]")];
+const itemHud = document.getElementById("itemHud");
+const found = new Set((store.get("baekil-items") || []).filter(i => i < items.length));
+document.getElementById("itemTotal").textContent = items.length;
+function updateItemHud() {
+  document.getElementById("itemCount").textContent = found.size;
+  itemHud.classList.toggle("clear", found.size === items.length);
+}
+function openHiddenReward() {
+  openPopup({ tag: "HIDDEN", title: "히든 업적 달성!", text: SP.hiddenText, photo: SP.hiddenPhoto, photoAlt: "히든 사진", party: true });
+}
+items.forEach((el, i) => {
+  if (found.has(i)) { el.hidden = true; return; }
+  el.addEventListener("click", () => {
+    found.add(i);
+    store.set("baekil-items", [...found]);
+    el.classList.add("got");
+    setTimeout(() => { el.hidden = true; }, 500);
+    updateItemHud();
+    if (found.size === items.length) { toast("🍼 젖병을 모두 모았어요!"); setTimeout(openHiddenReward, 700); }
+    else toast(`🍼 젖병 획득! (${found.size}/${items.length})`);
+  });
+});
+itemHud.addEventListener("click", () => {
+  if (found.size === items.length) openHiddenReward();
+  else toast(`페이지 곳곳에 숨은 젖병 ${items.length - found.size}개를 찾아보세요`);
+});
+updateItemHud();
+
+// 2) 보물상자: 3번 두드리면 열리고 덕담이 랜덤으로 나옴
+const chest = document.getElementById("chest");
+const chestHint = document.getElementById("chestHint");
+const loot = document.getElementById("loot");
+const reroll = document.getElementById("reroll");
+let knocks = 0, lastLoot = -1;
+function restartAnim(el, cls) { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
+function drawLoot() {
+  let i;
+  do { i = Math.floor(Math.random() * SP.blessings.length); } while (SP.blessings.length > 1 && i === lastLoot);
+  lastLoot = i;
+  const b = SP.blessings[i];
+  const rank = document.getElementById("lootRank");
+  rank.textContent = `★ ${b.rank}`;
+  rank.className = `rank-${b.rank}`;
+  document.getElementById("lootName").textContent = b.name;
+  document.getElementById("lootText").textContent = b.text;
+  loot.hidden = false;
+  loot.style.animation = "none"; void loot.offsetWidth; loot.style.animation = "";
+}
+chest.addEventListener("click", () => {
+  if (chest.classList.contains("open")) return;
+  knocks++;
+  restartAnim(chest, "knock");
+  if (knocks < 3) { chestHint.textContent = `똑똑! ${3 - knocks}번 더 두드려 주세요`; return; }
+  chest.classList.add("open");
+  chest.setAttribute("aria-label", "열린 보물상자");
+  chestHint.textContent = "보물상자가 열렸다!";
+  drawLoot();
+  reroll.hidden = false;
+});
+reroll.addEventListener("click", drawLoot);
+
+// 3) 보스전: 몬스터를 연타해서 HP 깎기
+const BOSS_HP = 100;
+const bossMon = document.getElementById("bossMon");
+const bossHpBar = document.getElementById("bossHp");
+const bossMsg = document.getElementById("bossMsg");
+const bossRetry = document.getElementById("bossRetry");
+const bossStage = document.getElementById("bossStage");
+let bossHp = BOSS_HP;
+bossMon.addEventListener("click", () => {
+  if (bossHp <= 0) return;
+  const crit = Math.random() < .12;
+  const dmg = (4 + Math.floor(Math.random() * 6)) * (crit ? 2 : 1);
+  bossHp = Math.max(bossHp - dmg, 0);
+  bossHpBar.style.width = `${bossHp / BOSS_HP * 100}%`;
+  restartAnim(bossMon, "hit");
+  const pop = document.createElement("span");
+  pop.className = `dmg${crit ? " crit" : ""}`;
+  pop.textContent = crit ? `CRITICAL -${dmg}` : `-${dmg}`;
+  pop.style.marginLeft = `${-40 + Math.random() * 30}px`;
+  bossStage.appendChild(pop);
+  setTimeout(() => pop.remove(), 600);
+  if (bossHp === 0) {
+    bossMon.textContent = "💤";
+    bossMon.classList.add("down");
+    bossMon.setAttribute("aria-label", "쓰러진 잠투정 몬스터");
+    bossMsg.textContent = `잠투정 몬스터를 물리쳤다! ${CONFIG.babyName}이가 꿀잠에 빠졌어요`;
+    bossRetry.hidden = false;
+    toast("🏆 보상: 엄마·아빠 HP 회복!");
+  } else if (bossHp < 30) bossMsg.textContent = "조금만 더! 몬스터가 하품을 해요…";
+  else if (bossHp < 70) bossMsg.textContent = "몬스터가 칭얼거리기 시작했어요!";
+});
+bossRetry.addEventListener("click", () => {
+  bossHp = BOSS_HP;
+  bossHpBar.style.width = "100%";
+  bossMon.textContent = "👾";
+  bossMon.classList.remove("down");
+  bossMon.setAttribute("aria-label", "잠투정 몬스터 공격하기");
+  bossMsg.textContent = `몬스터를 연타해서 ${CONFIG.babyName}이를 재워주세요!`;
+  bossRetry.hidden = true;
+});
+
+// 4) 비밀 커맨드: LV.100 배지를 5번 연속으로 누르기
+let badgeTaps = 0, badgeTimer;
+document.querySelector(".lv-badge").addEventListener("click", () => {
+  badgeTaps++;
+  clearTimeout(badgeTimer);
+  badgeTimer = setTimeout(() => { badgeTaps = 0; }, 1500);
+  if (badgeTaps < 5) return;
+  badgeTaps = 0;
+  openPopup({ tag: "SECRET", title: "비밀 커맨드 발견!", text: SP.secretText, photo: SP.secretPhoto, photoAlt: "비밀 사진" });
+});
+
+// 5) 날짜 한정 이벤트: 백일 당일·잔치 당일 첫 접속에 레벨업 연출 (?event=levelup 으로 미리보기)
+const preview = new URLSearchParams(location.search).get("event") === "levelup";
+const lvupEvent = dday === 0
+  ? { key: "party", title: "PARTY TIME!", text: `오늘은 ${CONFIG.babyName}이의 백일잔치 날!\n파티에 합류해 주셔서 고마워요.` }
+  : toLv100 === 0 || preview
+  ? { key: "lv100", title: "LEVEL UP! LV.100", text: `${CONFIG.babyName}이가 오늘 백 일이 되었어요!\n함께 축하해 주세요.` }
+  : null;
+if (lvupEvent) {
+  const seenKey = `baekil-event-${lvupEvent.key}`;
+  if (preview || !store.get(seenKey)) {
+    store.set(seenKey, true);
+    setTimeout(() => openPopup({ tag: "EVENT", title: lvupEvent.title, text: lvupEvent.text, party: true }), 600);
+  }
+}
 
 // 스크롤 등장 + 타자 효과·경험치 시작
 const io = new IntersectionObserver(entries => {
