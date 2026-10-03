@@ -286,6 +286,26 @@
   .ach.locked .ach-state { background: #9aa3c0; }
   .ach-body { padding: 14px 14px 18px; }
   .ach .photo { aspect-ratio: 4 / 3; border: 4px solid var(--ink); }
+  /* 아직 오지 않은 날: 픽셀 "?" 아이템 상자 */
+  .ach .photo.mystery {
+    flex-direction: column; gap: 6px; color: var(--cream); text-align: center;
+    background-color: var(--navy);
+    background-image:
+      linear-gradient(45deg, var(--navy-2) 25%, transparent 25%, transparent 75%, var(--navy-2) 75%),
+      linear-gradient(45deg, var(--navy-2) 25%, transparent 25%, transparent 75%, var(--navy-2) 75%);
+    background-size: 16px 16px; background-position: 0 0, 8px 8px;
+  }
+  .mystery-q {
+    width: 64px; height: 64px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--en); font-size: 28px; color: var(--ink); background: var(--yellow);
+    box-shadow: inset -4px -4px 0 var(--yellow-d), 0 0 0 4px var(--ink);
+    animation: mysteryBlink 1.2s steps(2) infinite;
+  }
+  @keyframes mysteryBlink { 50% { transform: translateY(-4px); } }
+  .mystery-d { font-family: "Jua", sans-serif; font-size: 17px; color: var(--yellow); margin-top: 6px; }
+  .mystery-open { font-family: "Jua", sans-serif; font-size: 15px; }
+  /* 날짜는 지났지만 사진이 아직 없을 때 */
+  .ach .photo.pending { white-space: pre-line; text-align: center; font-family: "Jua", sans-serif; font-size: 16px; line-height: 1.5; }
   .ach h3 { font-family: "Do Hyeon", sans-serif; font-weight: 400; font-size: 26px; line-height: 1.2; margin-top: 12px; }
   .ach .when { font-family: var(--num); font-size: 16px; color: var(--muted); }
   .ach .text { margin-top: 6px; font-size: 17px; }
@@ -427,17 +447,43 @@
 
   /* 서프라이즈: 보스전 */
   .boss { text-align: left; }
+  .boss .win-title span:last-child { font-family: "Jua", sans-serif; font-size: 17px; letter-spacing: 0; }
   .boss-body { padding: 16px 16px 20px; }
   .boss-body .bar-row { margin-top: 0; }
-  .boss-stage { position: relative; display: flex; justify-content: center; margin-top: 14px; }
-  .boss-mon {
-    width: 120px; height: 120px; border: 0; cursor: pointer; font-size: 72px; line-height: 1;
-    background: var(--navy); -webkit-tap-highlight-color: transparent; touch-action: manipulation;
-    box-shadow: 0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink), -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink), inset -6px -6px 0 0 var(--navy-2);
+  /* 꿀잠 퀘스트: 잠들수록 무대가 밤하늘로 바뀜 (--sleep: 0 → 1) */
+  .boss-stage {
+    --sleep: 0;
+    position: relative; display: flex; justify-content: center; align-items: center;
+    margin-top: 14px; padding: 22px 0; overflow: hidden;
+    background: linear-gradient(180deg, #ffe7b3, #ffd0dc);
+    box-shadow: 0 0 0 4px var(--ink);
   }
-  .boss-mon.hit { animation: hit .2s steps(2, end); }
-  @keyframes hit { 50% { transform: translateX(5px); filter: brightness(2); } }
+  .boss-stage::before {
+    content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, var(--deep), var(--navy-2));
+    opacity: var(--sleep); transition: opacity .4s;
+  }
+  .boss-stage .night-deco {
+    position: absolute; font-size: 18px; opacity: calc((var(--sleep) - .5) * 2); transition: opacity .4s; pointer-events: none;
+  }
+  .boss-stage .moon { top: 8px; right: 14px; font-size: 22px; }
+  .boss-stage .star1 { top: 14px; left: 18px; }
+  .boss-stage .star2 { bottom: 16px; right: 26px; font-size: 13px; }
+  .boss-stage .star3 { bottom: 26px; left: 34px; font-size: 12px; }
+  .boss-mon {
+    position: relative; width: 132px; height: 132px; padding: 6px; border: 0; cursor: pointer; line-height: 0;
+    background: var(--cream); -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+    box-shadow: 0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink), -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink), inset -6px -6px 0 0 var(--cream-2);
+  }
+  .boss-mon svg { width: 100%; height: 100%; display: block; shape-rendering: crispEdges; }
+  /* 토닥일 때마다 요람처럼 흔들흔들 */
+  .boss-mon.hit { animation: rock .36s steps(3, end); }
+  @keyframes rock { 33% { transform: rotate(-6deg); } 66% { transform: rotate(6deg); } }
   .boss-mon.down { cursor: default; background: var(--blue); box-shadow: 0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink), -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink), inset -6px -6px 0 0 var(--blue-d); }
+  .zzz {
+    position: absolute; top: -6px; right: -18px; font-family: var(--en); font-size: 14px; color: var(--yellow);
+    text-shadow: 2px 2px 0 var(--ink); line-height: 1; animation: zzz 1.6s steps(4, end) infinite;
+  }
+  @keyframes zzz { 0% { transform: translate(0, 6px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translate(8px, -14px); opacity: 0; } }
   .dmg {
     position: absolute; left: 50%; top: 10px; pointer-events: none; font-family: var(--en); font-size: 14px; color: var(--pink-d);
     white-space: nowrap; text-shadow: 2px 2px 0 var(--ink); animation: dmg .6s steps(4, end) forwards;
@@ -468,7 +514,8 @@
   @media (prefers-reduced-motion: reduce) {
     .reveal, .ach.reveal.in { opacity: 1; transform: none; transition: none; animation: none; }
     .sky i, .press, .dialog .next, .exp-lv .arrow { animation: none; }
-    .hidden-item, .hud-new, .chest.knock, .boss-mon.hit, .loot, .pop-win { animation: none; }
+    .hidden-item, .hud-new, .chest.knock, .boss-mon.hit, .loot, .pop-win, .mystery-q, .zzz { animation: none; }
+    .boss-stage::before, .boss-stage .night-deco { transition: none; }
     .chest .lid { transition: none; }
     .confetti { display: none; }
     .exp-bar i { transition: none; }
@@ -637,15 +684,36 @@
   <!-- 보너스: 보스전 -->
   <section class="reveal" id="boss">
     <p class="stage">BONUS STAGE</p>
-    <h2>보스 등장!</h2>
+    <h2>꿀잠 퀘스트!</h2>
     <div class="pbox boss drop">
-      <div class="win-title"><span>BOSS</span><span>잠투정 몬스터</span></div>
+      <div class="win-title"><span>BOSS</span><span>잠투정 대마왕</span></div>
       <div class="boss-body">
-        <div class="bar-row"><span>HP</span><div class="bar"><i id="bossHp" style="width:100%"></i></div></div>
+        <div class="bar-row"><span>잠투정</span><div class="bar"><i id="bossHp" style="width:100%"></i></div></div>
         <div class="boss-stage" id="bossStage">
-          <button class="boss-mon" id="bossMon" type="button" aria-label="잠투정 몬스터 공격하기">👾</button>
+          <span class="night-deco moon" aria-hidden="true">🌙</span>
+          <span class="night-deco star1" aria-hidden="true">✨</span>
+          <span class="night-deco star2" aria-hidden="true">⭐</span>
+          <span class="night-deco star3" aria-hidden="true">✨</span>
+          <button class="boss-mon" id="bossMon" type="button" aria-label="아기 토닥이기">
+            <!-- 픽셀 아기 얼굴: 표정(#babyFace)만 단계별로 바뀜 -->
+            <svg viewBox="0 0 32 32" aria-hidden="true">
+              <g fill="#1a1c2c">
+                <rect x="8" y="5" width="16" height="3"/><rect x="6" y="7" width="20" height="3"/>
+                <rect x="5" y="9" width="22" height="14"/><rect x="6" y="22" width="20" height="3"/>
+                <rect x="8" y="24" width="16" height="3"/>
+                <rect x="15" y="2" width="2" height="4"/><rect x="17" y="1" width="2" height="2"/>
+              </g>
+              <g fill="#ffd9b8">
+                <rect x="9" y="6" width="14" height="2"/><rect x="7" y="8" width="18" height="2"/>
+                <rect x="6" y="10" width="20" height="12"/><rect x="7" y="22" width="18" height="2"/>
+                <rect x="9" y="24" width="14" height="2"/>
+              </g>
+              <g fill="#ff8fab" opacity=".7"><rect x="7" y="17" width="3" height="2"/><rect x="22" y="17" width="3" height="2"/></g>
+              <g id="babyFace"></g>
+            </svg>
+          </button>
         </div>
-        <p class="boss-msg" id="bossMsg" role="status">몬스터를 연타해서 <span data-bind="babyName"></span>이를 재워주세요!</p>
+        <p class="boss-msg" id="bossMsg" role="status">아기를 토닥토닥 눌러서 <span data-bind="babyName"></span>이를 재워주세요!</p>
         <button class="pbtn pink boss-retry" id="bossRetry" type="button" hidden>↺ 다시 도전</button>
       </div>
     </div>
@@ -724,7 +792,7 @@ const CONFIG = {
   },
   timeline: [
     { title: "세상에 온 날", day: 1,   text: "3.37kg의 작은 몸으로 우리에게 와주었어요." },
-    { title: "50일",        day: 50,  text: "처음으로 눈을 맞추고 방긋 웃어주었어요." },
+    { title: "50일",        day: 50,  text: "옹알옹알, 첫 대화를 시작했어요." },
     { title: "100일",       day: 100, text: "고개를 번쩍 들고 옹알이도 제법 늘었어요." },
   ],
   // 서프라이즈 퀘스트
@@ -776,7 +844,7 @@ document.querySelectorAll("[data-bind]").forEach(el => { el.textContent = derive
 
 // 확장자를 바꿔가며 사진을 찾고, 찾으면 안내 칸을 사진으로 바꿉니다.
 const PHOTO_EXTS = ["jpg", "jpeg", "png", "webp", "JPG", "JPEG", "PNG"];
-function fillPhoto(el, src, alt) {
+function fillPhoto(el, src, alt, onFound) {
   if (!el || !src) return;
   el.dataset.src = src;
   const candidates = /\.\w+$/.test(src) ? [src] : PHOTO_EXTS.map(ext => `${src}.${ext}`);
@@ -788,6 +856,7 @@ function fillPhoto(el, src, alt) {
       if (el.dataset.src !== src) return;   // 그 사이 다른 사진으로 바뀐 경우
       el.textContent = "";
       el.appendChild(img);
+      if (onFound) onFound();
     };
     img.onerror = () => tryNext(idx + 1);
     img.src = candidates[idx];
@@ -886,15 +955,35 @@ CONFIG.timeline.forEach((item, i) => {
     `<span class="ach-en">ACHIEVEMENT<small></small></span><span class="ach-state"></span></div>` +
     `<div class="ach-body"><div class="photo"></div><h3></h3><p class="when"></p><p class="text"></p></div>` +
     `<span class="exp-plus"></span>`;
-  el.querySelector(".trophy").textContent = done ? "🏆" : "🔒";
-  el.querySelector(".ach-en small").textContent = done ? "업적 달성!" : "곧 달성 예정";
+  const trophy = el.querySelector(".trophy");
+  const status = el.querySelector(".ach-en small");
+  const photo = el.querySelector(".photo");
   el.querySelector(".ach-state").textContent = `QUEST ${i + 1}`;
-  el.querySelector(".photo").textContent = `${item.title} 사진`;
   el.querySelector("h3").textContent = item.title;
   el.querySelector(".when").textContent = `DAY ${item.day} · ${d.getFullYear()}. ${d.getMonth() + 1}. ${d.getDate()}.`;
-  el.querySelector(".text").textContent = item.text;
   el.querySelector(".exp-plus").textContent = `+${item.day} EXP`;
-  fillPhoto(el.querySelector(".photo"), CONFIG.photos.timeline[i], item.title);
+
+  if (!done) {
+    // ① 아직 오지 않은 날: 잠긴 "?" 상자 (사진이 있어도 그날까지 숨김)
+    trophy.textContent = "🔒";
+    status.textContent = "곧 달성 예정";
+    photo.classList.add("mystery");
+    photo.innerHTML = `<span class="mystery-q">?</span><span class="mystery-d"></span><span class="mystery-open"></span>`;
+    photo.querySelector(".mystery-d").textContent = `히든 퀘스트 · D-${Math.round((d - today) / DAY)}`;
+    photo.querySelector(".mystery-open").textContent = `${d.getMonth() + 1}월 ${d.getDate()}일 오픈 예정!`;
+    el.querySelector(".text").textContent = "과연 어떤 모습일까요? 두근두근…";
+  } else {
+    // ② 날짜는 지났지만 사진이 없을 때 → ③ 사진을 찾으면 정상 공개
+    trophy.textContent = "🎁";
+    status.textContent = "업적 달성!";
+    photo.classList.add("pending");
+    photo.textContent = "사진 업로드 중…\n곧 공개됩니다";
+    el.querySelector(".text").textContent = item.text;
+    fillPhoto(photo, CONFIG.photos.timeline[i], item.title, () => {
+      photo.classList.remove("pending");
+      trophy.textContent = "🏆";
+    });
+  }
   questList.appendChild(el);
 });
 
@@ -1052,7 +1141,7 @@ const QUESTS = [
   { key: "items", name: "숨은 젖병 찾기", hint: () => `페이지 곳곳에 숨어 있어요 (${found.size}/${items.length})`,
     done: () => found.size === items.length, reward: ["사진 보기", openHiddenReward] },
   { key: "chest", name: "보물상자 열기", hint: () => "BONUS 스테이지의 상자를 두드려 보세요" },
-  { key: "boss", name: "잠투정 몬스터 물리치기", hint: () => "BONUS STAGE에서 몬스터를 연타하세요" },
+  { key: "boss", name: "잠투정 아기 재우기", hint: () => "BONUS STAGE에서 아기를 토닥토닥 눌러 보세요" },
   { key: "secret", name: "??? 히든 퀘스트", doneName: "비밀 커맨드 발견", hint: () => "힌트: 레벨이 적힌 곳을 연타해 보세요",
     reward: ["다시 보기", openSecret] },
 ];
@@ -1144,47 +1233,76 @@ chest.addEventListener("click", () => {
 });
 reroll.addEventListener("click", drawLoot);
 
-// 3) 보스전: 몬스터를 연타해서 HP 깎기
+// 3) 꿀잠 퀘스트: 아기를 토닥여서 잠투정 게이지를 0으로 만들기
 const BOSS_HP = 100;
 const bossMon = document.getElementById("bossMon");
 const bossHpBar = document.getElementById("bossHp");
 const bossMsg = document.getElementById("bossMsg");
 const bossRetry = document.getElementById("bossRetry");
 const bossStage = document.getElementById("bossStage");
+const babyFace = document.getElementById("babyFace");
+// 표정 단계: 남은 잠투정이 min 이상일 때 적용 (눈·입 픽셀 + 메시지)
+const INK = 'fill="#1a1c2c"', TEAR = 'fill="#8fd3ff"', MOUTH = 'fill="#e0607e"';
+const r = (x, y, w, h, f = INK) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" ${f}/>`;
+const FACES = [
+  { min: 81, msg: () => "응애응애! 잠투정 폭발!", svg:   // 우는 얼굴 >  <
+    r(9,12,2,1)+r(11,13,2,1)+r(9,14,2,1) + r(21,12,2,1)+r(19,13,2,1)+r(21,14,2,1) +
+    r(10,15,1,3,TEAR)+r(21,15,1,3,TEAR) + r(13,19,6,4)+r(14,20,4,2,MOUTH) },
+  { min: 61, msg: () => "칭얼칭얼… 조금 진정했어요", svg:   // 찡그린 얼굴
+    r(10,11,2,1)+r(20,11,2,1) + r(9,13,4,1)+r(19,13,4,1) + r(13,21,2,1)+r(15,20,2,1)+r(17,21,2,1) },
+  { min: 41, msg: () => "하아암~ 하품을 해요", svg:   // 크게 하품
+    r(9,13,4,1)+r(19,13,4,1)+r(12,14,1,1,TEAR) + r(14,18,4,5)+r(15,19,2,3,MOUTH) },
+  { min: 16, msg: () => "눈꺼풀이 스르륵…", svg:   // 반쯤 감긴 눈
+    r(9,12,4,1)+r(19,12,4,1)+r(10,13,2,1)+r(20,13,2,1) + r(15,20,2,1) },
+  { min: 1, msg: () => "꾸벅… 거의 다 왔어요!", svg:   // 꾸벅꾸벅
+    r(9,14,4,1)+r(19,14,4,1) + r(15,20,2,2) },
+  { min: 0, msg: () => `쌔근쌔근… ${CONFIG.babyName}이가 꿀잠에 빠졌어요`, svg:   // 잠든 얼굴 u u
+    r(9,13,1,1)+r(10,14,2,1)+r(12,13,1,1) + r(19,13,1,1)+r(20,14,2,1)+r(22,13,1,1) + r(15,21,2,1) },
+];
 let bossHp = BOSS_HP;
+let faceIdx = -1;
+function renderBaby() {
+  const idx = FACES.findIndex(f => bossHp >= f.min);
+  bossStage.style.setProperty("--sleep", (1 - bossHp / BOSS_HP).toFixed(2));
+  bossHpBar.style.width = `${bossHp / BOSS_HP * 100}%`;
+  if (idx === faceIdx) return;
+  faceIdx = idx;
+  babyFace.innerHTML = FACES[idx].svg;   // 고정된 그림 문자열만 넣음
+  bossMsg.textContent = FACES[idx].msg();
+}
 bossMon.addEventListener("click", () => {
   if (bossHp <= 0) return;
   const crit = Math.random() < .12;
   const dmg = (4 + Math.floor(Math.random() * 6)) * (crit ? 2 : 1);
   bossHp = Math.max(bossHp - dmg, 0);
-  bossHpBar.style.width = `${bossHp / BOSS_HP * 100}%`;
   restartAnim(bossMon, "hit");
   const pop = document.createElement("span");
   pop.className = `dmg${crit ? " crit" : ""}`;
-  pop.textContent = crit ? `CRITICAL -${dmg}` : `-${dmg}`;
+  pop.textContent = crit ? `🎵 자장가 +${dmg}` : `토닥 +${dmg}`;
   pop.style.marginLeft = `${-40 + Math.random() * 30}px`;
   bossStage.appendChild(pop);
   setTimeout(() => pop.remove(), 600);
+  renderBaby();
   if (bossHp === 0) {
-    bossMon.textContent = "💤";
     bossMon.classList.add("down");
-    bossMon.setAttribute("aria-label", "쓰러진 잠투정 몬스터");
-    bossMsg.textContent = `잠투정 몬스터를 물리쳤다! ${CONFIG.babyName}이가 꿀잠에 빠졌어요`;
+    bossMon.setAttribute("aria-label", "잠든 아기");
+    const z = document.createElement("span");
+    z.className = "zzz"; z.textContent = "Zz";
+    bossMon.appendChild(z);
     bossRetry.hidden = false;
     completeQuest("boss");
     toast("🏆 보상: 엄마·아빠 HP 회복!");
-  } else if (bossHp < 30) bossMsg.textContent = "조금만 더! 몬스터가 하품을 해요…";
-  else if (bossHp < 70) bossMsg.textContent = "몬스터가 칭얼거리기 시작했어요!";
+  }
 });
 bossRetry.addEventListener("click", () => {
   bossHp = BOSS_HP;
-  bossHpBar.style.width = "100%";
-  bossMon.textContent = "👾";
   bossMon.classList.remove("down");
-  bossMon.setAttribute("aria-label", "잠투정 몬스터 공격하기");
-  bossMsg.textContent = `몬스터를 연타해서 ${CONFIG.babyName}이를 재워주세요!`;
+  bossMon.setAttribute("aria-label", "아기 토닥이기");
+  bossMon.querySelector(".zzz")?.remove();
   bossRetry.hidden = true;
+  renderBaby();
 });
+renderBaby();
 
 // 4) 비밀 커맨드: LV.100 배지를 5번 연속으로 누르기
 let badgeTaps = 0, badgeTimer;
