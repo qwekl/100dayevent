@@ -714,12 +714,13 @@ const CONFIG = {
   kakaoPlaceUrl: "https://place.map.kakao.com/433757592",
   placeLatLng: { lat: 37.62663898, lng: 127.15041135 },   // 티맵 길안내 목적지 좌표
   placeNote: "",
-  // 사진: images 폴더에 넣고 경로를 적어주세요. 비워두면 안내 칸이 표시됩니다.
+  // 사진: images 폴더에 아래 이름으로 넣으면 자동으로 표시됩니다. 파일이 없으면 안내 칸이 보입니다.
+  // 확장자 없이 적으면 jpg → jpeg → png → webp 순서로 찾고, 확장자까지 적으면 그 파일만 씁니다.
   photos: {
-    cover: "",
-    intro: "",
-    timeline: ["", "", ""],
-    gallery: ["", "", "", "", "", "", "", "", ""],
+    cover: "images/cover",
+    intro: "images/intro",
+    timeline: ["images/day1", "images/day50", "images/day100"],
+    gallery: Array.from({ length: 9 }, (_, i) => `images/image${i + 1}`),
   },
   timeline: [
     { title: "세상에 온 날", day: 1,   text: "3.37kg의 작은 몸으로 우리에게 와주었어요." },
@@ -773,12 +774,25 @@ const derived = {
 };
 document.querySelectorAll("[data-bind]").forEach(el => { el.textContent = derived[el.dataset.bind] ?? ""; });
 
+// 확장자를 바꿔가며 사진을 찾고, 찾으면 안내 칸을 사진으로 바꿉니다.
+const PHOTO_EXTS = ["jpg", "jpeg", "png", "webp", "JPG", "JPEG", "PNG"];
 function fillPhoto(el, src, alt) {
   if (!el || !src) return;
-  el.textContent = "";
-  const img = new Image();
-  img.src = src; img.alt = alt; img.loading = "lazy";
-  el.appendChild(img);
+  el.dataset.src = src;
+  const candidates = /\.\w+$/.test(src) ? [src] : PHOTO_EXTS.map(ext => `${src}.${ext}`);
+  const tryNext = idx => {
+    if (idx >= candidates.length) return;
+    const img = new Image();
+    img.alt = alt;
+    img.onload = () => {
+      if (el.dataset.src !== src) return;   // 그 사이 다른 사진으로 바뀐 경우
+      el.textContent = "";
+      el.appendChild(img);
+    };
+    img.onerror = () => tryNext(idx + 1);
+    img.src = candidates[idx];
+  };
+  tryNext(0);
 }
 fillPhoto(document.querySelector('[data-photo="cover"]'), CONFIG.photos.cover, "메인 사진");
 fillPhoto(document.querySelector('[data-photo="intro"]'), CONFIG.photos.intro, "소개 사진");
