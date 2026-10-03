@@ -365,12 +365,25 @@
   .hidden-item:focus-visible, .item-hud:focus-visible, .chest:focus-visible, .boss-mon:focus-visible { outline: 3px dashed var(--yellow); outline-offset: 4px; }
   .item-hud {
     position: fixed; z-index: 5; right: max(12px, calc(50vw - 228px)); bottom: calc(14px + env(safe-area-inset-bottom));
-    border: 0; cursor: pointer; background: var(--ink); color: var(--cream); font-family: var(--en); font-size: 10px; padding: 8px 10px 6px;
+    border: 0; cursor: pointer; background: var(--ink); color: var(--cream); font-family: "Jua", sans-serif; font-size: 15px; line-height: 1.3; padding: 7px 12px 6px;
     box-shadow: 0 -3px 0 0 var(--cream), 0 3px 0 0 var(--cream), -3px 0 0 0 var(--cream), 3px 0 0 0 var(--cream);
   }
-  .item-hud b { color: var(--yellow); font-weight: 400; }
+  .item-hud b { font-family: var(--num); font-size: 17px; color: var(--yellow); font-weight: 400; margin-left: 2px; }
   .item-hud.clear { background: var(--pink); color: var(--ink); }
   .item-hud.clear b { color: var(--ink); }
+  .hud-new { font-family: var(--en);
+    position: absolute; left: -10px; top: -14px; background: var(--pink); color: var(--ink); font-size: 8px; padding: 4px 4px 2px;
+    box-shadow: 0 0 0 2px var(--ink); animation: press 1s steps(1, end) infinite;
+  }
+  .qlist { list-style: none; margin-top: 14px; text-align: left; }
+  .qlist li { display: flex; gap: 10px; align-items: center; padding: 10px 2px; }
+  .qlist li + li { border-top: 3px dotted rgba(26, 28, 44, .25); }
+  .q-check { flex: none; width: 26px; height: 26px; border: 3px solid var(--ink); background: #fff; font-size: 14px; line-height: 20px; text-align: center; }
+  .qlist li.done .q-check { background: var(--green); }
+  .q-info { flex: 1; min-width: 0; }
+  .q-info b { display: block; font-weight: 400; font-size: 17px; line-height: 1.4; }
+  .q-info small { display: block; font-size: 14px; line-height: 1.4; color: var(--muted); }
+  .qlist .pbtn { flex: none; font-size: 14px; padding: 6px 10px; }
 
   /* 서프라이즈: 비밀 커맨드 */
   .lv-badge { cursor: pointer; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
@@ -455,7 +468,7 @@
   @media (prefers-reduced-motion: reduce) {
     .reveal, .ach.reveal.in { opacity: 1; transform: none; transition: none; animation: none; }
     .sky i, .press, .dialog .next, .exp-lv .arrow { animation: none; }
-    .hidden-item, .chest.knock, .boss-mon.hit, .loot, .pop-win { animation: none; }
+    .hidden-item, .hud-new, .chest.knock, .boss-mon.hit, .loot, .pop-win { animation: none; }
     .chest .lid { transition: none; }
     .confetti { display: none; }
     .exp-bar i { transition: none; }
@@ -505,6 +518,7 @@
       <p data-type><span data-bind="babyName"></span>이가 이 세상에 태어나 첫 모험을 시작한 지 어느덧 백 일이 다 되었어요.</p>
       <p data-type>밤낮없이 울고 웃으며 매일 한 칸씩 경험치를 쌓아 드디어 레벨 100을 앞두고 있답니다.</p>
       <p data-type>이 특별한 레벨업 순간을 함께 축하해 주시면 큰 힘이 될 거예요. 저희 파티에 꼭 합류해 주세요!</p>
+      <p data-type>참, 마을 곳곳에 젖병 5개와 보물상자, 그리고 보스가 숨어 있대요. 오른쪽 아래 📜 퀘스트 버튼에서 확인해 보세요!</p>
       <p class="sign">아빠 <span data-bind="dad"></span> · 엄마 <span data-bind="mom"></span></p>
       <span class="next" aria-hidden="true">▼</span>
     </div>
@@ -667,11 +681,12 @@
       <p class="pop-title" id="popTitle"></p>
       <div class="photo" id="popPhoto"></div>
       <p class="pop-text" id="popText"></p>
+      <ul class="qlist" id="qList" hidden></ul>
       <button class="pbtn pink pop-close" id="popClose" type="button">확인</button>
     </div>
   </div>
 </div>
-<button class="item-hud" id="itemHud" type="button" aria-label="숨은 젖병 찾기 현황">🍼 <b id="itemCount">0</b>/<span id="itemTotal">5</span></button>
+<button class="item-hud" id="questHud" type="button" aria-label="퀘스트 목록 보기">📜 퀘스트 <b id="questDone">0</b>/<span id="questTotal">4</span><span class="hud-new" id="hudNew" hidden>NEW</span></button>
 <div class="toast" id="toast" role="status"></div>
 
 <script>
@@ -961,13 +976,16 @@ const store = {
 const popup = document.getElementById("popup");
 const popPhoto = document.getElementById("popPhoto");
 const confetti = document.getElementById("confetti");
+const qList = document.getElementById("qList");
 const confettiColors = ["#ffd93d", "#ff8fab", "#8fd3ff", "#7bd389", "#fff4dc"];
-function openPopup({ tag, title, text, photo, photoAlt, party }) {
+function openPopup({ tag, title, text, photo, photoAlt, party, list }) {
   document.getElementById("popTag").textContent = tag;
   document.getElementById("popTitle").textContent = title;
   document.getElementById("popText").textContent = text;
   popPhoto.hidden = photo === undefined;
   if (photo !== undefined) { popPhoto.textContent = photoAlt; fillPhoto(popPhoto, photo, photoAlt); }
+  qList.hidden = !list;
+  if (list) renderQuestList();
   confetti.textContent = "";
   if (party && !reduce) {
     for (let i = 0; i < 40; i++) {
@@ -994,13 +1012,7 @@ document.addEventListener("keydown", e => { if (e.key === "Escape" && popup.clas
 
 // 1) 숨은 젖병 찾기 (찾은 개수는 이 기기에 저장)
 const items = [...document.querySelectorAll("[data-item]")];
-const itemHud = document.getElementById("itemHud");
 const found = new Set((store.get("baekil-items") || []).filter(i => i < items.length));
-document.getElementById("itemTotal").textContent = items.length;
-function updateItemHud() {
-  document.getElementById("itemCount").textContent = found.size;
-  itemHud.classList.toggle("clear", found.size === items.length);
-}
 function openHiddenReward() {
   openPopup({ tag: "HIDDEN", title: "히든 업적 달성!", text: SP.hiddenText, photo: SP.hiddenPhoto, photoAlt: "히든 사진", party: true });
 }
@@ -1011,16 +1023,78 @@ items.forEach((el, i) => {
     store.set("baekil-items", [...found]);
     el.classList.add("got");
     setTimeout(() => { el.hidden = true; }, 500);
-    updateItemHud();
     if (found.size === items.length) { toast("🍼 젖병을 모두 모았어요!"); setTimeout(openHiddenReward, 700); }
     else toast(`🍼 젖병 획득! (${found.size}/${items.length})`);
+    updateQuestHud();
+    if (found.size === items.length) checkAllClear();
   });
 });
-itemHud.addEventListener("click", () => {
-  if (found.size === items.length) openHiddenReward();
-  else toast(`페이지 곳곳에 숨은 젖병 ${items.length - found.size}개를 찾아보세요`);
+
+// 퀘스트 목록 (깬 퀘스트는 이 기기에 저장)
+const questHud = document.getElementById("questHud");
+const hudNew = document.getElementById("hudNew");
+const cleared = store.get("baekil-quests") || {};
+const QUESTS = [
+  { key: "items", name: "숨은 젖병 찾기", hint: () => `페이지 곳곳에 숨어 있어요 (${found.size}/${items.length})`,
+    done: () => found.size === items.length, reward: ["사진 보기", openHiddenReward] },
+  { key: "chest", name: "보물상자 열기", hint: () => "BONUS 스테이지의 상자를 두드려 보세요" },
+  { key: "boss", name: "잠투정 몬스터 물리치기", hint: () => "BONUS STAGE에서 몬스터를 연타하세요" },
+  { key: "secret", name: "??? 히든 퀘스트", doneName: "비밀 커맨드 발견", hint: () => "힌트: 레벨이 적힌 곳을 연타해 보세요",
+    reward: ["다시 보기", openSecret] },
+];
+const isDone = q => (q.done ? q.done() : !!cleared[q.key]);
+const doneCount = () => QUESTS.filter(isDone).length;
+document.getElementById("questTotal").textContent = QUESTS.length;
+function updateQuestHud() {
+  const n = doneCount();
+  document.getElementById("questDone").textContent = n;
+  questHud.classList.toggle("clear", n === QUESTS.length);
+  if (qList.hidden === false && popup.classList.contains("open")) renderQuestList();
+}
+function completeQuest(key) {
+  if (cleared[key]) return;
+  cleared[key] = true;
+  store.set("baekil-quests", cleared);
+  updateQuestHud();
+  checkAllClear();
+}
+function checkAllClear() {
+  if (doneCount() === QUESTS.length) setTimeout(() => toast("🏆 모든 퀘스트 클리어!"), 1900);
+}
+function renderQuestList() {
+  qList.textContent = "";
+  QUESTS.forEach(q => {
+    const done = isDone(q);
+    const li = document.createElement("li");
+    li.className = done ? "done" : "";
+    li.innerHTML = `<span class="q-check" aria-hidden="true"></span><span class="q-info"><b></b><small></small></span>`;
+    li.querySelector(".q-check").textContent = done ? "✓" : "";
+    li.querySelector("b").textContent = done && q.doneName ? q.doneName : q.name;
+    li.querySelector("small").textContent = done ? "클리어!" : q.hint();
+    if (done && q.reward) {
+      const btn = document.createElement("button");
+      btn.type = "button"; btn.className = "pbtn blue"; btn.textContent = q.reward[0];
+      btn.onclick = q.reward[1];
+      li.appendChild(btn);
+    }
+    qList.appendChild(li);
+  });
+}
+function openQuestList() {
+  const all = doneCount() === QUESTS.length;
+  openPopup({
+    tag: "QUEST LOG", list: true,
+    title: all ? "ALL CLEAR!" : "오늘의 퀘스트",
+    text: all ? "모든 퀘스트를 클리어했어요!\n진정한 백일 용사님이에요 🏆" : "하나씩 깰 때마다 체크돼요.",
+  });
+}
+if (!store.get("baekil-quest-seen")) hudNew.hidden = false;
+questHud.addEventListener("click", () => {
+  hudNew.hidden = true;
+  store.set("baekil-quest-seen", true);
+  openQuestList();
 });
-updateItemHud();
+updateQuestHud();
 
 // 2) 보물상자: 3번 두드리면 열리고 덕담이 랜덤으로 나옴
 const chest = document.getElementById("chest");
@@ -1048,6 +1122,7 @@ chest.addEventListener("click", () => {
   restartAnim(chest, "knock");
   if (knocks < 3) { chestHint.textContent = `똑똑! ${3 - knocks}번 더 두드려 주세요`; return; }
   chest.classList.add("open");
+  completeQuest("chest");
   chest.setAttribute("aria-label", "열린 보물상자");
   chestHint.textContent = "보물상자가 열렸다!";
   drawLoot();
@@ -1082,6 +1157,7 @@ bossMon.addEventListener("click", () => {
     bossMon.setAttribute("aria-label", "쓰러진 잠투정 몬스터");
     bossMsg.textContent = `잠투정 몬스터를 물리쳤다! ${CONFIG.babyName}이가 꿀잠에 빠졌어요`;
     bossRetry.hidden = false;
+    completeQuest("boss");
     toast("🏆 보상: 엄마·아빠 HP 회복!");
   } else if (bossHp < 30) bossMsg.textContent = "조금만 더! 몬스터가 하품을 해요…";
   else if (bossHp < 70) bossMsg.textContent = "몬스터가 칭얼거리기 시작했어요!";
@@ -1104,8 +1180,12 @@ document.querySelector(".lv-badge").addEventListener("click", () => {
   badgeTimer = setTimeout(() => { badgeTaps = 0; }, 1500);
   if (badgeTaps < 5) return;
   badgeTaps = 0;
-  openPopup({ tag: "SECRET", title: "비밀 커맨드 발견!", text: SP.secretText, photo: SP.secretPhoto, photoAlt: "비밀 사진" });
+  completeQuest("secret");
+  openSecret();
 });
+function openSecret() {
+  openPopup({ tag: "SECRET", title: "비밀 커맨드 발견!", text: SP.secretText, photo: SP.secretPhoto, photoAlt: "비밀 사진" });
+}
 
 // 5) 날짜 한정 이벤트: 백일 당일·잔치 당일 첫 접속에 레벨업 연출 (?event=levelup 으로 미리보기)
 const preview = new URLSearchParams(location.search).get("event") === "levelup";
