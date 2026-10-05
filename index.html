@@ -503,11 +503,32 @@
   .pop-body { padding: 18px 16px 18px; }
   .pop-title { font-family: "Do Hyeon", sans-serif; font-size: 27px; line-height: 1.3; color: var(--pink-d); }
   .pop-body .photo { aspect-ratio: 1; margin-top: 14px; border: 4px solid var(--ink); }
+  .pop-body .photo.has-video { aspect-ratio: auto; background: #000; }
+  .pop-body .photo video { display: block; width: 100%; max-height: 60vh; }
   .pop-text { margin-top: 12px; font-size: 17px; white-space: pre-line; }
   .pop-close { width: calc(100% - 8px); margin-top: 18px; }
+  /* 퀘스트 초기화: 눈에 덜 띄는 회색 버튼, 두 번 눌러야 실행 */
+  .pbtn.qreset { width: calc(100% - 8px); margin-top: 16px; font-size: 14px; padding: 8px 4px; background: #d9d4e4; box-shadow:
+      0 -4px 0 0 var(--ink), 0 4px 0 0 var(--ink), -4px 0 0 0 var(--ink), 4px 0 0 0 var(--ink),
+      inset -4px -4px 0 0 #b3abc6, inset 4px 4px 0 0 #f1eef6; }
+  .pbtn.qreset.armed { background: var(--pink); color: var(--ink); }
   .confetti { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
   .confetti i { position: absolute; top: -12px; width: 8px; height: 8px; animation: fall var(--d, 3s) steps(16, end) var(--delay, 0s) infinite; }
   @keyframes fall { 100% { transform: translateY(110vh) rotate(360deg); } }
+  /* 비밀 커맨드 폭죽: 처음 2초 동안 팝업 위(영상 포함) 화면 전체에서 크게 터짐 */
+  .fireworks { position: absolute; inset: 0; z-index: 2; overflow: hidden; pointer-events: none; }
+  .fireworks b {
+    position: absolute; width: 10px; height: 10px; margin: -5px 0 0 -5px; opacity: 0;
+    background: var(--c); box-shadow: 0 0 10px var(--c), 0 0 0 2px rgba(26, 28, 44, .35);
+    animation: spark 1.2s steps(10, end) var(--delay, 0s) forwards;
+  }
+  .fireworks b.core { width: 22px; height: 22px; margin: -11px 0 0 -11px; animation-name: flash; animation-duration: .45s; }
+  @keyframes spark {
+    0% { opacity: 1; transform: translate(0, 0); }
+    70% { opacity: 1; }
+    100% { opacity: 0; transform: translate(var(--dx), calc(var(--dy) + 40px)); }
+  }
+  @keyframes flash { 0% { opacity: 1; transform: scale(.5); } 100% { opacity: 0; transform: scale(2.4); } }
 
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s steps(4, end), transform .6s steps(4, end); }
   .reveal.in { opacity: 1; transform: none; }
@@ -517,7 +538,7 @@
     .hidden-item, .hud-new, .chest.knock, .boss-mon.hit, .loot, .pop-win, .mystery-q, .zzz { animation: none; }
     .boss-stage::before, .boss-stage .night-deco { transition: none; }
     .chest .lid { transition: none; }
-    .confetti { display: none; }
+    .confetti, .fireworks { display: none; }
     .exp-bar i { transition: none; }
     html { scroll-behavior: auto; }
   }
@@ -743,6 +764,7 @@
 </div>
 <div class="popup" id="popup" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="popTitle">
   <div class="confetti" id="confetti" aria-hidden="true"></div>
+  <div class="fireworks" id="fireworks" aria-hidden="true"></div>
   <div class="pbox drop pop-win">
     <div class="win-title"><span id="popTag"></span><span>★</span></div>
     <div class="pop-body">
@@ -750,6 +772,7 @@
       <div class="photo" id="popPhoto"></div>
       <p class="pop-text" id="popText"></p>
       <ul class="qlist" id="qList" hidden></ul>
+      <button class="pbtn qreset" id="qReset" type="button" hidden>↺ 처음부터 다시 하기</button>
       <button class="pbtn pink pop-close" id="popClose" type="button">확인</button>
     </div>
   </div>
@@ -802,6 +825,8 @@ const CONFIG = {
     hiddenText: "젖병을 모두 찾아낸 꼼꼼한 용사님께\n유찬이의 히든 사진을 공개합니다!",
     // LV.100 배지를 5번 연속으로 누르면 열리는 비밀 메시지
     secretPhoto: "",
+    // 비밀 영상: images 폴더에 secret.mp4 를 넣으면 사진 대신 영상이 나옵니다 (mp4 → webm → mov 순서로 찾음)
+    secretVideo: "images/secret",
     secretText: "유찬아, 우리에게 와줘서 정말 고마워.\n앞으로의 모험도 엄마 아빠가 늘 함께할게.",
     // 보물상자에서 랜덤으로 나오는 덕담
     blessings: [
@@ -1081,13 +1106,82 @@ const popPhoto = document.getElementById("popPhoto");
 const confetti = document.getElementById("confetti");
 const qList = document.getElementById("qList");
 const confettiColors = ["#ffd93d", "#ff8fab", "#8fd3ff", "#7bd389", "#fff4dc"];
-function openPopup({ tag, title, text, photo, photoAlt, party, list }) {
+// 확장자를 바꿔가며 영상을 찾고, 찾으면 칸에 넣어 바로 재생합니다. 없으면 onMissing 실행
+const VIDEO_EXTS = ["mp4", "webm", "mov", "MP4", "MOV"];
+function fillVideo(el, src, onMissing, playAt = 0) {
+  el.dataset.src = src;
+  const candidates = /\.\w+$/.test(src) ? [src] : VIDEO_EXTS.map(ext => `${src}.${ext}`);
+  const v = document.createElement("video");
+  v.controls = true; v.playsInline = true; v.preload = "metadata";
+  v.setAttribute("playsinline", "");
+  let idx = 0;
+  v.onerror = () => { if (++idx < candidates.length) v.src = candidates[idx]; else if (el.dataset.src === src) onMissing(); };
+  v.onloadedmetadata = () => {
+    if (el.dataset.src !== src) return;   // 그 사이 다른 팝업으로 바뀐 경우
+    v.onerror = null;
+    el.textContent = "";
+    el.classList.add("has-video");
+    el.appendChild(v);
+    // playAt(폭죽이 끝나갈 때)까지 기다렸다가 재생
+    setTimeout(() => { if (el.dataset.src === src && v.paused) tryPlay(); }, Math.max(0, playAt - performance.now()));
+  };
+  // 소리와 함께 재생이 막히는 폰에서는 음소거로 재생 (소리 버튼으로 켤 수 있음)
+  const tryPlay = () => v.play().catch(() => { v.muted = true; v.play().catch(() => {}); });
+  // 터치 직후에 미리 재생을 걸어 두어야 아이폰에서도 소리가 나옴 → playAt 전이면 잠시 멈춰 둠
+  v.addEventListener("playing", function hold() {
+    v.removeEventListener("playing", hold);
+    const wait = playAt - performance.now();
+    if (wait > 50) { v.pause(); setTimeout(() => { if (el.dataset.src === src) tryPlay(); }, wait); }
+  });
+  v.src = candidates[0];
+  v.play().catch(() => {});
+}
+function stopPopupVideo() {
+  popPhoto.dataset.src = "";   // 아직 불러오는 중인 영상이 닫힌 뒤에 끼어들지 않게
+  const v = popPhoto.querySelector("video");
+  if (v) { v.pause(); v.remove(); }
+  popPhoto.classList.remove("has-video");
+}
+// 픽셀 폭죽: 화면 곳곳에서 여러 발을 차례로 터뜨림
+const fireworks = document.getElementById("fireworks");
+function launchFireworks() {
+  fireworks.textContent = "";
+  if (reduce) return;
+  const SHOTS = 8, SPARKS = 16, GAP = .2;
+  for (let k = 0; k < SHOTS; k++) {
+    // 위·가운데·아래 구역을 돌아가며, 좌우도 번갈아 터뜨림
+    const top = [12, 45, 78][k % 3] + (Math.random() - .5) * 18;
+    const left = (k % 2 === 0 ? 25 : 75) + (Math.random() - .5) * 30;
+    const delay = k * GAP;
+    const color = confettiColors[k % confettiColors.length];
+    const core = document.createElement("b");
+    core.className = "core";
+    core.style.cssText = `top:${top}%;left:${left}%;--c:${color};--delay:${delay}s`;
+    fireworks.appendChild(core);
+    for (let i = 0; i < SPARKS; i++) {
+      const angle = (i / SPARKS) * Math.PI * 2;
+      const dist = 90 + Math.random() * 40;
+      const b = document.createElement("b");
+      b.style.cssText = `top:${top}%;left:${left}%;--c:${color};--delay:${delay}s;` +
+        `--dx:${Math.round(Math.cos(angle) * dist)}px;--dy:${Math.round(Math.sin(angle) * dist)}px`;
+      fireworks.appendChild(b);
+    }
+  }
+  setTimeout(() => { fireworks.textContent = ""; }, (SHOTS * GAP + 1.4) * 1000);
+}
+function openPopup({ tag, title, text, photo, photoAlt, video, party, list, boom }) {
   document.getElementById("popTag").textContent = tag;
   document.getElementById("popTitle").textContent = title;
   document.getElementById("popText").textContent = text;
-  popPhoto.hidden = photo === undefined;
-  if (photo !== undefined) { popPhoto.textContent = photoAlt; fillPhoto(popPhoto, photo, photoAlt); }
+  stopPopupVideo();
+  popPhoto.hidden = photo === undefined && !video;
+  if (!popPhoto.hidden) popPhoto.textContent = photoAlt;
+  if (video) fillVideo(popPhoto, video, () => fillPhoto(popPhoto, photo, photoAlt),
+    performance.now() + (boom && !reduce ? 1500 : 0));
+  else if (photo !== undefined) fillPhoto(popPhoto, photo, photoAlt);
   qList.hidden = !list;
+  qReset.hidden = !list;
+  disarmReset();
   if (list) renderQuestList();
   confetti.textContent = "";
   if (party && !reduce) {
@@ -1100,11 +1194,14 @@ function openPopup({ tag, title, text, photo, photoAlt, party, list }) {
       confetti.appendChild(c);
     }
   }
+  if (boom) launchFireworks(); else fireworks.textContent = "";
   popup.classList.add("open");
   popup.setAttribute("aria-hidden", "false");
   document.getElementById("popClose").focus({ focusVisible: false });
 }
 function closePopup() {
+  stopPopupVideo();
+  fireworks.textContent = "";
   popup.classList.remove("open");
   popup.setAttribute("aria-hidden", "true");
   confetti.textContent = "";
@@ -1164,6 +1261,36 @@ function completeQuest(key) {
 function checkAllClear() {
   if (doneCount() === QUESTS.length) setTimeout(() => toast("🏆 모든 퀘스트 클리어!"), 1900);
 }
+// 퀘스트 초기화: 3초 안에 두 번 눌러야 실행 (실수 방지)
+const qReset = document.getElementById("qReset");
+let resetTimer;
+function disarmReset() {
+  clearTimeout(resetTimer);
+  qReset.classList.remove("armed");
+  qReset.textContent = "↺ 처음부터 다시 하기";
+}
+qReset.addEventListener("click", () => {
+  if (!qReset.classList.contains("armed")) {
+    qReset.classList.add("armed");
+    qReset.textContent = "정말 초기화할까요? 한 번 더 누르기";
+    resetTimer = setTimeout(disarmReset, 3000);
+    return;
+  }
+  try {
+    localStorage.removeItem("baekil-quests");
+    localStorage.removeItem("baekil-items");
+    sessionStorage.setItem("baekil-reset", "1");
+  } catch {}
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  window.scrollTo(0, 0);
+  location.reload();
+});
+try {
+  if (sessionStorage.getItem("baekil-reset")) {
+    sessionStorage.removeItem("baekil-reset");
+    setTimeout(() => toast("↺ 퀘스트를 초기화했어요"), 600);
+  }
+} catch {}
 function renderQuestList() {
   qList.textContent = "";
   QUESTS.forEach(q => {
@@ -1316,7 +1443,7 @@ document.querySelector(".lv-badge").addEventListener("click", () => {
   openSecret();
 });
 function openSecret() {
-  openPopup({ tag: "SECRET", title: "비밀 커맨드 발견!", text: SP.secretText, photo: SP.secretPhoto, photoAlt: "비밀 사진" });
+  openPopup({ tag: "SECRET", title: "비밀 커맨드 발견!", text: SP.secretText, photo: SP.secretPhoto, photoAlt: "비밀 사진", video: SP.secretVideo, party: true, boom: true });
 }
 
 // 5) 날짜 한정 이벤트: 백일 당일·잔치 당일 첫 접속에 레벨업 연출 (?event=levelup 으로 미리보기)
