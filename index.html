@@ -365,6 +365,8 @@
   .closing .hearts { margin-top: 26px; display: flex; justify-content: center; gap: 10px; }
   .copy { width: calc(100% - 8px); margin-top: 34px; font-size: 18px; padding: 15px 8px; }
   footer { position: relative; z-index: 1; padding: 16px 0 44px; text-align: center; font-size: 15px; color: #9aa6c9; }
+  footer .credit { margin-bottom: 6px; }
+  footer .credit b { color: var(--cream); font-weight: 400; }
 
   .toast {
     position: fixed; left: 50%; bottom: 40px; transform: translate(-50%, 20px); z-index: 20;
@@ -750,7 +752,10 @@
     <button class="pbtn copy" id="copyLink" type="button">🔗 링크 복사하기</button>
   </section>
 
-  <footer>© <span data-bind="babyName"></span>이네 가족</footer>
+  <footer>
+    <p class="credit">기획 및 개발 <b>정민</b> · 감독 <b>여울</b></p>
+    <p>© <span data-bind="babyName"></span>이네 가족</p>
+  </footer>
 </main>
 
 <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="사진 크게 보기">
